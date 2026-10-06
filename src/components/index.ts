@@ -1,6 +1,8 @@
 export { Background } from "./Background";
 export { Counter } from "./Counter";
+export { DustParticles } from "./DustParticles";
 export { Eyebrow } from "./Eyebrow";
+export { FilmGrain } from "./FilmGrain";
 export { LetterReveal } from "./LetterReveal";
 export { Stage } from "./Stage";
 export { Typewriter } from "./Typewriter";

@@ -1,6 +1,7 @@
 import "./index.css";
 import { Composition, Folder } from "remotion";
 import { MyComposition } from "./Composition";
+import { AvuIntro, avuIntroSchema } from "./compositions/AvuIntro/AvuIntro";
 import {
   calculateShowcaseMetadata,
   Showcase,
@@ -24,6 +25,38 @@ import { VIDEO } from "./config/video";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Folder name="AVU-Wine-Stories">
+        <Composition
+          id="AvuIntro"
+          component={AvuIntro}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={8 * VIDEO.fps}
+          schema={avuIntroSchema}
+          defaultProps={{
+            title: "Wine Stories",
+            subtitle: "",
+            withAudio: true,
+          }}
+        />
+        {/* Vertical version for YouTube Shorts, Reels and TikTok. */}
+        <Composition
+          id="AvuIntro-Vertical"
+          component={AvuIntro}
+          width={1080}
+          height={1920}
+          fps={VIDEO.fps}
+          durationInFrames={8 * VIDEO.fps}
+          schema={avuIntroSchema}
+          defaultProps={{
+            title: "Wine Stories",
+            subtitle: "",
+            withAudio: true,
+          }}
+        />
+      </Folder>
+
       <Composition
         id="Showcase"
         component={Showcase}

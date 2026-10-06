@@ -15,6 +15,7 @@ import { staticFile } from "remotion";
 const DISPLAY = "Space Grotesk";
 const BODY = "Inter";
 const MONO = "JetBrains Mono";
+const SERIF = "Cormorant Garamond";
 
 const files = [
   {
@@ -35,10 +36,32 @@ const files = [
     weight: "500",
     file: "jetbrains-mono-latin-500-normal.woff2",
   },
+  {
+    family: SERIF,
+    weight: "500",
+    file: "cormorant-garamond-latin-500-normal.woff2",
+  },
+  {
+    family: SERIF,
+    weight: "500",
+    style: "italic",
+    file: "cormorant-garamond-latin-500-italic.woff2",
+  },
+  {
+    family: SERIF,
+    weight: "600",
+    style: "italic",
+    file: "cormorant-garamond-latin-600-italic.woff2",
+  },
 ] as const;
 
-for (const { family, weight, file } of files) {
-  loadFont({ family, weight, url: staticFile(`fonts/${file}`) });
+for (const font of files) {
+  loadFont({
+    family: font.family,
+    weight: font.weight,
+    style: "style" in font ? font.style : "normal",
+    url: staticFile(`fonts/${font.file}`),
+  });
 }
 
 export const FONTS = {
@@ -48,4 +71,6 @@ export const FONTS = {
   body: `"${BODY}", system-ui, sans-serif`,
   /** Code, numbers, technical readouts. */
   mono: `"${MONO}", ui-monospace, monospace`,
+  /** Elegant serif (regular + italic) for premium/editorial titles. */
+  serif: `"${SERIF}", Georgia, serif`,
 } as const;

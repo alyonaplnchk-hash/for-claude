@@ -41,7 +41,8 @@ src/
   Root.tsx                 Registers every <Composition>. Add new videos here.
   config/video.ts          VIDEO = { width, height, fps }: one place to change format.
   theme/tokens.ts          Colors, radii, gradient helper.
-  theme/fonts.ts           Loads bundled fonts; exports FONTS.display/body/mono.
+  theme/fonts.ts           Loads bundled fonts; exports FONTS.display/body/mono/serif.
+  theme/avu.ts             AVU Luxury Wines brand colors (gold, champagne, wine tones).
   utils/animation.ts       CLAMP, EASE presets, progress(), fadeInOut(), stagger().
   utils/time.ts            secondsToFrames(), framesToSeconds().
   components/              Reusable building blocks (see "Components").
@@ -52,13 +53,41 @@ src/
       SoundTrack.tsx       Music bed + whooshes synced to scene cuts.
       scenes/*.tsx         One file per scene.
     TitleCard/             Minimal single-scene composition. Copy it to start new ones.
+    AvuIntro/              AVU Wine Stories channel intro (16:9 + 9:16).
+      AvuIntro.tsx         Composition + AVU_INTRO_TIMELINE (seconds; drives picture and sound).
+      AvuLogo.tsx          The AVU logo as animatable SVG (draw, fill, wipes, sheen).
+      AvuTitle.tsx         Serif title with per-letter reveal and light sweep.
+      logoPaths.ts         Traced vector paths of the logo (generated, don't hand-edit).
   Composition.tsx          Original blank scaffold (MyComp). Kept as-is.
 public/                    Static assets, referenced with staticFile('…').
   audio/                   Demo audio, synthesized by scripts/generate-demo-audio.sh.
+  brand/                   AVU logo: original PNG + traced SVG.
   fonts/                   WOFF2 fonts + OFL licenses.
 scripts/                   Helper scripts.
 out/                       Render output (git-ignored).
 ```
+
+## AVU Wine Stories (brand)
+
+This repo produces videos for the **AVU Wine Stories** channel by AVU Luxury Wines.
+
+- **Logo:** `public/brand/avu-luxury-wines-logo.png` (original) and `.svg` (vector). In
+  compositions use `<AvuLogo />` from `src/compositions/AvuIntro/AvuLogo.tsx`; with no
+  props it renders the static logo. Never stretch, recolor or rearrange the logo. Only
+  reveal it (draw, fill, wipe, fade) and keep its proportions.
+- **Colors:** `AVU` in `src/theme/avu.ts`. The official gold is `#88764A`, used on
+  wine-dark backgrounds (`wineBlack` → `wine`) with `champagne` for text.
+- **Type:** `FONTS.serif` (Cormorant Garamond, italic for titles) plus `FONTS.body` for small caps lines.
+- **Mood:** slow, elegant easing (`EASE.inOut` / `EASE.out`, no bouncy springs), gold dust,
+  film grain, vignette, a glass-chime accent. Avoid fast cuts and saturated colors.
+- **Channel intro:** compositions `AvuIntro` (1920×1080) and `AvuIntro-Vertical`
+  (1080×1920 for Shorts/Reels/TikTok), 8 s. Props: `title` (default "Wine Stories"),
+  `subtitle` (optional small line), `withAudio`. To retime, edit `AVU_INTRO_TIMELINE`;
+  the sound effects use the same values.
+  - Render: `npx remotion render AvuIntro out/avu-wine-stories-intro.mp4`
+  - Vertical: `npx remotion render AvuIntro-Vertical out/avu-wine-stories-intro-vertical.mp4`
+- **New episode videos:** start from `TitleCard`, but use the AVU theme, `FONTS.serif`,
+  `DustParticles` and `FilmGrain`. Reuse `<AvuLogo />` for end cards.
 
 ## Rules that keep renders correct
 
@@ -116,6 +145,8 @@ To add a scene to Showcase: create `scenes/NewScene.tsx` and add a `*Seconds` fi
 | `<LetterReveal>` | Letters drop in with springy overshoot | `delayInFrames`, `staggerInFrames`. Wraps between words. |
 | `<Typewriter>` | Types text out with a frame-driven blinking cursor | `delayInFrames`, `charactersPerSecond`, `cursorColor`. |
 | `<Counter>` | Counts up to a number | `value`, `countSeconds`, `decimals`, `prefix`, `suffix`. |
+| `<DustParticles>` | Rising, twinkling specks / bokeh (deterministic) | `color`, `count`, `fadeInSeconds`, `seed`. |
+| `<FilmGrain>` | Animated film grain overlay | `opacity`. |
 
 The text components use `Interactive.withSchema({ wrapInSequence: true })`, so
 their props are editable in Studio. Typography (font, size, color) is passed

@@ -12,6 +12,8 @@
 Make polished motion graphics videos with React and [Remotion](https://www.remotion.dev/docs/) **4.0.533**.
 The project is set up for AI coding agents: see [`AGENTS.md`](AGENTS.md) (Claude Code reads it through [`CLAUDE.md`](CLAUDE.md)). Remotion's official Agent Skills are in `.agents/skills`.
 
+**AVU Wine Stories channel intro:** `AvuIntro` (1920×1080) and `AvuIntro-Vertical` (1080×1920), 8 s. The AVU logo draws itself in gold, then the channel name *Wine Stories* is revealed beside it. Render with `npx remotion render AvuIntro out/avu-wine-stories-intro.mp4`.
+
 The sample composition **Showcase** (1920×1080, 30 fps, 14.4 s) has four scenes: kinetic typography, vector shapes, slide/wipe/fade transitions, and a music bed with sound effects synced to the cuts.
 
 ## Quick start
@@ -82,4 +84,4 @@ Found an issue with Remotion? [File an issue here](https://github.com/remotion-d
 
 Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
 
-The bundled fonts (Space Grotesk, Inter, JetBrains Mono) are licensed under the SIL Open Font License. Their licenses are in `public/fonts/`. The demo audio is synthesized by `scripts/generate-demo-audio.sh`.
+The AVU Luxury Wines logo in `public/brand/` belongs to AVU Luxury Wines. The bundled fonts (Space Grotesk, Inter, JetBrains Mono, Cormorant Garamond) are licensed under the SIL Open Font License. Their licenses are in `public/fonts/`. The demo audio is synthesized by `scripts/generate-demo-audio.sh`.
