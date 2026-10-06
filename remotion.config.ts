@@ -10,5 +10,8 @@ import { enableTailwind } from '@remotion/tailwind-v4';
 
 Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
+// Standard BT.709 / yuv420p output so MP4s play on iPhone, Safari, QuickTime
+// and social apps (without it, JPEG frames produce full-range yuvj420p).
+Config.setColorSpace("bt709");
 Config.setOverwriteOutput(true);
 Config.overrideBundlerConfig(enableTailwind);
