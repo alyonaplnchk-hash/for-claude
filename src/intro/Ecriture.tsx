@@ -16,14 +16,20 @@ import {
 } from "./shared";
 
 // Variant A — "Écriture": light and airy, the title written by hand.
-const INK = "#7E7058";
-const TEXT = "#4A443B";
+const MUTED_INK = "#7E7058";
+const MUTED_TEXT = "#4A443B";
+// The AVU logo colour
+export const AVU_GOLD = "#8A774C";
 export const ECRITURE_DURATION = 7 * 30;
 
-export const Ecriture: React.FC<IntroProps> = ({
+export const Ecriture: React.FC<
+  IntroProps & { ink?: string; text?: string }
+> = ({
   guestLogo,
   guestLogoWidth,
   guestLogoAspect,
+  ink = MUTED_INK,
+  text = MUTED_TEXT,
 }) => {
   const frame = useCurrentFrame();
   return (
@@ -53,7 +59,7 @@ export const Ecriture: React.FC<IntroProps> = ({
           src={AVU_LOGO}
           width={150}
           aspect={AVU_ASPECT}
-          color={INK}
+          color={ink}
           style={{
             marginBottom: 120,
             ...fadeIn(frame, 150, 40, {}),
@@ -66,7 +72,7 @@ export const Ecriture: React.FC<IntroProps> = ({
             fontSize: 34,
             letterSpacing: "0.62em",
             paddingLeft: "0.62em",
-            color: TEXT,
+            color: text,
             ...fadeIn(frame, 24, 40, { rise: 6 }),
           }}
         >
@@ -78,11 +84,11 @@ export const Ecriture: React.FC<IntroProps> = ({
             start={48}
             duration={62}
             width={780}
-            ink={INK}
+            ink={ink}
           />
         </div>
         <div style={{ marginTop: -26, marginLeft: 80 }}>
-          <HandFlourish start={104} length={26} width={420} ink={INK} />
+          <HandFlourish start={104} length={26} width={420} ink={ink} />
         </div>
 
         <div
@@ -90,7 +96,7 @@ export const Ecriture: React.FC<IntroProps> = ({
             fontFamily: PLAYFAIR,
             fontStyle: "italic",
             fontSize: 44,
-            color: TEXT,
+            color: text,
             marginTop: 70,
             ...fadeIn(frame, 128, 36),
           }}
@@ -101,7 +107,7 @@ export const Ecriture: React.FC<IntroProps> = ({
           src={guestLogo}
           width={guestLogoWidth * 0.85}
           aspect={guestLogoAspect}
-          color={TEXT}
+          color={text}
           style={{
             marginTop: 46,
             ...fadeIn(frame, 142, 42, {}),

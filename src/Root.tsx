@@ -1,7 +1,7 @@
 import "./index.css";
 import { Composition } from "remotion";
 import { MyComposition } from "./Composition";
-import { Ecriture, ECRITURE_DURATION } from "./intro/Ecriture";
+import { AVU_GOLD, Ecriture, ECRITURE_DURATION } from "./intro/Ecriture";
 import { Editorial, EDITORIAL_DURATION } from "./intro/Editorial";
 import { Nocturne, NOCTURNE_DURATION } from "./intro/Nocturne";
 import { FPS, IntroProps } from "./intro/shared";
@@ -28,6 +28,13 @@ export const RemotionRoot: React.FC = () => {
         component={Ecriture}
         durationInFrames={ECRITURE_DURATION}
         {...variant}
+      />
+      <Composition
+        id="Spotlight-A-Ecriture-Gold"
+        component={Ecriture}
+        durationInFrames={ECRITURE_DURATION}
+        {...variant}
+        defaultProps={{ ...guest, ink: AVU_GOLD, text: AVU_GOLD }}
       />
       <Composition
         id="Spotlight-B-Editorial"
