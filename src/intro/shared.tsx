@@ -3,6 +3,7 @@ import { loadFont } from "@remotion/fonts";
 import {
   AbsoluteFill,
   Easing,
+  Img,
   interpolate,
   random,
   staticFile,
@@ -98,6 +99,33 @@ export const StoreFootage: React.FC<{
         src={staticFile("store.mp4")}
         playbackRate={SOURCE_SECONDS / (durationInFrames / FPS)}
         muted
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+    </AbsoluteFill>
+  );
+};
+
+export const StorePhoto: React.FC<{
+  src: string;
+  durationInFrames: number;
+  blurTo: number;
+  blurFrom?: [number, number];
+  tone?: string;
+}> = ({ src, durationInFrames, blurTo, blurFrom = [6, 60], tone = "" }) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill
+      style={{
+        filter: `blur(${interpolate(frame, blurFrom, [0, blurTo], {
+          ...clamp,
+          easing: Easing.inOut(Easing.sin),
+        })}px) ${tone}`,
+        // Slow push-in so the still photo feels alive
+        scale: interpolate(frame, [0, durationInFrames], [1.12, 1.22], clamp),
+      }}
+    >
+      <Img
+        src={staticFile(src)}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
     </AbsoluteFill>

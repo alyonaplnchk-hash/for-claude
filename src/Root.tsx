@@ -37,6 +37,18 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ ...guest, ink: AVU_GOLD, text: AVU_GOLD }}
       />
       <Composition
+        id="Spotlight-A-Final"
+        component={Ecriture}
+        durationInFrames={ECRITURE_DURATION}
+        {...variant}
+        defaultProps={{
+          ...guest,
+          ink: AVU_GOLD,
+          photo: "store.jpg",
+          originalLogos: true,
+        }}
+      />
+      <Composition
         id="Spotlight-B-Editorial"
         component={Editorial}
         durationInFrames={EDITORIAL_DURATION}

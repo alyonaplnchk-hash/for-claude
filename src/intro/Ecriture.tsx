@@ -1,4 +1,10 @@
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Img,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import {
   clamp,
   fadeIn,
@@ -9,6 +15,7 @@ import {
   PLAYFAIR,
   SORA,
   StoreFootage,
+  StorePhoto,
   Vignette,
   TintedLogo,
   AVU_LOGO,
@@ -23,22 +30,40 @@ export const AVU_GOLD = "#8A774C";
 export const ECRITURE_DURATION = 7 * 30;
 
 export const Ecriture: React.FC<
-  IntroProps & { ink?: string; text?: string }
+  IntroProps & {
+    ink?: string;
+    text?: string;
+    // Use a still photo instead of the store footage
+    photo?: string;
+    // Show both logos in their own colours instead of re-inking them
+    originalLogos?: boolean;
+  }
 > = ({
   guestLogo,
   guestLogoWidth,
   guestLogoAspect,
   ink = MUTED_INK,
   text = MUTED_TEXT,
+  photo,
+  originalLogos = false,
 }) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
-      <StoreFootage
-        durationInFrames={ECRITURE_DURATION}
-        blurTo={11}
-        tone="saturate(0.65) sepia(0.12)"
-      />
+      {photo ? (
+        <StorePhoto
+          src={photo}
+          durationInFrames={ECRITURE_DURATION}
+          blurTo={11}
+          tone="saturate(0.65) sepia(0.12) brightness(1.14)"
+        />
+      ) : (
+        <StoreFootage
+          durationInFrames={ECRITURE_DURATION}
+          blurTo={11}
+          tone="saturate(0.65) sepia(0.12)"
+        />
+      )}
       <AbsoluteFill
         style={{
           backgroundColor: "#EFE9DE",
@@ -55,16 +80,23 @@ export const Ecriture: React.FC<
           paddingBottom: 30,
         }}
       >
-        <TintedLogo
-          src={AVU_LOGO}
-          width={150}
-          aspect={AVU_ASPECT}
-          color={ink}
-          style={{
-            marginBottom: 120,
-            ...fadeIn(frame, 150, 40, {}),
-          }}
-        />
+        {originalLogos ? (
+          <Img
+            src={staticFile(AVU_LOGO)}
+            style={{ width: 150, marginBottom: 120, ...fadeIn(frame, 150, 40) }}
+          />
+        ) : (
+          <TintedLogo
+            src={AVU_LOGO}
+            width={150}
+            aspect={AVU_ASPECT}
+            color={ink}
+            style={{
+              marginBottom: 120,
+              ...fadeIn(frame, 150, 40, {}),
+            }}
+          />
+        )}
 
         <div
           style={{
@@ -103,16 +135,27 @@ export const Ecriture: React.FC<
         >
           in conversation with
         </div>
-        <TintedLogo
-          src={guestLogo}
-          width={guestLogoWidth * 0.85}
-          aspect={guestLogoAspect}
-          color={text}
-          style={{
-            marginTop: 46,
-            ...fadeIn(frame, 142, 42, {}),
-          }}
-        />
+        {originalLogos ? (
+          <Img
+            src={staticFile(guestLogo)}
+            style={{
+              width: guestLogoWidth * 0.85,
+              marginTop: 46,
+              ...fadeIn(frame, 142, 42),
+            }}
+          />
+        ) : (
+          <TintedLogo
+            src={guestLogo}
+            width={guestLogoWidth * 0.85}
+            aspect={guestLogoAspect}
+            color={text}
+            style={{
+              marginTop: 46,
+              ...fadeIn(frame, 142, 42, {}),
+            }}
+          />
+        )}
       </AbsoluteFill>
     </AbsoluteFill>
   );
