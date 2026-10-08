@@ -27,7 +27,7 @@ import {
 const MUTED_INK = "#7E7058";
 const MUTED_TEXT = "#4A443B";
 // The AVU logo colour
-export const AVU_GOLD = "#8A774C";
+export const AVU_GOLD = "#89764B";
 export const ECRITURE_DURATION = 7 * 30;
 
 export const Ecriture: React.FC<

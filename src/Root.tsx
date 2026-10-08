@@ -47,7 +47,6 @@ export const RemotionRoot: React.FC = () => {
           photo: "store.jpg",
           originalLogos: true,
           veil: 0.36,
-          music: "music/spotlight-intro.wav",
         }}
       />
       <Composition
