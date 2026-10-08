@@ -40,6 +40,8 @@ export const Ecriture: React.FC<
     originalLogos?: boolean;
     // Strength of the light veil over the background (0–1)
     veil?: number;
+    // Extra soft veil behind the type, so the gold reads clearly (0–1)
+    textVeil?: number;
     music?: string;
   }
 > = ({
@@ -51,6 +53,7 @@ export const Ecriture: React.FC<
   photo,
   originalLogos = false,
   veil = 0.66,
+  textVeil = 0,
   music,
 }) => {
   const frame = useCurrentFrame();
@@ -78,6 +81,13 @@ export const Ecriture: React.FC<
         }}
       />
       <Vignette color="#B7AA94" strength={0.35} />
+      <AbsoluteFill
+        style={{
+          background:
+            "radial-gradient(ellipse 62% 30% at 50% 50%, #EFE9DE 0%, rgba(239,233,222,0.6) 55%, rgba(239,233,222,0) 100%)",
+          opacity: interpolate(frame, [10, 70], [0, textVeil], clamp),
+        }}
+      />
       <Grain opacity={0.11} />
 
       <AbsoluteFill

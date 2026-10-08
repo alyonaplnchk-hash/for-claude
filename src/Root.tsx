@@ -47,6 +47,7 @@ export const RemotionRoot: React.FC = () => {
           photo: "store.jpg",
           originalLogos: true,
           veil: 0.36,
+          textVeil: 0.55,
         }}
       />
       <Composition
