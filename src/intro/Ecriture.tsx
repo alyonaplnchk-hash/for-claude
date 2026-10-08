@@ -1,3 +1,4 @@
+import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   Img,
@@ -37,6 +38,9 @@ export const Ecriture: React.FC<
     photo?: string;
     // Show both logos in their own colours instead of re-inking them
     originalLogos?: boolean;
+    // Strength of the light veil over the background (0–1)
+    veil?: number;
+    music?: string;
   }
 > = ({
   guestLogo,
@@ -46,16 +50,19 @@ export const Ecriture: React.FC<
   text = MUTED_TEXT,
   photo,
   originalLogos = false,
+  veil = 0.66,
+  music,
 }) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
+      {music ? <Audio src={staticFile(music)} /> : null}
       {photo ? (
         <StorePhoto
           src={photo}
           durationInFrames={ECRITURE_DURATION}
           blurTo={11}
-          tone="saturate(0.65) sepia(0.12) brightness(1.14)"
+          tone="saturate(0.72) sepia(0.12) brightness(0.95)"
         />
       ) : (
         <StoreFootage
@@ -67,7 +74,7 @@ export const Ecriture: React.FC<
       <AbsoluteFill
         style={{
           backgroundColor: "#EFE9DE",
-          opacity: interpolate(frame, [6, 60], [0, 0.66], clamp),
+          opacity: interpolate(frame, [6, 60], [0, veil], clamp),
         }}
       />
       <Vignette color="#B7AA94" strength={0.35} />
