@@ -7,7 +7,7 @@
 #   scripts/render-exact.sh Spotlight-A-Final out/spotlight-A-final [--browser-executable=...]
 set -euo pipefail
 comp="$1"; name="$2"; shift 2
-seq="$(mktemp -d)"
+seq="$(mktemp -d "${TMPDIR:-/tmp}/remotion_seq_XXXXXX")"
 trap 'rm -rf "$seq"' EXIT
 
 npx remotion render "$comp" "$seq" --sequence --image-format=png "$@"
