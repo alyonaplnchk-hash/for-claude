@@ -81,6 +81,23 @@ export const RemotionRoot: React.FC = () => {
           photo: "store.jpg",
         }}
       />
+      <Composition
+        id="Question-LynchBages-Invite"
+        component={QuestionCard}
+        durationInFrames={QUESTION_DURATION}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          lines: [
+            "Who would you invite",
+            "to share a bottle",
+            "of Lynch-Bages?",
+          ],
+          highlight: ["Lynch-Bages"],
+          photo: "store.jpg",
+        }}
+      />
     </>
   );
 };
