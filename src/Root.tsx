@@ -4,6 +4,7 @@ import { MyComposition } from "./Composition";
 import { AVU_GOLD, Ecriture, ECRITURE_DURATION } from "./intro/Ecriture";
 import { Editorial, EDITORIAL_DURATION } from "./intro/Editorial";
 import { Nocturne, NOCTURNE_DURATION } from "./intro/Nocturne";
+import { QuestionCard, QUESTION_DURATION } from "./intro/QuestionCard";
 import { FPS, IntroProps } from "./intro/shared";
 
 const guest: IntroProps = {
@@ -61,6 +62,24 @@ export const RemotionRoot: React.FC = () => {
         component={Nocturne}
         durationInFrames={NOCTURNE_DURATION}
         {...variant}
+      />
+      <Composition
+        id="Question-LynchBages-Stories"
+        component={QuestionCard}
+        durationInFrames={QUESTION_DURATION}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          lines: [
+            "What are the most",
+            "memorable stories",
+            "connected to",
+            "Lynch-Bages?",
+          ],
+          highlight: ["Lynch-Bages"],
+          photo: "store.jpg",
+        }}
       />
     </>
   );
