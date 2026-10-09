@@ -6,6 +6,7 @@ import { Editorial, EDITORIAL_DURATION } from "./intro/Editorial";
 import { Nocturne, NOCTURNE_DURATION } from "./intro/Nocturne";
 import { QuestionCard, QUESTION_DURATION } from "./intro/QuestionCard";
 import { FPS, IntroProps } from "./intro/shared";
+import { ThankYouCard, THANK_YOU_DURATION } from "./intro/ThankYouCard";
 
 const guest: IntroProps = {
   guestLogo: "guests/lynch-bages.png",
@@ -113,6 +114,19 @@ export const RemotionRoot: React.FC = () => {
             "favourite bottle?",
           ],
           highlight: ["Lynch-Bages"],
+          photo: "store.jpg",
+        }}
+      />
+      <Composition
+        id="ThankYou-LynchBages"
+        component={ThankYouCard}
+        durationInFrames={THANK_YOU_DURATION}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          guestLogo: guest.guestLogo,
+          guestLogoAspect: guest.guestLogoAspect,
           photo: "store.jpg",
         }}
       />

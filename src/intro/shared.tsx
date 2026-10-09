@@ -181,24 +181,32 @@ export const Vignette: React.FC<{ color: string; strength: number }> = ({
   />
 );
 
-// Uneven pen rhythm per letter of "Spotlight": the capital takes longest,
-// the pen lingers on loops and moves quickly through the small joins.
-const PEN_RHYTHM = [1.9, 0.8, 1.1, 0.9, 0.7, 0.6, 1.0, 0.8, 0.9];
+// Uneven pen rhythm per letter: capitals take longest, the pen lingers on
+// loops, moves quickly through the small joins and pauses between words.
+const PEN_RHYTHM: Record<keyof typeof SCRIPT_GLYPHS, number[]> = {
+  Spotlight: [1.9, 0.8, 1.1, 0.9, 0.7, 0.6, 1.0, 0.8, 0.9],
+  "Thank you": [1.8, 0.9, 0.8, 0.8, 1.0, 1.4, 0.8, 0.9],
+};
 
-/**
- * "Spotlight" written by hand: each glyph's outline is traced by the pen,
- * then the ink settles into it.
- */
-export const HandwrittenSpotlight: React.FC<{
+type HandwrittenProps = {
   start: number;
   duration: number;
   width: number;
   ink: string;
-}> = ({ start, duration, width, ink }) => {
+};
+
+/**
+ * A word written by hand: each glyph's outline is traced by the pen,
+ * then the ink settles into it.
+ */
+export const HandwrittenWord: React.FC<
+  HandwrittenProps & { word: keyof typeof SCRIPT_GLYPHS }
+> = ({ word, start, duration, width, ink }) => {
   const frame = useCurrentFrame();
-  const { glyphs, box } = SCRIPT_GLYPHS.Spotlight;
+  const { glyphs, box } = SCRIPT_GLYPHS[word];
+  const rhythm = PEN_RHYTHM[word];
   const pad = 20;
-  const total = PEN_RHYTHM.reduce((a, b) => a + b, 0);
+  const total = rhythm.reduce((a, b) => a + b, 0);
   let cursor = start;
 
   return (
@@ -208,7 +216,7 @@ export const HandwrittenSpotlight: React.FC<{
       style={{ overflow: "visible" }}
     >
       {glyphs.map((g, i) => {
-        const len = (PEN_RHYTHM[i] / total) * duration;
+        const len = (rhythm[i] / total) * duration;
         const s = cursor;
         // Letters overlap slightly, like a continuous hand.
         cursor += len * 0.82;
@@ -240,6 +248,10 @@ export const HandwrittenSpotlight: React.FC<{
     </svg>
   );
 };
+
+export const HandwrittenSpotlight: React.FC<HandwrittenProps> = (props) => (
+  <HandwrittenWord word="Spotlight" {...props} />
+);
 
 /** A loose pen stroke that underlines the title, slightly uneven. */
 export const HandFlourish: React.FC<{
