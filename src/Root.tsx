@@ -1,6 +1,7 @@
 import "./index.css";
 import { Composition, Folder } from "remotion";
 import { AvuIntro } from "./AvuIntro";
+import { AvuTitle, TITLE_DURATION } from "./title/AvuTitle";
 import { Estate } from "./scenes/Estate";
 import { Finale } from "./scenes/Finale";
 import { History } from "./scenes/History";
@@ -10,6 +11,14 @@ import { FPS, INTRO_DURATION, SCENES } from "./theme";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="AvuWineStoriesTitle"
+        component={AvuTitle}
+        durationInFrames={TITLE_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="AvuWineStoriesIntro"
         component={AvuIntro}
