@@ -2,14 +2,13 @@ import {
   AbsoluteFill,
   Easing,
   Img,
-  Interactive,
   interpolate,
   random,
   staticFile,
   useCurrentFrame,
 } from "remotion";
 import { EMBLEM_PATHS } from "../components/AvuEmblem";
-import { playfair, script } from "../fonts";
+import { playfair } from "../fonts";
 
 export const OPENER_DURATION = 240;
 
@@ -21,7 +20,11 @@ const clamp = {
 // Brand gold, deepened and nudged toward olive so it reads less orange on screen.
 const BG = "#706240";
 const IVORY = "#FBF8F1";
-const TITLE_WORDS = ["AVU", "WINE", "STORIES"];
+const TITLE_WORDS = [
+  { text: "AVU", italic: false },
+  { text: "WINE", italic: false },
+  { text: "STORIES", italic: true },
+];
 
 // Rounded corners (radius 10) with a 5px feathered edge for the estate photo.
 const PHOTO_MASK = `data:image/svg+xml,${encodeURIComponent(
@@ -174,7 +177,14 @@ export const FigeacOpener: React.FC = () => {
         {TITLE_WORDS.map((word, i) => {
           const start = 38 + i * 8;
           return (
-            <div key={word} style={{ overflow: "hidden" }}>
+            <div
+              key={word.text}
+              style={{
+                overflow: "hidden",
+                fontStyle: word.italic ? "italic" : "normal",
+                paddingRight: word.italic ? "0.08em" : 0,
+              }}
+            >
               <div
                 style={{
                   translate: `0px ${interpolate(frame, [start, start + 30], [105, 0], {
@@ -183,31 +193,26 @@ export const FigeacOpener: React.FC = () => {
                   })}%`,
                 }}
               >
-                {word}
+                {word.text}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Château Figeac, written on in script */}
-      <Interactive.Div
-        name="Chateau Figeac"
+      {/* Château Figeac wordmark, revealed left to right */}
+      <Img
+        name="Chateau Figeac logo"
+        src={staticFile("figeac/logo.png")}
         style={{
           position: "absolute",
-          right: 100,
-          top: 262,
-          padding: "0 30px",
-          fontFamily: script,
-          fontSize: 214,
-          lineHeight: 1.1,
-          color: IVORY,
+          right: 110,
+          top: 330,
+          width: 880,
           WebkitMaskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
           maskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
         }}
-      >
-        Château Figeac
-      </Interactive.Div>
+      />
     </AbsoluteFill>
   );
 };
