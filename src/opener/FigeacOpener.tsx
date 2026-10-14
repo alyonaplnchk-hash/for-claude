@@ -4,10 +4,12 @@ import {
   Img,
   Interactive,
   interpolate,
+  random,
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { playfair, sans, script } from "../fonts";
+import { EMBLEM_PATHS } from "../components/AvuEmblem";
+import { playfair, script } from "../fonts";
 
 export const OPENER_DURATION = 240;
 
@@ -16,61 +18,104 @@ const clamp = {
   extrapolateRight: "clamp",
 } as const;
 
-// Exact gold sampled from the AVU Luxury Wines logo, on the logo's white.
-const GOLD = "#88764A";
-const GOLD_DEEP = "#6F5F38";
-const WHITE = "#FFFFFF";
-const PANEL_X = 1060;
+const BG = "#89764B";
+const IVORY = "#FBF8F1";
+const TITLE_WORDS = ["AVU", "WINE", "STORIES"];
 
 const smooth = Easing.bezier(0.65, 0, 0.35, 1);
 const settle = Easing.bezier(0.16, 1, 0.3, 1);
 
-// A line of text that slides up out of an invisible mask.
-const MaskLine: React.FC<{
-  frame: number;
-  start: number;
-  children: React.ReactNode;
-  style: React.CSSProperties;
-}> = ({ frame, start, children, style }) => (
-  <div style={{ overflow: "hidden", paddingBottom: 6 }}>
-    <div
-      style={{
-        ...style,
-        translate: `0px ${interpolate(frame, [start, start + 28], [110, 0], {
-          ...clamp,
-          easing: settle,
-        })}%`,
-      }}
-    >
-      {children}
-    </div>
-  </div>
+// Sparse, fine-lined AVU emblems drifting slowly behind everything.
+const TILES = new Array(6 * 4).fill(true).map((_, i) => {
+  const col = i % 6;
+  const row = Math.floor(i / 6);
+  return {
+    x: col * 360 - 140 + (row % 2) * 180 + random(`tx-${i}`) * 50,
+    y: row * 320 - 150 + random(`ty-${i}`) * 50,
+    rotate: random(`tr-${i}`) * 360,
+    size: 200 + random(`ts-${i}`) * 60,
+  };
+});
+
+const Pattern: React.FC<{ frame: number }> = ({ frame }) => (
+  <AbsoluteFill
+    style={{
+      opacity: interpolate(frame, [0, 30], [0, 1], clamp),
+      translate: `${-frame * 0.18}px ${-frame * 0.1}px`,
+    }}
+  >
+    {TILES.map((t, i) => (
+      <svg
+        key={i}
+        width={t.size}
+        viewBox="90 0 700 570"
+        style={{
+          position: "absolute",
+          left: t.x,
+          top: t.y,
+          rotate: `${t.rotate}deg`,
+          overflow: "visible",
+        }}
+      >
+        {EMBLEM_PATHS.map((d) => (
+          <path key={d} d={d} fill="none" stroke={IVORY} strokeOpacity={0.15} strokeWidth={4} />
+        ))}
+      </svg>
+    ))}
+  </AbsoluteFill>
 );
 
 export const FigeacOpener: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const divider = interpolate(frame, [0, 26], [0, 1080], { ...clamp, easing: smooth });
-  const panel = interpolate(frame, [16, 52], [0, 100], { ...clamp, easing: smooth });
-  const write = interpolate(frame, [78, 122], [-15, 100], {
+  const frameLine = interpolate(frame, [4, 44], [0, 1], { ...clamp, easing: smooth });
+  const photo = interpolate(frame, [10, 46], [0, 1], { ...clamp, easing: smooth });
+  const bottle = interpolate(frame, [22, 62], [0, 1], { ...clamp, easing: settle });
+  const write = interpolate(frame, [84, 130], [-15, 100], {
     ...clamp,
     easing: Easing.bezier(0.45, 0, 0.35, 1),
   });
-  const rule = interpolate(frame, [112, 140], [0, 120], { ...clamp, easing: settle });
-  const bottle = interpolate(frame, [52, 92], [0, 1], { ...clamp, easing: settle });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE }}>
-      {/* Estate photo, full-bleed on the right, opened from the gold divider */}
+    <AbsoluteFill style={{ backgroundColor: BG }}>
+      {/* A barely-there glow keeps the flat brand colour from feeling dead */}
+      <AbsoluteFill
+        style={{
+          background:
+            "radial-gradient(ellipse at 55% 42%, rgba(255,248,230,0.07) 0%, rgba(255,248,230,0) 60%)",
+        }}
+      />
+      <Pattern frame={frame} />
+
+      {/* Fine ivory hairline framing the whole picture */}
+      <svg width={1920} height={1080} style={{ position: "absolute" }}>
+        <rect
+          x={34}
+          y={34}
+          width={1852}
+          height={1012}
+          fill="none"
+          stroke={IVORY}
+          strokeOpacity={0.35}
+          strokeWidth={1.2}
+          pathLength={1}
+          strokeDasharray="1 1"
+          strokeDashoffset={1 - frameLine}
+        />
+      </svg>
+
+      {/* Estate photo, opening from its centre */}
       <div
         style={{
           position: "absolute",
-          left: PANEL_X,
-          top: 0,
-          width: 1920 - PANEL_X,
-          height: 1080,
+          left: 610,
+          top: 575,
+          width: 880,
+          height: 430,
+          borderRadius: 4,
           overflow: "hidden",
-          clipPath: `inset(0 ${100 - panel}% 0 0)`,
+          boxShadow: "0 30px 60px rgba(35, 26, 8, 0.38)",
+          clipPath: `inset(0 ${(1 - photo) * 50}% 0 ${(1 - photo) * 50}% round 4px)`,
         }}
       >
         <Img
@@ -80,153 +125,91 @@ export const FigeacOpener: React.FC = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "52% 50%",
-            scale: interpolate(frame, [16, OPENER_DURATION], [1.16, 1.03], clamp),
+            objectPosition: "50% 42%",
+            scale: interpolate(frame, [10, OPENER_DURATION], [1.18, 1.03], clamp),
           }}
         />
-        {/* Soft white fade where the photo meets the page */}
-        <AbsoluteFill
-          style={{
-            background: "linear-gradient(90deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 22%)",
-          }}
-        />
-        {/* Inset hairline frame */}
         <div
           style={{
             position: "absolute",
-            inset: 36,
-            border: "1px solid rgba(255,255,255,0.7)",
-            opacity: interpolate(frame, [50, 70], [0, 1], clamp),
+            inset: 14,
+            border: `1px solid ${IVORY}`,
+            opacity: interpolate(frame, [44, 64], [0, 0.75], clamp),
           }}
         />
       </div>
 
-      {/* Gold divider line */}
-      <div
+      {/* Bottle */}
+      <Img
+        name="Figeac bottle"
+        src={staticFile("figeac/bottle.png")}
         style={{
           position: "absolute",
-          left: PANEL_X - 1,
-          top: 0,
-          width: 2,
-          height: divider,
-          backgroundColor: GOLD,
+          left: 170,
+          top: 140,
+          height: 880,
+          opacity: interpolate(bottle, [0, 0.4], [0, 1], clamp),
+          rotate: `${interpolate(bottle, [0, 1], [-11, -5])}deg`,
+          translate: `${interpolate(bottle, [0, 1], [-260, 0])}px ${Math.sin(frame / 30) * 4}px`,
+          filter: "drop-shadow(16px 24px 26px rgba(35, 26, 8, 0.45))",
         }}
       />
 
-      {/* Bottle, standing on the divider, with a soft floor shadow */}
+      {/* AVU WINE STORIES: each word rises out of a mask */}
       <div
         style={{
           position: "absolute",
-          left: PANEL_X - 128,
-          top: 150,
-          width: 256,
-          height: 900,
-          opacity: bottle,
-          translate: `0px ${(1 - bottle) * 90}px`,
+          left: 470,
+          right: 80,
+          top: 118,
+          display: "flex",
+          justifyContent: "center",
+          gap: "0.32em",
+          fontFamily: playfair,
+          fontWeight: 600,
+          fontSize: 128,
+          lineHeight: 1.08,
+          letterSpacing: "0.07em",
+          color: IVORY,
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            left: 18,
-            right: 18,
-            bottom: -14,
-            height: 34,
-            borderRadius: "50%",
-            background: "radial-gradient(ellipse at center, rgba(40,30,10,0.35) 0%, rgba(40,30,10,0) 70%)",
-          }}
-        />
-        <Img
-          name="Figeac bottle"
-          src={staticFile("figeac/bottle.png")}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 9,
-            height: 892,
-            filter: "drop-shadow(14px 18px 22px rgba(40, 30, 10, 0.28))",
-          }}
-        />
+        {TITLE_WORDS.map((word, i) => {
+          const start = 38 + i * 8;
+          return (
+            <div key={word} style={{ overflow: "hidden" }}>
+              <div
+                style={{
+                  translate: `0px ${interpolate(frame, [start, start + 30], [105, 0], {
+                    ...clamp,
+                    easing: settle,
+                  })}%`,
+                }}
+              >
+                {word}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Left editorial column */}
-      <div style={{ position: "absolute", left: 150, top: 175, width: 760 }}>
-        <Img
-          name="AVU emblem"
-          src={staticFile("avu/emblem.png")}
-          style={{
-            width: 118,
-            opacity: interpolate(frame, [22, 44], [0, 1], clamp),
-            clipPath: `inset(${interpolate(frame, [22, 50], [100, 0], { ...clamp, easing: smooth })}% 0 0 0)`,
-          }}
-        />
-
-        <div style={{ marginTop: 70 }}>
-          <MaskLine
-            frame={frame}
-            start={36}
-            style={{
-              fontFamily: playfair,
-              fontWeight: 700,
-              fontSize: 132,
-              lineHeight: 1,
-              letterSpacing: "0.02em",
-              color: GOLD_DEEP,
-            }}
-          >
-            AVU WINE
-          </MaskLine>
-          <MaskLine
-            frame={frame}
-            start={46}
-            style={{
-              fontFamily: playfair,
-              fontWeight: 700,
-              fontSize: 132,
-              lineHeight: 1,
-              letterSpacing: "0.02em",
-              color: GOLD_DEEP,
-            }}
-          >
-            STORIES
-          </MaskLine>
-        </div>
-
-        <Interactive.Div
-          name="Chateau Figeac"
-          style={{
-            marginTop: -10,
-            marginLeft: -12,
-            padding: "0 24px",
-            fontFamily: script,
-            fontSize: 156,
-            lineHeight: 1.15,
-            whiteSpace: "nowrap",
-            color: GOLD,
-            WebkitMaskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
-            maskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
-          }}
-        >
-          Château Figeac
-        </Interactive.Div>
-
-        <div style={{ marginTop: 26, display: "flex", alignItems: "center", gap: 28 }}>
-          <div style={{ width: rule, height: 1.5, backgroundColor: GOLD }} />
-          <Interactive.Div
-            name="Appellation"
-            style={{
-              fontFamily: sans,
-              fontWeight: 500,
-              fontSize: 22,
-              letterSpacing: "0.38em",
-              color: GOLD,
-              opacity: interpolate(frame, [122, 144], [0, 1], clamp),
-            }}
-          >
-            SAINT-ÉMILION
-          </Interactive.Div>
-        </div>
-      </div>
+      {/* Château Figeac, written on in script */}
+      <Interactive.Div
+        name="Chateau Figeac"
+        style={{
+          position: "absolute",
+          right: 100,
+          top: 262,
+          padding: "0 30px",
+          fontFamily: script,
+          fontSize: 214,
+          lineHeight: 1.1,
+          color: IVORY,
+          WebkitMaskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
+          maskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
+        }}
+      >
+        Château Figeac
+      </Interactive.Div>
     </AbsoluteFill>
   );
 };
