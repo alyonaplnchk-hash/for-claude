@@ -18,7 +18,8 @@ const clamp = {
   extrapolateRight: "clamp",
 } as const;
 
-const BG = "#89764B";
+// Brand gold, deepened and nudged toward olive so it reads less orange on screen.
+const BG = "#706240";
 const IVORY = "#FBF8F1";
 const TITLE_WORDS = ["AVU", "WINE", "STORIES"];
 
@@ -69,7 +70,7 @@ export const FigeacOpener: React.FC = () => {
   const frame = useCurrentFrame();
 
   const frameLine = interpolate(frame, [4, 44], [0, 1], { ...clamp, easing: smooth });
-  const photo = interpolate(frame, [10, 46], [0, 1], { ...clamp, easing: smooth });
+  const photo = interpolate(frame, [8, 50], [0, 1], { ...clamp, easing: settle });
   const bottle = interpolate(frame, [22, 62], [0, 1], { ...clamp, easing: settle });
   const write = interpolate(frame, [84, 130], [-15, 100], {
     ...clamp,
@@ -78,13 +79,6 @@ export const FigeacOpener: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: BG }}>
-      {/* A barely-there glow keeps the flat brand colour from feeling dead */}
-      <AbsoluteFill
-        style={{
-          background:
-            "radial-gradient(ellipse at 55% 42%, rgba(255,248,230,0.07) 0%, rgba(255,248,230,0) 60%)",
-        }}
-      />
       <Pattern frame={frame} />
 
       {/* Fine ivory hairline framing the whole picture */}
@@ -104,7 +98,7 @@ export const FigeacOpener: React.FC = () => {
         />
       </svg>
 
-      {/* Estate photo, opening from its centre */}
+      {/* Estate photo, rising from below */}
       <div
         style={{
           position: "absolute",
@@ -115,7 +109,8 @@ export const FigeacOpener: React.FC = () => {
           borderRadius: 4,
           overflow: "hidden",
           boxShadow: "0 30px 60px rgba(35, 26, 8, 0.38)",
-          clipPath: `inset(0 ${(1 - photo) * 50}% 0 ${(1 - photo) * 50}% round 4px)`,
+          opacity: interpolate(photo, [0, 0.3], [0, 1], clamp),
+          translate: `0px ${(1 - photo) * 520}px`,
         }}
       >
         <Img
@@ -127,14 +122,6 @@ export const FigeacOpener: React.FC = () => {
             objectFit: "cover",
             objectPosition: "50% 42%",
             scale: interpolate(frame, [10, OPENER_DURATION], [1.18, 1.03], clamp),
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 14,
-            border: `1px solid ${IVORY}`,
-            opacity: interpolate(frame, [44, 64], [0, 0.75], clamp),
           }}
         />
       </div>
