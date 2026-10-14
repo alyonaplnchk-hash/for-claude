@@ -23,6 +23,14 @@ const BG = "#706240";
 const IVORY = "#FBF8F1";
 const TITLE_WORDS = ["AVU", "WINE", "STORIES"];
 
+// Rounded corners (radius 10) with a 5px feathered edge for the estate photo.
+const PHOTO_MASK = `data:image/svg+xml,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='730' height='480'>" +
+    "<filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='2.5'/></filter>" +
+    "<rect x='2.5' y='2.5' width='725' height='475' rx='10' fill='white' filter='url(#f)'/>" +
+    "</svg>",
+)}`;
+
 const smooth = Easing.bezier(0.65, 0, 0.35, 1);
 const settle = Easing.bezier(0.16, 1, 0.3, 1);
 
@@ -107,12 +115,11 @@ export const FigeacOpener: React.FC = () => {
           // Same 1440x947 proportions as the original photo, so nothing is cropped.
           width: 730,
           height: 480,
-          borderRadius: 4,
-          overflow: "hidden",
-          boxShadow: "0 30px 60px rgba(35, 26, 8, 0.38)",
           opacity: interpolate(photo, [0, 0.3], [0, 1], clamp),
           translate: `0px ${(1 - photo) * 560}px`,
           scale: interpolate(frame, [8, OPENER_DURATION], [0.97, 1], clamp),
+          // drop-shadow follows the feathered alpha edge, unlike box-shadow.
+          filter: "drop-shadow(0 26px 30px rgba(35, 26, 8, 0.4))",
         }}
       >
         <Img
@@ -122,6 +129,10 @@ export const FigeacOpener: React.FC = () => {
             width: "100%",
             height: "100%",
             objectFit: "contain",
+            WebkitMaskImage: `url("${PHOTO_MASK}")`,
+            maskImage: `url("${PHOTO_MASK}")`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
           }}
         />
       </div>
