@@ -3,12 +3,10 @@ import {
   Easing,
   Img,
   interpolate,
-  random,
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { EMBLEM_PATHS } from "../components/AvuEmblem";
-import { playfair } from "../fonts";
+import { playfair, sans, serif } from "../fonts";
 
 export const OPENER_DURATION = 240;
 
@@ -20,162 +18,109 @@ const clamp = {
 // Brand gold, deepened and nudged toward olive so it reads less orange on screen.
 const BG = "#706240";
 const IVORY = "#FBF8F1";
+const FIGEAC_RED = "#A92728";
 const TITLE_WORDS = [
   { text: "AVU", italic: false },
   { text: "WINE", italic: false },
   { text: "STORIES", italic: true },
 ];
 
+// Layout grid. Nothing goes below SAFE_BOTTOM (YouTube player controls).
+const SAFE_BOTTOM = 880;
+const COLUMN_X = 650;
+const BOTTLE_RATIO = 475 / 1670;
+const LOGO_RATIO = 125 / 983;
+const PHOTO = { left: 1130, top: 430, width: 680, height: 680 * (947 / 1440) };
+
 // Rounded corners (radius 10) with a 5px feathered edge for the estate photo.
-const PHOTO_MASK = `data:image/svg+xml,${encodeURIComponent(
-  "<svg xmlns='http://www.w3.org/2000/svg' width='730' height='480'>" +
-    "<filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='2.5'/></filter>" +
-    "<rect x='2.5' y='2.5' width='725' height='475' rx='10' fill='white' filter='url(#f)'/>" +
-    "</svg>",
-)}`;
+const photoMask = (w: number, h: number) =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'>` +
+      "<filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='2.5'/></filter>" +
+      `<rect x='2.5' y='2.5' width='${w - 5}' height='${h - 5}' rx='10' fill='white' filter='url(#f)'/>` +
+      "</svg>",
+  )}`;
+const PHOTO_MASK = photoMask(PHOTO.width, Math.round(PHOTO.height));
 
-const smooth = Easing.bezier(0.65, 0, 0.35, 1);
+const ease = Easing.bezier(0.25, 0.1, 0.25, 1);
 const settle = Easing.bezier(0.16, 1, 0.3, 1);
-
-// Sparse, fine-lined AVU emblems drifting slowly behind everything.
-const TILES = new Array(6 * 4).fill(true).map((_, i) => {
-  const col = i % 6;
-  const row = Math.floor(i / 6);
-  return {
-    x: col * 360 - 140 + (row % 2) * 180 + random(`tx-${i}`) * 50,
-    y: row * 320 - 150 + random(`ty-${i}`) * 50,
-    rotate: random(`tr-${i}`) * 360,
-    size: 200 + random(`ts-${i}`) * 60,
-  };
-});
-
-const Pattern: React.FC<{ frame: number }> = ({ frame }) => (
-  <AbsoluteFill
-    style={{
-      opacity: interpolate(frame, [0, 30], [0, 1], clamp),
-      translate: `${-frame * 0.18}px ${-frame * 0.1}px`,
-    }}
-  >
-    {TILES.map((t, i) => (
-      <svg
-        key={i}
-        width={t.size}
-        viewBox="90 0 700 570"
-        style={{
-          position: "absolute",
-          left: t.x,
-          top: t.y,
-          rotate: `${t.rotate}deg`,
-          overflow: "visible",
-        }}
-      >
-        {EMBLEM_PATHS.map((d) => (
-          <path key={d} d={d} fill="none" stroke={IVORY} strokeOpacity={0.15} strokeWidth={4} />
-        ))}
-      </svg>
-    ))}
-  </AbsoluteFill>
-);
+const smooth = Easing.bezier(0.65, 0, 0.35, 1);
 
 export const FigeacOpener: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const frameLine = interpolate(frame, [4, 44], [0, 1], { ...clamp, easing: smooth });
-  const photo = interpolate(frame, [8, 50], [0, 1], { ...clamp, easing: settle });
-  const bottle = interpolate(frame, [22, 62], [0, 1], { ...clamp, easing: settle });
-  const write = interpolate(frame, [84, 130], [-15, 100], {
-    ...clamp,
-    easing: Easing.bezier(0.45, 0, 0.35, 1),
-  });
+  const bottle = interpolate(frame, [0, 40], [0, 1], { ...clamp, easing: settle });
+  const photo = interpolate(frame, [34, 80], [0, 1], { ...clamp, easing: settle });
+  const logo = interpolate(frame, [46, 86], [0, 100], { ...clamp, easing: smooth });
+  const rule = interpolate(frame, [80, 112], [0, 72], { ...clamp, easing: settle });
+  const details = interpolate(frame, [92, 122], [0, 1], { ...clamp, easing: ease });
+
+  const bottleHeight = 790;
+  const bottleWidth = bottleHeight * BOTTLE_RATIO;
 
   return (
     <AbsoluteFill style={{ backgroundColor: BG }}>
-      <Pattern frame={frame} />
-
-      {/* Fine ivory hairline framing the whole picture */}
-      <svg width={1920} height={1080} style={{ position: "absolute" }}>
-        <rect
-          x={34}
-          y={34}
-          width={1852}
-          height={1012}
-          fill="none"
-          stroke={IVORY}
-          strokeOpacity={0.35}
-          strokeWidth={1.2}
-          pathLength={1}
-          strokeDasharray="1 1"
-          strokeDashoffset={1 - frameLine}
-        />
+      {/* Faint grain instead of the old line pattern */}
+      <svg width={1920} height={1080} style={{ position: "absolute", opacity: 0.12 }}>
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={5} />
+          <feColorMatrix values="0 0 0 0 1  0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0.35 0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
       </svg>
 
-      {/* Estate photo, rising from below */}
+      {/* Bottle: upright, one soft contact shadow (light from the left) */}
       <div
         style={{
           position: "absolute",
-          left: 700,
-          top: 540,
-          // Same 1440x947 proportions as the original photo, so nothing is cropped.
-          width: 730,
-          height: 480,
-          opacity: interpolate(photo, [0, 0.3], [0, 1], clamp),
-          translate: `0px ${(1 - photo) * 560}px`,
-          scale: interpolate(frame, [8, OPENER_DURATION], [0.97, 1], clamp),
-          // drop-shadow follows the feathered alpha edge, unlike box-shadow.
-          filter: "drop-shadow(0 26px 30px rgba(35, 26, 8, 0.4))",
+          left: 330 - bottleWidth / 2,
+          top: SAFE_BOTTOM - bottleHeight,
+          width: bottleWidth,
+          height: bottleHeight,
+          opacity: bottle,
+          translate: `0px ${(1 - bottle) * 40}px`,
+          scale: interpolate(frame, [0, OPENER_DURATION], [1, 1.035], clamp),
+          transformOrigin: "50% 100%",
         }}
       >
-        <Img
-          name="Chateau Figeac"
-          src={staticFile("figeac/estate.jpg")}
+        <div
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-            WebkitMaskImage: `url("${PHOTO_MASK}")`,
-            maskImage: `url("${PHOTO_MASK}")`,
-            WebkitMaskSize: "100% 100%",
-            maskSize: "100% 100%",
+            position: "absolute",
+            left: bottleWidth * 0.05,
+            width: bottleWidth * 1.4,
+            bottom: -14,
+            height: 34,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(ellipse at 40% 50%, rgba(25,18,6,0.55) 0%, rgba(25,18,6,0) 70%)",
+            filter: "blur(4px)",
           }}
+        />
+        <Img
+          name="Figeac 2022 bottle"
+          src={staticFile("figeac/bottle.png")}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
         />
       </div>
 
-      {/* Bottle */}
-      <Img
-        name="Figeac bottle"
-        src={staticFile("figeac/bottle.png")}
-        style={{
-          position: "absolute",
-          left: 170,
-          top: 140,
-          height: 880,
-          opacity: interpolate(bottle, [0, 0.4], [0, 1], clamp),
-          rotate: `${interpolate(bottle, [0, 1], [-11, -5])}deg`,
-          translate: `${interpolate(bottle, [0, 1], [-260, 0])}px ${Math.sin(frame / 30) * 4}px`,
-          filter: "drop-shadow(16px 24px 26px rgba(35, 26, 8, 0.45))",
-        }}
-      />
-
-      {/* AVU WINE STORIES: each word rises out of a mask */}
+      {/* Series title: each word rises out of a mask */}
       <div
         style={{
           position: "absolute",
-          left: 470,
-          right: 80,
-          top: 118,
+          left: COLUMN_X,
+          top: 112,
           display: "flex",
-          justifyContent: "center",
-          gap: "0.32em",
+          gap: "0.28em",
           fontFamily: playfair,
           fontWeight: 600,
-          fontSize: 128,
+          fontSize: 112,
           lineHeight: 1.08,
-          letterSpacing: "0.07em",
+          letterSpacing: "0.03em",
           color: IVORY,
         }}
       >
         {TITLE_WORDS.map((word, i) => {
-          const start = 38 + i * 8;
+          const start = 18 + i * 7;
           return (
             <div
               key={word.text}
@@ -200,19 +145,92 @@ export const FigeacOpener: React.FC = () => {
         })}
       </div>
 
-      {/* Château Figeac wordmark, revealed left to right */}
+      {/* Château Figeac logotype, wiped in from the left */}
       <Img
-        name="Chateau Figeac logo"
+        name="Chateau-Figeac logotype"
         src={staticFile("figeac/logo.png")}
         style={{
           position: "absolute",
-          right: 110,
-          top: 330,
-          width: 880,
-          WebkitMaskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
-          maskImage: `linear-gradient(90deg, #000 ${write}%, transparent ${write + 15}%)`,
+          left: COLUMN_X + 4,
+          top: 280,
+          width: 720,
+          height: 720 * LOGO_RATIO,
+          clipPath: `inset(-10% ${100 - logo}% -10% 0)`,
         }}
       />
+
+      {/* Details column, left of the photo */}
+      <div
+        style={{
+          position: "absolute",
+          left: COLUMN_X + 4,
+          top: PHOTO.top,
+          width: 420,
+          display: "flex",
+          flexDirection: "column",
+          gap: 22,
+        }}
+      >
+        <div style={{ width: rule, height: 2, backgroundColor: FIGEAC_RED }} />
+        <div
+          style={{
+            fontFamily: serif,
+            fontStyle: "italic",
+            fontWeight: 500,
+            fontSize: 46,
+            lineHeight: 1.1,
+            color: IVORY,
+            opacity: details,
+            translate: `0px ${(1 - details) * 12}px`,
+          }}
+        >
+          Saint-Émilion, Bordeaux
+        </div>
+        <div
+          style={{
+            fontFamily: sans,
+            fontWeight: 500,
+            fontSize: 17,
+            letterSpacing: "0.32em",
+            lineHeight: 1.7,
+            color: "rgba(251,248,241,0.75)",
+            opacity: details,
+            translate: `0px ${(1 - details) * 12}px`,
+          }}
+        >
+          PREMIER GRAND CRU
+          <br />
+          CLASSÉ A
+        </div>
+      </div>
+
+      {/* Estate photo, uncropped, rising from below */}
+      <div
+        style={{
+          position: "absolute",
+          left: PHOTO.left,
+          top: PHOTO.top,
+          width: PHOTO.width,
+          height: PHOTO.height,
+          opacity: interpolate(photo, [0, 0.35], [0, 1], clamp),
+          translate: `0px ${(1 - photo) * 140}px`,
+          filter: "drop-shadow(0 22px 28px rgba(25, 18, 6, 0.35))",
+        }}
+      >
+        <Img
+          name="Chateau-Figeac estate"
+          src={staticFile("figeac/estate.jpg")}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            WebkitMaskImage: `url("${PHOTO_MASK}")`,
+            maskImage: `url("${PHOTO_MASK}")`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+          }}
+        />
+      </div>
     </AbsoluteFill>
   );
 };
