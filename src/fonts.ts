@@ -15,6 +15,7 @@ const fonts: { family: string; file: string; weight: string; style?: string }[] 
   { family: sans, file: "montserrat-latin-500-normal", weight: "500" },
   { family: display, file: "bebas-neue-latin-400-normal", weight: "400" },
   { family: playfair, file: "playfair-display-latin-600-normal", weight: "600" },
+  { family: playfair, file: "playfair-display-latin-700-normal", weight: "700" },
   { family: playfair, file: "playfair-display-latin-400-italic", weight: "400", style: "italic" },
   { family: script, file: "italianno-latin-400-normal", weight: "400" },
 ];

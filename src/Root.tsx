@@ -1,6 +1,7 @@
 import "./index.css";
 import { Composition, Folder } from "remotion";
 import { AvuIntro } from "./AvuIntro";
+import { FigeacOpener, OPENER_DURATION } from "./opener/FigeacOpener";
 import { AvuTitle, TITLE_DURATION } from "./title/AvuTitle";
 import { Estate } from "./scenes/Estate";
 import { Finale } from "./scenes/Finale";
@@ -11,6 +12,14 @@ import { FPS, INTRO_DURATION, SCENES } from "./theme";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="FigeacOpener"
+        component={FigeacOpener}
+        durationInFrames={OPENER_DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="AvuWineStoriesTitle"
         component={AvuTitle}
