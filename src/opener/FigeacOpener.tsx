@@ -102,15 +102,17 @@ export const FigeacOpener: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 610,
-          top: 575,
-          width: 880,
-          height: 430,
+          left: 700,
+          top: 540,
+          // Same 1440x947 proportions as the original photo, so nothing is cropped.
+          width: 730,
+          height: 480,
           borderRadius: 4,
           overflow: "hidden",
           boxShadow: "0 30px 60px rgba(35, 26, 8, 0.38)",
           opacity: interpolate(photo, [0, 0.3], [0, 1], clamp),
-          translate: `0px ${(1 - photo) * 520}px`,
+          translate: `0px ${(1 - photo) * 560}px`,
+          scale: interpolate(frame, [8, OPENER_DURATION], [0.97, 1], clamp),
         }}
       >
         <Img
@@ -119,9 +121,7 @@ export const FigeacOpener: React.FC = () => {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover",
-            objectPosition: "50% 42%",
-            scale: interpolate(frame, [10, OPENER_DURATION], [1.18, 1.03], clamp),
+            objectFit: "contain",
           }}
         />
       </div>
