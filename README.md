@@ -86,3 +86,24 @@ npx remotion render FigeacTitle out/avu-wine-stories-chateau-figeac.mp4 --codec=
 ```
 
 A ready render is in `renders/avu-wine-stories-chateau-figeac.mp4`.
+
+## Editorial cut (8 s)
+
+Composition `FigeacEditorial` (1920×1080, 30 fps, 240 frames, no audio) is a luxury
+editorial version built from the same layers:
+
+| Time | Animation |
+| --- | --- |
+| 0:00–0:01.3 | The château appears as a framed plate rising in, with a drawn hairline frame and "Saint-Émilion / Bordeaux" captions |
+| 0:01.5–0:02.7 | The plate opens out to the full photo panel |
+| 0:02.4–0:03.6 | Bottle appears solid and settles 45 px |
+| 0:03.2–0:04.5 | Hairlines open around "Millésime 2022" |
+| 0:03.8–0:04.9 | "CHÂTEAU-FIGEAC" rises from behind its baseline |
+| 0:04.7–0:05.5 | Classification and lions fade up |
+| 0:05.6–0:07 | A slow light sweep across the gold letters, then hold |
+
+"AVU WINE Stories" and the photo never move; a fine film grain runs throughout.
+
+```console
+npx remotion render FigeacEditorial out/avu-wine-stories-chateau-figeac-editorial.mp4 --codec=h264 --image-format=png --crf=14 --pixel-format=yuv420p --muted
+```
