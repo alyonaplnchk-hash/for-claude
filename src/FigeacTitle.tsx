@@ -27,10 +27,8 @@ const clamp = {
   extrapolateLeft: "clamp",
   extrapolateRight: "clamp",
 } as const;
-const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
 const easeOutCubic = Easing.bezier(0.33, 1, 0.68, 1);
 const easeInOut = Easing.bezier(0.45, 0, 0.55, 1);
-const camera = Easing.bezier(0.33, 0, 0.67, 1);
 
 const full: React.CSSProperties = {
   position: "absolute",
@@ -47,7 +45,7 @@ export const FigeacTitle: React.FC = () => {
   // the letters themselves never move.
   const wipeEdge = interpolate(
     frame,
-    [90, 124],
+    [66, 100],
     [MAIN_TITLE_LEFT - 10, MAIN_TITLE_RIGHT + WIPE_FEATHER + 10],
     { ...clamp, easing: easeInOut },
   );
@@ -58,11 +56,10 @@ export const FigeacTitle: React.FC = () => {
       {/* Ivory background */}
       <Img src={layer("background")} style={full} />
 
-      {/* Château photo, visible from the first frame, ~2% documentary push-in */}
-      <PhotoBand frame={frame} left={0} right={PHOTO_CROP} opacity={1} />
+      {/* Château photo — static, visible from the first frame */}
+      <PhotoBand left={0} right={PHOTO_CROP} opacity={1} />
       {/* The strip that lies behind the bottle joins as the bottle arrives */}
       <PhotoBand
-        frame={frame}
         left={PHOTO_CROP}
         right={PHOTO_WIDTH}
         opacity={interpolate(frame, [36, 46], [0, 1], {
@@ -86,25 +83,12 @@ export const FigeacTitle: React.FC = () => {
         <Img src={layer("bottle")} style={full} />
       </Interactive.Div>
 
-      {/* 0:02–0:03 — "AVU WINE Stories" fades up 15px */}
-      <Interactive.Div
-        name="Series title"
-        style={{
-          ...full,
-          opacity: interpolate(frame, [60, 84], [0, 1], {
-            ...clamp,
-            easing: Easing.bezier(0.33, 0, 0.2, 1),
-          }),
-          translate: interpolate(frame, [60, 90], ["0px 15px", "0px 0px"], {
-            ...clamp,
-            easing: easeOut,
-          }),
-        }}
-      >
+      {/* "AVU WINE Stories" — static, visible from the first frame */}
+      <Interactive.Div name="Series title" style={full}>
         <Img src={layer("title-series")} style={full} />
       </Interactive.Div>
 
-      {/* 0:03–0:04.1 — "CHATEAU-FIGEAC" horizontal mask reveal */}
+      {/* 0:02.2–0:03.3 — "CHÂTEAU-FIGEAC" horizontal mask reveal */}
       <Interactive.Div
         name="Main title"
         style={{
@@ -116,12 +100,12 @@ export const FigeacTitle: React.FC = () => {
         <Img src={layer("title-main")} style={full} />
       </Interactive.Div>
 
-      {/* 0:04–0:04.5 — classification and lions, soft fade */}
+      {/* 0:03.2–0:03.8 — classification and lions, soft fade */}
       <Interactive.Div
         name="Classification"
         style={{
           ...full,
-          opacity: interpolate(frame, [118, 135], [0, 1], {
+          opacity: interpolate(frame, [96, 113], [0, 1], {
             ...clamp,
             easing: Easing.bezier(0.33, 0, 0.2, 1),
           }),
@@ -129,19 +113,18 @@ export const FigeacTitle: React.FC = () => {
       >
         <Img src={layer("title-class")} style={full} />
       </Interactive.Div>
-      {/* 0:04.5–0:06 — hold on the finished composition */}
+      {/* 0:03.8–0:06 — hold on the finished composition */}
     </AbsoluteFill>
   );
 };
 
-// One vertical band of the château photo. Every band carries the same
-// push-in, so together they read as a single photograph.
+// One vertical band of the static château photo; the bands line up into a
+// single photograph.
 const PhotoBand: React.FC<{
-  frame: number;
   left: number;
   right: number;
   opacity: number;
-}> = ({ frame, left, right, opacity }) => (
+}> = ({ left, right, opacity }) => (
   <div
     style={{
       position: "absolute",
@@ -160,12 +143,7 @@ const PhotoBand: React.FC<{
         top: 0,
         width: PHOTO_WIDTH,
         height: 1080,
-        transformOrigin: `${PHOTO_WIDTH / 2}px 540px`,
-        scale: interpolate(frame, [0, 180], [1, 1.02], {
-          ...clamp,
-          easing: camera,
-        }),
-      }}
+              }}
     >
       <Img
         src={layer("chateau-photo")}
