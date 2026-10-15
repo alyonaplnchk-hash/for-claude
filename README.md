@@ -74,10 +74,10 @@ photo carries the requested ~2.5% push-in.
 Layers live in `public/figeac/` and were cut from the reference image with
 `scripts/extract_layers.py` (needs `numpy`, `pillow`, `opencv-python-headless`).
 
-Sound: `public/figeac/sound.wav` is synthesised from physical models by `scripts/make_sound.py`
-(needs `numpy`, `scipy`): cork pop (0.35 s), wine pouring into a glass (0.9–2.65 s),
-a pulse every second from 1 s, a riser into a crystal glass clink on the main-title wipe (3 s),
-then a sub boom and ringing glass for the classification (4 s).
+Sound: `public/figeac/sound.wav` is synthesised by `scripts/make_sound.py` (needs `numpy`,
+`scipy`): a string ensemble (Dmaj9 → Gmaj7/B → D), a soft cork pop (0.35 s), wine poured
+gently into a glass (0.9–2.65 s), a felt-piano motif on the reveals, a crystal clink tuned
+to the chord on the main-title wipe (3 s) and a low piano chord for the classification (4 s).
 
 Render:
 
