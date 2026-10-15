@@ -57,32 +57,32 @@ Note that for some entities a company license is needed. [Read the terms here](h
 
 ## AVU WINE Stories — Château-Figeac title (6 s)
 
-Composition `FigeacTitle` (1920×1080, 30 fps, 180 frames) animates the reference
-title card layer by layer. The final frame matches the reference; only the château
-photo carries the requested ~2.5% push-in.
+Composition `FigeacTitle` (1920×1080, 30 fps, 180 frames, no audio) animates the reference
+title card layer by layer. The final frame matches the reference (with the corrected
+spelling CHÂTEAU); only the château photo carries a subtle ~2% push-in.
 
 | Time | Animation |
 | --- | --- |
-| 0:00–0:01 | Château photo fades in from the ivory background |
-| 0:00–0:06 | Château photo slow push-in (100% → 102.5%) |
-| 0:01–0:02 | Bottle rises 60 px, fades in, scales 98% → 100% |
+| 0:00–0:06 | Château photo visible from the first frame, slow push-in (100% → 102%) |
+| 0:01–0:02 | Bottle reaches full opacity within 3 frames and rises 45 px with a soft ease-out |
 | 0:02–0:03 | "AVU WINE Stories" fades in, rises 15 px |
-| 0:03–0:04.1 | "CHATEAU-FIGEAC" left-to-right mask wipe (letters stay put) |
+| 0:03–0:04.1 | "CHÂTEAU-FIGEAC" left-to-right mask wipe (letters stay put) |
 | 0:04–0:04.5 | Classification and gold lions fade in |
 | 0:04.5–0:06 | Hold on the final composition |
+
+The source image has no photo pixels behind the bottle, so the photo is cropped at the
+bottle's left edge (x = 666) until the bottle arrives; the strip beside the neck then joins
+while the bottle rises. Nothing is mirrored or regenerated.
 
 Layers live in `public/figeac/` and were cut from the reference image with
 `scripts/extract_layers.py` (needs `numpy`, `pillow`, `opencv-python-headless`).
 
-Sound: `public/figeac/sound.wav` is synthesised by `scripts/make_sound.py` (needs `numpy`,
-`scipy`): a string ensemble (Dmaj9 → Gmaj7/B → D), a soft cork pop (0.35 s), wine poured
-gently into a glass (0.9–2.65 s), a felt-piano motif on the reveals, a crystal clink tuned
-to the chord on the main-title wipe (3 s) and a low piano chord for the classification (4 s).
+The circumflex on CHÂTEAU is drawn in the title's own style by `scripts/add_circumflex.py`.
 
 Render:
 
 ```console
-npx remotion render FigeacTitle out/avu-wine-stories-chateau-figeac.mp4 --codec=h264 --crf=14 --image-format=png --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k
+npx remotion render FigeacTitle out/avu-wine-stories-chateau-figeac.mp4 --codec=h264 --image-format=png --crf=12 --pixel-format=yuv420p --muted
 ```
 
 A ready render is in `renders/avu-wine-stories-chateau-figeac.mp4`.

@@ -1,4 +1,3 @@
-import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   Easing,
@@ -16,7 +15,10 @@ const layer = (name: string) => staticFile(`figeac/${name}.png`);
 
 // Geometry taken from the reference image.
 const PHOTO_WIDTH = 785; // photo / ivory split
-const BOTTLE_CENTER = "794.5px 549px";
+// Left edge of the bottle silhouette. The photo behind the bottle is not in
+// the source image, so until the bottle stands in front of it the photo is
+// cropped here and shows only original pixels.
+const PHOTO_CROP = 666;
 const MAIN_TITLE_LEFT = 957;
 const MAIN_TITLE_RIGHT = 1806;
 const WIPE_FEATHER = 110;
@@ -26,7 +28,9 @@ const clamp = {
   extrapolateRight: "clamp",
 } as const;
 const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
+const easeOutCubic = Easing.bezier(0.33, 1, 0.68, 1);
 const easeInOut = Easing.bezier(0.45, 0, 0.55, 1);
+const camera = Easing.bezier(0.33, 0, 0.67, 1);
 
 const full: React.CSSProperties = {
   position: "absolute",
@@ -51,64 +55,31 @@ export const FigeacTitle: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#cbc5b1" }}>
-      {/* Sound design synthesised by scripts/make_sound.py */}
-      <Audio src={staticFile("figeac/sound.wav")} />
-
-      {/* Ivory background (clean plate) */}
+      {/* Ivory background */}
       <Img src={layer("background")} style={full} />
 
-      {/* 0:00–0:06 — slow documentary push-in on the château, ~2.5% */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: PHOTO_WIDTH,
-          height: 1080,
-          overflow: "hidden",
-        }}
-      >
-        <Interactive.Div
-          name="Château photo"
-          style={{
-            position: "absolute",
-            inset: 0,
-            transformOrigin: "50% 50%",
-            // 0:00–0:01 — the château fades up out of the ivory
-            opacity: interpolate(frame, [0, 27], [0, 1], {
-              ...clamp,
-              easing: Easing.bezier(0.33, 0, 0.2, 1),
-            }),
-            scale: interpolate(frame, [0, 180], [1, 1.025], {
-              ...clamp,
-              easing: easeInOut,
-            }),
-          }}
-        >
-          <Img
-            src={layer("chateau-photo")}
-            style={{ width: PHOTO_WIDTH, height: 1080, display: "block" }}
-          />
-        </Interactive.Div>
-      </div>
+      {/* Château photo, visible from the first frame, ~2% documentary push-in */}
+      <PhotoBand frame={frame} left={0} right={PHOTO_CROP} opacity={1} />
+      {/* The strip that lies behind the bottle joins as the bottle arrives */}
+      <PhotoBand
+        frame={frame}
+        left={PHOTO_CROP}
+        right={PHOTO_WIDTH}
+        opacity={interpolate(frame, [36, 46], [0, 1], {
+          ...clamp,
+          easing: easeInOut,
+        })}
+      />
 
-      {/* 0:01–0:02 — bottle rises 60px, fades and scales 98% → 100% */}
+      {/* 0:01–0:02 — bottle, solid almost at once, rises 45px with a soft ease-out */}
       <Interactive.Div
         name="Bottle"
         style={{
           ...full,
-          transformOrigin: BOTTLE_CENTER,
-          opacity: interpolate(frame, [30, 54], [0, 1], {
+          opacity: interpolate(frame, [30, 33], [0, 1], clamp),
+          translate: interpolate(frame, [30, 60], ["0px 45px", "0px 0px"], {
             ...clamp,
-            easing: Easing.bezier(0.33, 0, 0.2, 1),
-          }),
-          translate: interpolate(frame, [30, 60], ["0px 60px", "0px 0px"], {
-            ...clamp,
-            easing: easeOut,
-          }),
-          scale: interpolate(frame, [30, 60], [0.98, 1], {
-            ...clamp,
-            easing: easeOut,
+            easing: easeOutCubic,
           }),
         }}
       >
@@ -162,3 +133,44 @@ export const FigeacTitle: React.FC = () => {
     </AbsoluteFill>
   );
 };
+
+// One vertical band of the château photo. Every band carries the same
+// push-in, so together they read as a single photograph.
+const PhotoBand: React.FC<{
+  frame: number;
+  left: number;
+  right: number;
+  opacity: number;
+}> = ({ frame, left, right, opacity }) => (
+  <div
+    style={{
+      position: "absolute",
+      left,
+      top: 0,
+      width: right - left,
+      height: 1080,
+      overflow: "hidden",
+      opacity,
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        left: -left,
+        top: 0,
+        width: PHOTO_WIDTH,
+        height: 1080,
+        transformOrigin: `${PHOTO_WIDTH / 2}px 540px`,
+        scale: interpolate(frame, [0, 180], [1, 1.02], {
+          ...clamp,
+          easing: camera,
+        }),
+      }}
+    >
+      <Img
+        src={layer("chateau-photo")}
+        style={{ width: PHOTO_WIDTH, height: 1080, display: "block" }}
+      />
+    </div>
+  </div>
+);
