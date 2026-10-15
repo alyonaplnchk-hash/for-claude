@@ -1,3 +1,4 @@
+import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   Easing,
@@ -50,6 +51,9 @@ export const FigeacTitle: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#cbc5b1" }}>
+      {/* Sound design synthesised by scripts/make_sound.py */}
+      <Audio src={staticFile("figeac/sound.wav")} />
+
       {/* Ivory background (clean plate) */}
       <Img src={layer("background")} style={full} />
 
@@ -70,6 +74,11 @@ export const FigeacTitle: React.FC = () => {
             position: "absolute",
             inset: 0,
             transformOrigin: "50% 50%",
+            // 0:00–0:01 — the château fades up out of the ivory
+            opacity: interpolate(frame, [0, 27], [0, 1], {
+              ...clamp,
+              easing: Easing.bezier(0.33, 0, 0.2, 1),
+            }),
             scale: interpolate(frame, [0, 180], [1, 1.025], {
               ...clamp,
               easing: easeInOut,

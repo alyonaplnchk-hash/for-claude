@@ -63,6 +63,7 @@ photo carries the requested ~2.5% push-in.
 
 | Time | Animation |
 | --- | --- |
+| 0:00–0:01 | Château photo fades in from the ivory background |
 | 0:00–0:06 | Château photo slow push-in (100% → 102.5%) |
 | 0:01–0:02 | Bottle rises 60 px, fades in, scales 98% → 100% |
 | 0:02–0:03 | "AVU WINE Stories" fades in, rises 15 px |
@@ -73,10 +74,14 @@ photo carries the requested ~2.5% push-in.
 Layers live in `public/figeac/` and were cut from the reference image with
 `scripts/extract_layers.py` (needs `numpy`, `pillow`, `opencv-python-headless`).
 
+Sound: `public/figeac/sound.wav` is synthesised by `scripts/make_sound.py` (ambient pad,
+whoosh on the bottle, chime on the series title, shimmer on the main-title wipe,
+low bloom and bell on the classification).
+
 Render:
 
 ```console
-npx remotion render FigeacTitle out/avu-wine-stories-chateau-figeac.mp4 --codec=h264 --crf=14 --image-format=png --pixel-format=yuv420p
+npx remotion render FigeacTitle out/avu-wine-stories-chateau-figeac.mp4 --codec=h264 --crf=14 --image-format=png --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k
 ```
 
 A ready render is in `renders/avu-wine-stories-chateau-figeac.mp4`.
