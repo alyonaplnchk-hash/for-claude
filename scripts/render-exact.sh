@@ -21,7 +21,11 @@ esac
 
 npx remotion render "$comp" "$seq" --sequence --image-format=png "$@"
 
-in=(-framerate 30 -i "$seq/element-%03d.png")
+# Remotion pads frame numbers to the length of the last one (element-00.png
+# for a 90-frame card, element-000.png for 100+ frames)
+first="$(ls "$seq" | grep '^element-[0-9]*\.png$' | sort | head -n1)"
+num="${first#element-}"; num="${num%.png}"; digits=${#num}
+in=(-framerate 30 -i "$seq/element-%0${digits}d.png")
 scale="scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int"
 tags=(-colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv)
 
