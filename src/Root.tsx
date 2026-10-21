@@ -39,7 +39,9 @@ export const RemotionRoot: React.FC = () => {
             <Composition
               id={`${ep.id}-0-Intro`}
               component={Ecriture}
-              durationInFrames={ECRITURE_DURATION}
+              durationInFrames={
+                ep.introSeconds ? ep.introSeconds * FPS : ECRITURE_DURATION
+              }
               {...video}
               defaultProps={{
                 ...INTRO_LOOK,
@@ -48,6 +50,7 @@ export const RemotionRoot: React.FC = () => {
                 scriptWord: series.scriptWord,
                 scriptScale: series.scriptScale,
                 subtitle: ep.introSubtitle ?? series.subtitle,
+                title: ep.introTitle,
                 guestLogo: ep.guest?.logo,
                 guestLogoAspect: ep.guest?.aspect ?? 1,
                 guestLogoWidth: GUEST_LOGO_WIDTH,
@@ -72,7 +75,9 @@ export const RemotionRoot: React.FC = () => {
             <Composition
               id={`${ep.id}-9-Outro`}
               component={ThankYouCard}
-              durationInFrames={THANK_YOU_DURATION}
+              durationInFrames={
+                ep.outroSeconds ? ep.outroSeconds * FPS : THANK_YOU_DURATION
+              }
               {...video}
               defaultProps={{
                 guestLogo: ep.guest?.logo,

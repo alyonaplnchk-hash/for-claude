@@ -28,6 +28,13 @@ export type Episode = {
   // Line under the script word in the intro; defaults per series
   // (e.g. "with Laura" when only Laura presents)
   introSubtitle?: string;
+  // Episode title in small caps under the script word, one entry per line;
+  // replaces introSubtitle
+  introTitle?: string[];
+  // Shorter intro / outro: the same animation, played faster
+  // (defaults: intro 7 s, outro 6 s)
+  introSeconds?: number;
+  outroSeconds?: number;
 };
 
 export const EPISODES: Episode[] = [
@@ -60,6 +67,15 @@ export const EPISODES: Episode[] = [
         highlight: ["Lynch-Bages"],
       },
     ],
+  },
+  {
+    id: "WT-ChampagneGlass",
+    series: "wine-tips",
+    photo: "store.jpg",
+    introTitle: ["WHICH GLASS IS RIGHT", "FOR CHAMPAGNE?"],
+    introSeconds: 3,
+    outroSeconds: 3,
+    cards: [],
   },
   {
     // Sample episode to preview the Wine Tips templates

@@ -4,6 +4,7 @@ import {
   interpolate,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import {
   AVU_ASPECT,
@@ -38,11 +39,19 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
   photo,
 }) => {
   const frame = useCurrentFrame();
+  // A shorter composition plays the same animation faster; the pen keeps
+  // at least 40 frames so "Thank you" still reads as written by hand.
+  const { durationInFrames } = useVideoConfig();
+  const pace = durationInFrames / THANK_YOU_DURATION;
+  const t = (f: number) => Math.round(f * pace);
+  const writeStart = t(8);
+  const writeEnd = writeStart + Math.max(40, t(58));
+  const logoStart = writeEnd + t(10);
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
       <StorePhoto
         src={photo}
-        durationInFrames={THANK_YOU_DURATION}
+        durationInFrames={durationInFrames}
         blurTo={11}
         blurFrom={[-1, 0]}
         tone="saturate(0.72) sepia(0.12) brightness(0.95)"
@@ -61,13 +70,18 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         <HandwrittenWord
           word="Thank you"
-          start={8}
-          duration={58}
+          start={writeStart}
+          duration={writeEnd - writeStart}
           width={800}
           ink={AVU_GOLD}
         />
         <div style={{ marginTop: -22, marginLeft: 120 }}>
-          <HandFlourish start={60} length={22} width={420} ink={AVU_GOLD} />
+          <HandFlourish
+            start={writeEnd - 6}
+            length={Math.max(16, t(22))}
+            width={420}
+            ink={AVU_GOLD}
+          />
         </div>
 
         <div
@@ -83,7 +97,7 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
             style={{
               height: AVU_HEIGHT,
               width: AVU_HEIGHT * AVU_ASPECT,
-              ...fadeIn(frame, 76, 30),
+              ...fadeIn(frame, logoStart, t(30)),
             }}
           />
           {guestLogo && guestLogoAspect ? (
@@ -93,9 +107,14 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
                   width: 1.5,
                   backgroundColor: AVU_GOLD,
                   opacity: 0.55,
-                  height: interpolate(frame, [80, 104], [0, GUEST_HEIGHT], {
-                    ...clamp,
-                  }),
+                  height: interpolate(
+                    frame,
+                    [logoStart + t(4), logoStart + t(28)],
+                    [0, GUEST_HEIGHT],
+                    {
+                      ...clamp,
+                    },
+                  ),
                 }}
               />
               <Img
@@ -103,7 +122,7 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
                 style={{
                   height: GUEST_HEIGHT,
                   width: GUEST_HEIGHT * guestLogoAspect,
-                  ...fadeIn(frame, 86, 30),
+                  ...fadeIn(frame, logoStart + t(10), t(30)),
                 }}
               />
             </>

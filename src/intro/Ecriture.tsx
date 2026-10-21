@@ -5,6 +5,7 @@ import {
   interpolate,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import {
   clamp,
@@ -32,6 +33,8 @@ const MUTED_TEXT = "#4A443B";
 // The AVU logo colour
 export const AVU_GOLD = "#89764B";
 export const ECRITURE_DURATION = 7 * 30;
+// Episode title size: legible on a phone, and about 20 letters fit a line
+const TITLE_SIZE = 46;
 
 export const Ecriture: React.FC<
   Omit<IntroProps, "guestLogo"> & {
@@ -43,6 +46,8 @@ export const Ecriture: React.FC<
     scriptWord?: ScriptWord;
     // Line under the script word
     subtitle?: string;
+    // Episode title in small caps, one entry per line; replaces the subtitle
+    title?: string[];
     // Letter size of the script word relative to Spotlight
     scriptScale?: number;
     ink?: string;
@@ -72,11 +77,20 @@ export const Ecriture: React.FC<
   scriptWord = "Spotlight",
   subtitle = "in conversation with",
   scriptScale = 1,
+  title,
 }) => {
   const frame = useCurrentFrame();
+  // A shorter composition plays the same animation faster
+  const { durationInFrames } = useVideoConfig();
+  const pace = durationInFrames / ECRITURE_DURATION;
+  const t = (f: number) => Math.round(f * pace);
   // Spotlight: 62 frames for 9 letters; other words keep the same pen speed.
+  // The pen never writes faster than 24 frames a word, so it still reads.
   const glyphCount = SCRIPT_GLYPHS[scriptWord].glyphs.length;
-  const writeLength = Math.max(34, Math.round((62 * glyphCount) / 9));
+  const writeLength = Math.max(
+    24,
+    t(Math.max(34, Math.round((62 * glyphCount) / 9))),
+  );
   const wordWidth = Math.round(scriptWidth(scriptWord) * scriptScale);
   const flourishWidth = Math.min(420, Math.round(wordWidth * 0.75));
   return (
@@ -85,21 +99,23 @@ export const Ecriture: React.FC<
       {photo ? (
         <StorePhoto
           src={photo}
-          durationInFrames={ECRITURE_DURATION}
+          durationInFrames={durationInFrames}
           blurTo={11}
+          blurFrom={[t(6), t(60)]}
           tone="saturate(0.72) sepia(0.12) brightness(0.95)"
         />
       ) : (
         <StoreFootage
-          durationInFrames={ECRITURE_DURATION}
+          durationInFrames={durationInFrames}
           blurTo={11}
+          blurFrom={[t(6), t(60)]}
           tone="saturate(0.65) sepia(0.12)"
         />
       )}
       <AbsoluteFill
         style={{
           backgroundColor: "#EFE9DE",
-          opacity: interpolate(frame, [6, 60], [0, veil], clamp),
+          opacity: interpolate(frame, [t(6), t(60)], [0, veil], clamp),
         }}
       />
       <Vignette color="#B7AA94" strength={0.35} />
@@ -107,7 +123,7 @@ export const Ecriture: React.FC<
         style={{
           background:
             "radial-gradient(ellipse 62% 30% at 50% 50%, #EFE9DE 0%, rgba(239,233,222,0.6) 55%, rgba(239,233,222,0) 100%)",
-          opacity: interpolate(frame, [10, 70], [0, textVeil], clamp),
+          opacity: interpolate(frame, [t(10), t(70)], [0, textVeil], clamp),
         }}
       />
       <Grain opacity={0.11} />
@@ -122,7 +138,11 @@ export const Ecriture: React.FC<
         {originalLogos ? (
           <Img
             src={staticFile(AVU_LOGO)}
-            style={{ width: 150, marginBottom: 120, ...fadeIn(frame, 150, 40) }}
+            style={{
+              width: 150,
+              marginBottom: 120,
+              ...fadeIn(frame, t(150), t(40)),
+            }}
           />
         ) : (
           <TintedLogo
@@ -132,7 +152,7 @@ export const Ecriture: React.FC<
             color={ink}
             style={{
               marginBottom: 120,
-              ...fadeIn(frame, 150, 40, {}),
+              ...fadeIn(frame, t(150), t(40), {}),
             }}
           />
         )}
@@ -144,7 +164,7 @@ export const Ecriture: React.FC<
             letterSpacing: "0.62em",
             paddingLeft: "0.62em",
             color: text,
-            ...fadeIn(frame, 24, 40, { rise: 6 }),
+            ...fadeIn(frame, t(24), t(40), { rise: 6 }),
           }}
         >
           {kicker}
@@ -153,7 +173,7 @@ export const Ecriture: React.FC<
         <div style={{ marginTop: -6 }}>
           <HandwrittenWord
             word={scriptWord}
-            start={48}
+            start={t(48)}
             duration={writeLength}
             width={wordWidth}
             ink={ink}
@@ -166,32 +186,57 @@ export const Ecriture: React.FC<
           }}
         >
           <HandFlourish
-            start={48 + writeLength - 6}
-            length={26}
+            start={t(48) + writeLength - 6}
+            length={Math.max(14, t(26))}
             width={flourishWidth}
             ink={ink}
           />
         </div>
 
-        <div
-          style={{
-            fontFamily: PLAYFAIR,
-            fontStyle: "italic",
-            fontSize: 44,
-            color: text,
-            marginTop: 70,
-            ...fadeIn(frame, 128, 36),
-          }}
-        >
-          {subtitle}
-        </div>
+        {title ? (
+          <div
+            style={{
+              fontFamily: SORA,
+              fontSize: TITLE_SIZE,
+              lineHeight: 1.45,
+              letterSpacing: "0.16em",
+              textAlign: "center",
+              color: text,
+              marginTop: 76,
+              ...fadeIn(frame, t(128), t(36)),
+            }}
+          >
+            {title.map((line, i) => (
+              // Keep each line whole; the title is broken by hand
+              <div
+                key={i}
+                style={{ whiteSpace: "nowrap", paddingLeft: "0.16em" }}
+              >
+                {line}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            style={{
+              fontFamily: PLAYFAIR,
+              fontStyle: "italic",
+              fontSize: 44,
+              color: text,
+              marginTop: 70,
+              ...fadeIn(frame, t(128), t(36)),
+            }}
+          >
+            {subtitle}
+          </div>
+        )}
         {!guestLogo ? null : originalLogos ? (
           <Img
             src={staticFile(guestLogo)}
             style={{
               width: guestLogoWidth * 0.85,
               marginTop: 46,
-              ...fadeIn(frame, 142, 42),
+              ...fadeIn(frame, t(142), t(42)),
             }}
           />
         ) : (
@@ -202,7 +247,7 @@ export const Ecriture: React.FC<
             color={text}
             style={{
               marginTop: 46,
-              ...fadeIn(frame, 142, 42, {}),
+              ...fadeIn(frame, t(142), t(42), {}),
             }}
           />
         )}
