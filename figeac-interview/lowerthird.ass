@@ -1,0 +1,16 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: LT,Didact Gothic,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:04.50,0:00:08.30,LT,,0,0,0,,{\an7\pos(70,858)\p1\1c&H2A3A44&\1a&H48&\bord0\shad0\fad(350,350)}m 0 0 l 640 0 l 640 156 l 0 156
+Dialogue: 3,0:00:04.65,0:00:08.30,LT,,0,0,0,,{\an7\clip(70,858,710,1014)\move(60,880,100,880,0,500)\fs58\fad(300,350)}Château Figeac.
+Dialogue: 3,0:00:04.85,0:00:08.30,LT,,0,0,0,,{\an7\clip(70,858,710,1014)\move(60,950,102,950,0,500)\fs34\1a&H20&\fad(300,350)}1er Grand Cru Classé «A» · Saint-Émilion
