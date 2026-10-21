@@ -7,7 +7,6 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { useFitTitle } from "./fitTitle";
 import {
   clamp,
   fadeIn,
@@ -34,13 +33,6 @@ const MUTED_TEXT = "#4A443B";
 // The AVU logo colour
 export const AVU_GOLD = "#89764B";
 export const ECRITURE_DURATION = 7 * 30;
-// Episode title: the largest text on the card. It shrinks to keep at least
-// TITLE_MARGIN px clear on both sides, so longer titles never touch the edges.
-const TITLE_SIZE = 69;
-const TITLE_TRACKING = 0.06;
-const TITLE_MARGIN = 90;
-// With an episode title, the series name becomes a label: 40% smaller
-const LABEL_SCALE = 0.6;
 
 export const Ecriture: React.FC<
   Omit<IntroProps, "guestLogo"> & {
@@ -52,8 +44,6 @@ export const Ecriture: React.FC<
     scriptWord?: ScriptWord;
     // Line under the script word
     subtitle?: string;
-    // Episode title in small caps, one entry per line; replaces the subtitle
-    title?: string[];
     // Letter size of the script word relative to Spotlight
     scriptScale?: number;
     ink?: string;
@@ -83,7 +73,6 @@ export const Ecriture: React.FC<
   scriptWord = "Spotlight",
   subtitle = "in conversation with",
   scriptScale = 1,
-  title,
 }) => {
   const frame = useCurrentFrame();
   // A shorter composition plays the same animation faster
@@ -97,15 +86,7 @@ export const Ecriture: React.FC<
     24,
     t(Math.max(34, Math.round((62 * glyphCount) / 9))),
   );
-  const { width } = useVideoConfig();
-  const label = title ? LABEL_SCALE : 1;
-  const titleSize = useFitTitle({
-    lines: title ?? [],
-    maxSize: TITLE_SIZE,
-    maxWidth: width - 2 * TITLE_MARGIN,
-    tracking: TITLE_TRACKING,
-  });
-  const wordWidth = Math.round(scriptWidth(scriptWord) * scriptScale * label);
+  const wordWidth = Math.round(scriptWidth(scriptWord) * scriptScale);
   const flourishWidth = Math.min(420, Math.round(wordWidth * 0.75));
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
@@ -146,8 +127,7 @@ export const Ecriture: React.FC<
         style={{
           alignItems: "center",
           justifyContent: "center",
-          // An episode title adds height below, so lift the block a little
-          paddingBottom: title ? 110 : 30,
+          paddingBottom: 30,
         }}
       >
         {originalLogos ? (
@@ -155,7 +135,7 @@ export const Ecriture: React.FC<
             src={staticFile(AVU_LOGO)}
             style={{
               width: 150,
-              marginBottom: title ? 90 : 120,
+              marginBottom: 120,
               ...fadeIn(frame, t(150), t(40)),
             }}
           />
@@ -166,7 +146,7 @@ export const Ecriture: React.FC<
             aspect={AVU_ASPECT}
             color={ink}
             style={{
-              marginBottom: title ? 90 : 120,
+              marginBottom: 120,
               ...fadeIn(frame, t(150), t(40), {}),
             }}
           />
@@ -175,7 +155,7 @@ export const Ecriture: React.FC<
         <div
           style={{
             fontFamily: SORA,
-            fontSize: Math.round(34 * label),
+            fontSize: 34,
             letterSpacing: "0.62em",
             paddingLeft: "0.62em",
             color: text,
@@ -185,7 +165,7 @@ export const Ecriture: React.FC<
           {kicker}
         </div>
 
-        <div style={{ marginTop: Math.round(-6 * label) }}>
+        <div style={{ marginTop: -6 }}>
           <HandwrittenWord
             word={scriptWord}
             start={t(48)}
@@ -196,12 +176,8 @@ export const Ecriture: React.FC<
         </div>
         <div
           style={{
-            marginTop: Math.round(
-              (-26 + (scriptScale - 1) * 40) * label + (title ? 14 : 0),
-            ),
-            // Under a label the line sits exactly centred; under the large
-            // word it follows the slant of the script
-            marginLeft: title ? 0 : Math.round(wordWidth / 9.75),
+            marginTop: -26 + Math.round((scriptScale - 1) * 40),
+            marginLeft: Math.round(wordWidth / 9.75),
           }}
         >
           <HandFlourish
@@ -212,46 +188,18 @@ export const Ecriture: React.FC<
           />
         </div>
 
-        {title ? (
-          <div
-            style={{
-              fontFamily: SORA,
-              fontSize: titleSize,
-              lineHeight: 1.3,
-              letterSpacing: `${TITLE_TRACKING}em`,
-              textAlign: "center",
-              color: text,
-              marginTop: 64,
-              ...fadeIn(frame, t(128), t(36)),
-            }}
-          >
-            {title.map((line, i) => (
-              // Keep each line whole; the title is broken by hand
-              <div
-                key={i}
-                style={{
-                  whiteSpace: "nowrap",
-                  paddingLeft: `${TITLE_TRACKING}em`,
-                }}
-              >
-                {line}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div
-            style={{
-              fontFamily: PLAYFAIR,
-              fontStyle: "italic",
-              fontSize: 44,
-              color: text,
-              marginTop: 70,
-              ...fadeIn(frame, t(128), t(36)),
-            }}
-          >
-            {subtitle}
-          </div>
-        )}
+        <div
+          style={{
+            fontFamily: PLAYFAIR,
+            fontStyle: "italic",
+            fontSize: 44,
+            color: text,
+            marginTop: 70,
+            ...fadeIn(frame, t(128), t(36)),
+          }}
+        >
+          {subtitle}
+        </div>
         {!guestLogo ? null : originalLogos ? (
           <Img
             src={staticFile(guestLogo)}

@@ -8,6 +8,7 @@ import { Nocturne, NOCTURNE_DURATION } from "./intro/Nocturne";
 import { QuestionCard, QUESTION_DURATION } from "./intro/QuestionCard";
 import { FPS, IntroProps } from "./intro/shared";
 import { ThankYouCard, THANK_YOU_DURATION } from "./intro/ThankYouCard";
+import { TitleIntro, TITLE_INTRO_DURATION } from "./intro/TitleIntro";
 
 const video = { fps: FPS, width: 1080, height: 1920 };
 
@@ -36,26 +37,41 @@ export const RemotionRoot: React.FC = () => {
         const series = SERIES[ep.series];
         return (
           <Folder key={ep.id} name={ep.id}>
-            <Composition
-              id={`${ep.id}-0-Intro`}
-              component={Ecriture}
-              durationInFrames={
-                ep.introSeconds ? ep.introSeconds * FPS : ECRITURE_DURATION
-              }
-              {...video}
-              defaultProps={{
-                ...INTRO_LOOK,
-                photo: ep.photo,
-                kicker: series.kicker,
-                scriptWord: series.scriptWord,
-                scriptScale: series.scriptScale,
-                subtitle: ep.introSubtitle ?? series.subtitle,
-                title: ep.introTitle,
-                guestLogo: ep.guest?.logo,
-                guestLogoAspect: ep.guest?.aspect ?? 1,
-                guestLogoWidth: GUEST_LOGO_WIDTH,
-              }}
-            />
+            {ep.introTitle ? (
+              <Composition
+                id={`${ep.id}-0-Intro`}
+                component={TitleIntro}
+                durationInFrames={
+                  ep.introSeconds ? ep.introSeconds * FPS : TITLE_INTRO_DURATION
+                }
+                {...video}
+                defaultProps={{
+                  photo: ep.photo,
+                  scriptWord: series.titleScriptWord,
+                  title: ep.introTitle,
+                }}
+              />
+            ) : (
+              <Composition
+                id={`${ep.id}-0-Intro`}
+                component={Ecriture}
+                durationInFrames={
+                  ep.introSeconds ? ep.introSeconds * FPS : ECRITURE_DURATION
+                }
+                {...video}
+                defaultProps={{
+                  ...INTRO_LOOK,
+                  photo: ep.photo,
+                  kicker: series.kicker,
+                  scriptWord: series.scriptWord,
+                  scriptScale: series.scriptScale,
+                  subtitle: ep.introSubtitle ?? series.subtitle,
+                  guestLogo: ep.guest?.logo,
+                  guestLogoAspect: ep.guest?.aspect ?? 1,
+                  guestLogoWidth: GUEST_LOGO_WIDTH,
+                }}
+              />
+            )}
             {ep.cards.map((card, i) => (
               <Composition
                 key={i}

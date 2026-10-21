@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { continueRender, delayRender } from "remotion";
-import { SORA } from "./shared";
 
-// Largest font size (up to maxSize) at which every line, set in Sora caps
-// with the given letter-spacing (in em), fits within maxWidth.
+// Largest font size (up to maxSize) at which every line, set in the given
+// font with the given letter-spacing (in em), fits within maxWidth.
 export const useFitTitle = ({
   lines,
+  font: family,
   maxSize,
   maxWidth,
-  tracking,
+  tracking = 0,
 }: {
   lines: string[];
+  font: string;
   maxSize: number;
   maxWidth: number;
-  tracking: number;
+  tracking?: number;
 }) => {
   const [size, setSize] = useState(maxSize);
   const key = lines.join("\n");
   const [handle] = useState(() => delayRender("Fit the episode title"));
   useEffect(() => {
-    const font = `400 ${maxSize}px ${SORA}`;
+    const font = `400 ${maxSize}px "${family}"`;
     document.fonts
       .load(font)
       .then(() => {
@@ -44,6 +45,6 @@ export const useFitTitle = ({
         continueRender(handle);
         throw err;
       });
-  }, [key, maxSize, maxWidth, tracking, handle]);
+  }, [key, family, maxSize, maxWidth, tracking, handle]);
   return size;
 };

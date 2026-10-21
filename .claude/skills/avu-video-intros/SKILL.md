@@ -42,7 +42,7 @@ Shared look (don't change unless asked): blurred store photo with a light
 cream veil, soft film grain and vignette; Sora for small caps, Playfair
 Display Italic for sentences, Pinyon Script for the hand-written word.
 Gold `#89764B` for the script word, flourishes and highlighted words; text
-`#4A443B`.
+`#4A443B` (episode-title intros use a deeper `#352C21` and upright Playfair).
 
 **Producer Spotlight** (`series: "producer-spotlight"`)
 - Intro (7 s): PRODUCER → *Spotlight* written by hand in gold → flourish →
@@ -59,8 +59,9 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
 - Cards: label WINE TIPS, the tip, key word(s) in gold, and a `byline` with
   who shares it ("Laura" / "Ivano").
 - Outro: *Thank you* + AVU logo alone.
-- Episode intro with a title (`introTitle`, e.g. "Which glass is right for
-  Champagne?"): the hierarchy flips — see "Episode title intros" below.
+- Episode intro with a title (`introTitle`, e.g. "Which glass is best for
+  Champagne?"): a different, title-led layout — see "Episode title intros"
+  below.
 
 ## Workflow
 
@@ -120,41 +121,43 @@ list "Lynch-Bages" for "Lynch-Bages?".
 
 ### Episode title intros (Wine Tips)
 
-When an episode has its own title, the intro is built around it:
+When an episode has its own title (`introTitle`), it gets the title-led
+intro `src/intro/TitleIntro.tsx` instead of the series intro. Layout,
+approved from the user's mockup (WT-ChampagneGlass):
 
-- Order, top to bottom: AVU logo → series name (WINE + *Tips*) → gold line →
-  episode title. No subtitle line, no guest logo.
-- The series name reads as a **label**, 40% smaller than in the plain intro.
-  The gold line under it is centred exactly on the frame.
-- The episode title is the **largest text**: Sora uppercase, charcoal
-  `#4A443B`, 69 px, letter-spacing 0.06em, line-height 1.3. Keep the user's
-  capitals.
+- Top to bottom: AVU logo (180 px wide, top at y 479) → the series name
+  written by hand in gold as one label ("Wine Tips", `titleScriptWord` in
+  `SERIES`) → a short straight gold rule (190 px, centred exactly) → the
+  episode title. No kicker, no subtitle, no guest logo.
+- The episode title is the **largest text**: Playfair Display regular
+  (upright, not italic), sentence case, deep charcoal `#352C21`, 79 px,
+  line-height 1.28. Write it the way the user does (they changed "right" to
+  "best" in the mockup; follow the latest wording).
 - Break the title by hand into **2–3 lines** at natural phrase boundaries,
-  e.g. "WHICH GLASS / IS RIGHT / FOR CHAMPAGNE?". Each line is kept whole
-  (never wraps on its own).
+  e.g. "Which glass is best / for Champagne?". Lines never wrap on their own.
 - **Auto-fit rule:** the title shrinks automatically (`src/intro/fitTitle.ts`)
   so every line keeps at least **90 px** clear on both sides of the
-  1080 px frame; it never grows above 69 px. A long title still fits, but if
-  it shrinks far below 69 px, suggest a shorter title or a better line break
-  rather than accepting tiny type.
-- The block sits slightly above the middle of the frame.
-- Usually 3 s: `introSeconds: 3, outroSeconds: 3` (the same animation,
-  played faster).
+  1080 px frame; it never grows above 79 px. If a title would shrink a lot,
+  suggest a shorter title or a better line break rather than tiny type.
+- Animation (3 s): the label is written by hand (0.2–1.3 s), the rule draws
+  out from the centre, the title lines rise in one after another, the logo
+  fades in last; everything holds from about 2.5 s.
+- Usually 3 s: `introSeconds: 3, outroSeconds: 3`.
 
 ```ts
 {
   id: "WT-ChampagneGlass",
   series: "wine-tips",
   photo: "store.jpg",
-  introTitle: ["WHICH GLASS", "IS RIGHT", "FOR CHAMPAGNE?"],
+  introTitle: ["Which glass is best", "for Champagne?"],
   introSeconds: 3,
   outroSeconds: 3,
   cards: [],
 },
 ```
 
-Check the final frame (last frame, e.g. 89 for 3 s): measure the title's
-side margins (≥ 90 px each) and that nothing is cut off.
+Check the final frame (frame 89 for 3 s): measure the title's side margins
+(≥ 90 px each) and that nothing is cut off.
 
 ### 4. Preview before rendering
 
@@ -197,7 +200,7 @@ breaks, which words are gold), and any concern (e.g. low-res logo).
 ## Adding a new hand-written word
 
 Only the words in `scripts/script-words.txt` can be animated by hand
-(currently Spotlight, Thank you, Tips). To add one (e.g. for a new series):
+(currently Spotlight, Thank you, Tips, Wine Tips, Producer Spotlight). To add one (e.g. for a new series):
 
 ```bash
 echo "Cheers" >> scripts/script-words.txt

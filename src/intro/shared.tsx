@@ -28,6 +28,11 @@ void Promise.all([
   }),
   loadFont({
     family: PLAYFAIR,
+    url: staticFile("fonts/playfair-display-latin-400-normal.woff2"),
+    style: "normal",
+  }),
+  loadFont({
+    family: PLAYFAIR,
     url: staticFile("fonts/playfair-display-latin-400-italic.woff2"),
     style: "italic",
   }),
@@ -187,6 +192,7 @@ export const Vignette: React.FC<{ color: string; strength: number }> = ({
 const PEN_RHYTHM: Partial<Record<ScriptWord, number[]>> = {
   Spotlight: [1.9, 0.8, 1.1, 0.9, 0.7, 0.6, 1.0, 0.8, 0.9],
   "Thank you": [1.8, 0.9, 0.8, 0.8, 1.0, 1.4, 0.8, 0.9],
+  "Wine Tips": [1.8, 0.8, 0.8, 0.9, 1.9, 0.8, 0.9, 0.9],
 };
 
 export type ScriptWord = keyof typeof SCRIPT_GLYPHS;
