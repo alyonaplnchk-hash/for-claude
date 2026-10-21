@@ -1,0 +1,49 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Didact Gothic,66,&H00FFFFFF,&H80FFFFFF,&H90000000,&HA0000000,0,0,0,0,100,100,1,0,1,2,1.5,2,80,80,235,1
+Style: LT,Didact Gothic,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,0:00:01.46,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k48}so {\k52}Château {\k34\fnGreat Vibes\fs100}Figeac{\fnDidact Gothic\fs66}
+Dialogue: 1,0:00:01.46,0:00:02.76,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k28}we {\k76}speak {\k26}about
+Dialogue: 1,0:00:02.76,0:00:03.80,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k56}23 {\k42}vintage
+Dialogue: 1,0:00:03.80,0:00:04.28,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k18}that {\k16}is {\k14}a
+Dialogue: 1,0:00:04.28,0:00:05.72,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k50}very {\k20\fnGreat Vibes\fs100}good{\fnDidact Gothic\fs66} {\k54}vintage
+Dialogue: 1,0:00:05.72,0:00:06.80,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k22}it's {\k2}the {\k84}130th
+Dialogue: 1,0:00:06.80,0:00:08.76,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k44\fnGreat Vibes\fs100}anniversary{\fnDidact Gothic\fs66} {\k150}for {\k2}the
+Dialogue: 1,0:00:08.76,0:00:10.42,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k142}vintage {\k24}of
+Dialogue: 1,0:00:10.42,0:00:11.28,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k36}Manoncourt {\k28}family
+Dialogue: 1,0:00:11.28,0:00:12.00,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k20}we {\k10}are {\k42\fnGreat Vibes\fs100}proud{\fnDidact Gothic\fs66}
+Dialogue: 1,0:00:12.00,0:00:12.98,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k16}to {\k36}present {\k46}the
+Dialogue: 1,0:00:12.98,0:00:14.26,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k32}23 {\k72}today
+Dialogue: 1,0:00:14.26,0:00:15.30,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k32}because {\k26}it {\k46}was
+Dialogue: 1,0:00:15.30,0:00:15.90,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k38}kind {\k20}of {\k2}a
+Dialogue: 1,0:00:15.90,0:00:16.66,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k14}big {\k32}success {\k30}and
+Dialogue: 1,0:00:16.66,0:00:16.96,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k6}a {\k24\fnGreat Vibes\fs100}highlight{\fnDidact Gothic\fs66}
+Dialogue: 1,0:00:16.96,0:00:17.62,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k24}for {\k24}us
+Dialogue: 1,0:00:17.62,0:00:18.74,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k34}we {\k26}harvest {\k52}with
+Dialogue: 1,0:00:18.74,0:00:19.16,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k16}a {\k26}lot
+Dialogue: 1,0:00:19.16,0:00:19.82,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k14}of {\k34\fnGreat Vibes\fs100}precision{\fnDidact Gothic\fs66}
+Dialogue: 1,0:00:19.82,0:00:20.44,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k18}but {\k36}very
+Dialogue: 1,0:00:20.44,0:00:20.94,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k12}very {\k28}fast
+Dialogue: 1,0:00:20.94,0:00:21.32,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k1}that {\k22}is {\k16}a
+Dialogue: 1,0:00:21.32,0:00:22.64,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k62}vintage {\k22}that {\k48}produces
+Dialogue: 1,0:00:22.64,0:00:23.46,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k30}wines {\k34}that {\k18}are
+Dialogue: 1,0:00:23.46,0:00:24.60,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k30}much {\k22}more {\k44\fnGreat Vibes\fs100}balanced{\fnDidact Gothic\fs66}
+Dialogue: 1,0:00:24.60,0:00:25.76,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k58}you {\k20}can {\k38}keep
+Dialogue: 1,0:00:25.76,0:00:26.30,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k16}in {\k10}the {\k28}cellar
+Dialogue: 1,0:00:26.30,0:00:26.52,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k12}for {\k10}a
+Dialogue: 1,0:00:26.52,0:00:27.02,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k16\fnGreat Vibes\fs100}long{\fnDidact Gothic\fs66} {\k20}time
+Dialogue: 1,0:00:27.02,0:00:27.72,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k46\fnGreat Vibes\fs100}thank{\fnDidact Gothic\fs66} {\k24}you
+Dialogue: 1,0:00:27.72,0:00:28.88,Cap,,0,0,0,,{\fad(80,80)\blur3}{\k16}for {\k48}coming {\k46}bye-bye
+Dialogue: 2,0:00:05.90,0:00:09.70,LT,,0,0,0,,{\an7\pos(70,858)\p1\1c&H2A3A44&\1a&H48&\bord0\shad0\fad(300,300)}m 0 0 l 640 0 l 640 156 l 0 156
+Dialogue: 3,0:00:06.05,0:00:09.70,LT,,0,0,0,,{\an7\clip(70,858,710,1014)\move(60,880,100,880,0,450)\fs58\fad(250,300)}Château Figeac.
+Dialogue: 3,0:00:06.25,0:00:09.70,LT,,0,0,0,,{\an7\clip(70,858,710,1014)\move(60,950,102,950,0,450)\fs34\1a&H20&\fad(250,300)}1er Grand Cru Classé «A» · Saint-Émilion
