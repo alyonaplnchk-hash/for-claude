@@ -72,7 +72,7 @@ export const EPISODES: Episode[] = [
     id: "WT-ChampagneGlass",
     series: "wine-tips",
     photo: "store.jpg",
-    introTitle: ["WHICH GLASS IS RIGHT", "FOR CHAMPAGNE?"],
+    introTitle: ["WHICH GLASS", "IS RIGHT", "FOR CHAMPAGNE?"],
     introSeconds: 3,
     outroSeconds: 3,
     cards: [],

@@ -59,6 +59,8 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
 - Cards: label WINE TIPS, the tip, key word(s) in gold, and a `byline` with
   who shares it ("Laura" / "Ivano").
 - Outro: *Thank you* + AVU logo alone.
+- Episode intro with a title (`introTitle`, e.g. "Which glass is right for
+  Champagne?"): the hierarchy flips — see "Episode title intros" below.
 
 ## Workflow
 
@@ -116,6 +118,44 @@ spelling (e.g. British "favourite").
 `highlight` lists single words; punctuation is ignored when matching, so
 list "Lynch-Bages" for "Lynch-Bages?".
 
+### Episode title intros (Wine Tips)
+
+When an episode has its own title, the intro is built around it:
+
+- Order, top to bottom: AVU logo → series name (WINE + *Tips*) → gold line →
+  episode title. No subtitle line, no guest logo.
+- The series name reads as a **label**, 40% smaller than in the plain intro.
+  The gold line under it is centred exactly on the frame.
+- The episode title is the **largest text**: Sora uppercase, charcoal
+  `#4A443B`, 69 px, letter-spacing 0.06em, line-height 1.3. Keep the user's
+  capitals.
+- Break the title by hand into **2–3 lines** at natural phrase boundaries,
+  e.g. "WHICH GLASS / IS RIGHT / FOR CHAMPAGNE?". Each line is kept whole
+  (never wraps on its own).
+- **Auto-fit rule:** the title shrinks automatically (`src/intro/fitTitle.ts`)
+  so every line keeps at least **90 px** clear on both sides of the
+  1080 px frame; it never grows above 69 px. A long title still fits, but if
+  it shrinks far below 69 px, suggest a shorter title or a better line break
+  rather than accepting tiny type.
+- The block sits slightly above the middle of the frame.
+- Usually 3 s: `introSeconds: 3, outroSeconds: 3` (the same animation,
+  played faster).
+
+```ts
+{
+  id: "WT-ChampagneGlass",
+  series: "wine-tips",
+  photo: "store.jpg",
+  introTitle: ["WHICH GLASS", "IS RIGHT", "FOR CHAMPAGNE?"],
+  introSeconds: 3,
+  outroSeconds: 3,
+  cards: [],
+},
+```
+
+Check the final frame (last frame, e.g. 89 for 3 s): measure the title's
+side margins (≥ 90 px each) and that nothing is cut off.
+
 ### 4. Preview before rendering
 
 Rendering takes ~2 minutes per part, so check stills first:
@@ -126,7 +166,7 @@ npx remotion still <id>-1-Card /tmp/preview.png --frame=170 --scale=0.5 --browse
 ```
 
 Useful frames: intro 205 (final state), cards 40 (mid-reveal) and 170,
-outro 175. Look at every still: no line wrapping you didn't intend, the gold
+outro 175. For 3 s intros/outros the final frame is 89. Look at every still: no line wrapping you didn't intend, the gold
 word is right, nothing overlaps, logos balanced.
 
 ### 5. Render
