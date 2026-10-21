@@ -22,8 +22,9 @@ import { AVU_GOLD } from "./Ecriture";
 export const THANK_YOU_DURATION = 6 * 30;
 
 export type ThankYouProps = {
-  guestLogo: string;
-  guestLogoAspect: number;
+  // Omit both for a series without a guest (Wine Tips)
+  guestLogo?: string;
+  guestLogoAspect?: number;
   photo: string;
 };
 
@@ -85,24 +86,28 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
               ...fadeIn(frame, 76, 30),
             }}
           />
-          <div
-            style={{
-              width: 1.5,
-              backgroundColor: AVU_GOLD,
-              opacity: 0.55,
-              height: interpolate(frame, [80, 104], [0, GUEST_HEIGHT], {
-                ...clamp,
-              }),
-            }}
-          />
-          <Img
-            src={staticFile(guestLogo)}
-            style={{
-              height: GUEST_HEIGHT,
-              width: GUEST_HEIGHT * guestLogoAspect,
-              ...fadeIn(frame, 86, 30),
-            }}
-          />
+          {guestLogo && guestLogoAspect ? (
+            <>
+              <div
+                style={{
+                  width: 1.5,
+                  backgroundColor: AVU_GOLD,
+                  opacity: 0.55,
+                  height: interpolate(frame, [80, 104], [0, GUEST_HEIGHT], {
+                    ...clamp,
+                  }),
+                }}
+              />
+              <Img
+                src={staticFile(guestLogo)}
+                style={{
+                  height: GUEST_HEIGHT,
+                  width: GUEST_HEIGHT * guestLogoAspect,
+                  ...fadeIn(frame, 86, 30),
+                }}
+              />
+            </>
+          ) : null}
         </div>
       </AbsoluteFill>
     </AbsoluteFill>

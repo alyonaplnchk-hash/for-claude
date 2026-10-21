@@ -10,6 +10,15 @@ comp="$1"; name="$2"; shift 2
 seq="$(mktemp -d "${TMPDIR:-/tmp}/remotion_seq_XXXXXX")"
 trap 'rm -rf "$seq"' EXIT
 
+# Use the container's preinstalled browser when none is given
+case " $* " in
+  *--browser-executable*) ;;
+  *)
+    hs=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell
+    [ -x "$hs" ] && set -- "$@" --browser-executable="$hs"
+    ;;
+esac
+
 npx remotion render "$comp" "$seq" --sequence --image-format=png "$@"
 
 in=(-framerate 30 -i "$seq/element-%03d.png")

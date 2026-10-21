@@ -183,10 +183,19 @@ export const Vignette: React.FC<{ color: string; strength: number }> = ({
 
 // Uneven pen rhythm per letter: capitals take longest, the pen lingers on
 // loops, moves quickly through the small joins and pauses between words.
-const PEN_RHYTHM: Record<keyof typeof SCRIPT_GLYPHS, number[]> = {
+// Words without an entry get a default: a slow capital, then an even hand.
+const PEN_RHYTHM: Partial<Record<ScriptWord, number[]>> = {
   Spotlight: [1.9, 0.8, 1.1, 0.9, 0.7, 0.6, 1.0, 0.8, 0.9],
   "Thank you": [1.8, 0.9, 0.8, 0.8, 1.0, 1.4, 0.8, 0.9],
 };
+
+export type ScriptWord = keyof typeof SCRIPT_GLYPHS;
+
+/** Display width that keeps every script word at the same letter size. */
+export const scriptWidth = (word: ScriptWord) =>
+  Math.round(
+    SCRIPT_GLYPHS[word].box[2] * (780 / SCRIPT_GLYPHS.Spotlight.box[2]),
+  );
 
 type HandwrittenProps = {
   start: number;
@@ -200,11 +209,12 @@ type HandwrittenProps = {
  * then the ink settles into it.
  */
 export const HandwrittenWord: React.FC<
-  HandwrittenProps & { word: keyof typeof SCRIPT_GLYPHS }
+  HandwrittenProps & { word: ScriptWord }
 > = ({ word, start, duration, width, ink }) => {
   const frame = useCurrentFrame();
   const { glyphs, box } = SCRIPT_GLYPHS[word];
-  const rhythm = PEN_RHYTHM[word];
+  const rhythm =
+    PEN_RHYTHM[word] ?? glyphs.map((_, i) => (i === 0 ? 1.8 : 0.9));
   const pad = 20;
   const total = rhythm.reduce((a, b) => a + b, 0);
   let cursor = start;

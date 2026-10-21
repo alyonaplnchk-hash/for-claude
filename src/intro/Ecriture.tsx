@@ -11,17 +11,20 @@ import {
   fadeIn,
   Grain,
   HandFlourish,
-  HandwrittenSpotlight,
+  HandwrittenWord,
   IntroProps,
   PLAYFAIR,
   SORA,
   StoreFootage,
+  ScriptWord,
+  scriptWidth,
   StorePhoto,
   Vignette,
   TintedLogo,
   AVU_LOGO,
   AVU_ASPECT,
 } from "./shared";
+import { SCRIPT_GLYPHS } from "../scriptGlyphs";
 
 // Variant A — "Écriture": light and airy, the title written by hand.
 const MUTED_INK = "#7E7058";
@@ -31,7 +34,17 @@ export const AVU_GOLD = "#89764B";
 export const ECRITURE_DURATION = 7 * 30;
 
 export const Ecriture: React.FC<
-  IntroProps & {
+  Omit<IntroProps, "guestLogo"> & {
+    // Omit for a series without a guest (Wine Tips)
+    guestLogo?: string;
+    // Small caps line above the script word
+    kicker?: string;
+    // Word written by hand; must be listed in scripts/script-words.txt
+    scriptWord?: ScriptWord;
+    // Line under the script word
+    subtitle?: string;
+    // Letter size of the script word relative to Spotlight
+    scriptScale?: number;
     ink?: string;
     text?: string;
     // Use a still photo instead of the store footage
@@ -55,8 +68,17 @@ export const Ecriture: React.FC<
   veil = 0.66,
   textVeil = 0,
   music,
+  kicker = "PRODUCER",
+  scriptWord = "Spotlight",
+  subtitle = "in conversation with",
+  scriptScale = 1,
 }) => {
   const frame = useCurrentFrame();
+  // Spotlight: 62 frames for 9 letters; other words keep the same pen speed.
+  const glyphCount = SCRIPT_GLYPHS[scriptWord].glyphs.length;
+  const writeLength = Math.max(34, Math.round((62 * glyphCount) / 9));
+  const wordWidth = Math.round(scriptWidth(scriptWord) * scriptScale);
+  const flourishWidth = Math.min(420, Math.round(wordWidth * 0.75));
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
       {music ? <Audio src={staticFile(music)} /> : null}
@@ -125,19 +147,30 @@ export const Ecriture: React.FC<
             ...fadeIn(frame, 24, 40, { rise: 6 }),
           }}
         >
-          PRODUCER
+          {kicker}
         </div>
 
         <div style={{ marginTop: -6 }}>
-          <HandwrittenSpotlight
+          <HandwrittenWord
+            word={scriptWord}
             start={48}
-            duration={62}
-            width={780}
+            duration={writeLength}
+            width={wordWidth}
             ink={ink}
           />
         </div>
-        <div style={{ marginTop: -26, marginLeft: 80 }}>
-          <HandFlourish start={104} length={26} width={420} ink={ink} />
+        <div
+          style={{
+            marginTop: -26 + Math.round((scriptScale - 1) * 40),
+            marginLeft: Math.round(wordWidth / 9.75),
+          }}
+        >
+          <HandFlourish
+            start={48 + writeLength - 6}
+            length={26}
+            width={flourishWidth}
+            ink={ink}
+          />
         </div>
 
         <div
@@ -150,9 +183,9 @@ export const Ecriture: React.FC<
             ...fadeIn(frame, 128, 36),
           }}
         >
-          in conversation with
+          {subtitle}
         </div>
-        {originalLogos ? (
+        {!guestLogo ? null : originalLogos ? (
           <Img
             src={staticFile(guestLogo)}
             style={{

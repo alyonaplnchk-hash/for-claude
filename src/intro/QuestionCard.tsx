@@ -22,6 +22,10 @@ export type QuestionCardProps = {
   // Words shown in AVU gold
   highlight: string[];
   photo: string;
+  // Small caps line above the text
+  label?: string;
+  // Optional signature under the flourish, e.g. who shares the tip
+  byline?: string;
 };
 
 const WORD_START = 10;
@@ -32,6 +36,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   lines,
   highlight,
   photo,
+  label = "PRODUCER SPOTLIGHT",
+  byline,
 }) => {
   const frame = useCurrentFrame();
   let index = 0;
@@ -80,7 +86,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             }),
           }}
         >
-          PRODUCER SPOTLIGHT
+          {label}
         </div>
 
         <div
@@ -130,6 +136,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             ink={AVU_GOLD}
           />
         </div>
+
+        {byline ? (
+          <div
+            style={{
+              fontFamily: PLAYFAIR,
+              fontStyle: "italic",
+              fontSize: 44,
+              color: AVU_GOLD,
+              marginTop: 28,
+              opacity: interpolate(
+                frame,
+                [lastWordDone - 4, lastWordDone + 14],
+                [0, 1],
+                { ...clamp, easing: soft },
+              ),
+            }}
+          >
+            {byline}
+          </div>
+        ) : null}
       </AbsoluteFill>
     </AbsoluteFill>
   );
