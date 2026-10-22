@@ -6,12 +6,21 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.2.5",
     "@remotion/cli": "4.0.529",
+    "@remotion/fonts": "^4.0.529",
+    "@remotion/google-fonts": "^4.0.529",
+    "@remotion/tailwind-v4": "4.0.529",
+    "@types/d3-geo": "^3.1.0",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.529",
-    "@remotion/tailwind-v4": "4.0.529",
-    "tailwindcss": "4.0.0"
+    "tailwindcss": "4.0.0",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.529",
