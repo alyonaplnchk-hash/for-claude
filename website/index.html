@@ -303,14 +303,14 @@ p { margin: 0 0 1em; }
 
 <main>
   <!-- 1. Hero: the building -->
-  <section class="film" id="hero" data-film="building" aria-label="The AVU SA Building in Melide">
+  <section class="film" id="hero" data-film="building" aria-label="AVU in Melide: the building, The Wine Shop and The Wine Club">
     <div class="film__stage"></div>
     <div class="film__caption wrap">
       <p class="eyebrow">Melide · Lake Lugano · Switzerland</p>
       <h1 class="display h1">Access to the world's greatest wines</h1>
       <a class="link" href="#visit">Request an invitation</a>
     </div>
-    <p class="film__place">The AVU SA Building</p>
+    <p class="film__place" aria-hidden="true">The AVU SA Building · Melide</p>
     <button class="film__pause" aria-pressed="false" aria-label="Pause film"></button>
   </section>
 
@@ -346,7 +346,7 @@ p { margin: 0 0 1em; }
         <p>Unlike merchants who source a wine only after an order is placed, we physically own and professionally store the vast majority of our collection. That lets us inspect every bottle personally and dispatch it at once, anywhere in the world.</p>
         <a class="link" href="#bottles">See rare bottles</a>
       </div>
-      <div class="split__media"><img src="assets/photos/shop-cradle.jpg" width="1067" height="1600" alt="A brass decanting cradle on a display table in The Wine Shop, with backlit shelves of bottles behind it" loading="lazy"></div>
+      <div class="split__media"><img src="assets/photos/shop-racks.jpg" width="1067" height="1600" alt="Bottles resting on brass racks in The Wine Shop" loading="lazy"></div>
     </div>
   </section>
 
@@ -455,8 +455,8 @@ p { margin: 0 0 1em; }
         </blockquote>
       </div>
       <div class="split__media butler-media">
-        <img src="assets/photos/lounge-1.jpg" width="1000" height="667" alt="The client lounge in the AVU SA Building, with leather armchairs and a bar" loading="lazy">
-        <img src="assets/photos/shop-team-2.jpg" width="1400" height="933" alt="An AVU advisor greeting a client in The Wine Shop" loading="lazy">
+        <img src="assets/photos/o-lounge-tasting.jpg" width="1400" height="933" alt="Clients tasting wine with an AVU advisor in the lounge" loading="lazy">
+        <img src="assets/photos/o-tasting.jpg" width="2000" height="1333" alt="An AVU advisor leading a private tasting in the tasting room, surrounded by walls of wine" loading="lazy">
       </div>
     </div>
   </section>
@@ -567,7 +567,7 @@ p { margin: 0 0 1em; }
       <span class="uva__line">The grape · The producer · The terroir · The vintage · The bottle</span>
       <span>AVU is UVA, the grape, read backwards. © AVU SA · Privacy · Terms</span>
     </div>
-    <p class="mock-note">Mockup for internal review. Photos: Marco Reggi (watermarked previews, to be replaced by the originals). Films are simulated in the browser from still photos.</p>
+    <p class="mock-note">Mockup for internal review. Photos: Marco Reggi. The watermarked previews are the latest photos and will be replaced by their originals. Films are simulated in the browser from still photos.</p>
   </div>
 </footer>
 
@@ -596,39 +596,43 @@ p { margin: 0 0 1em; }
   });
 
   /* Films: each shot moves from [x%, y%, scale, rotate] to the next, cross-fading while the camera keeps moving */
-  /* Paced like patek.com's films (14–20 s, shots of about 3 s): five shots of 3 s = a 15 s loop */
+  /* Paced like patek.com's films (14–20 s, shots of about 2.5–3 s).
+     Hero: a montage across all of AVU, wide → interior → detail → people, ending on the roof sign. */
   var FILMS = {
-    building: [
-      { src: 'b-wide.jpg', from: [0, 0, 1.06, 0], to: [2, 2, 1.16, 0.2] },
-      { src: 'b-pavilion.jpg', from: [-2, 0, 1.1, 0], to: [2, -2, 1.18, 0] },
-      { src: 'b-corner.jpg', from: [0, -3, 1.16, -0.3], to: [0, 1, 1.08, 0.2] },
-      { src: 'b-front.jpg', from: [0, 2, 1.08, 0], to: [0, -2, 1.16, 0] },
-      { src: 'b-roof.jpg', from: [0, -6, 1.2, 0], to: [0, 4, 1.12, 0] }
-    ],
-    shop: [
+    building: { shot: 2.6, fade: 0.8, shots: [
+      { src: 'b-wide.jpg', from: [0, 0, 1.05, 0], to: [1, 2, 1.15, 0.15], label: 'The AVU SA Building · Melide' },
+      { src: 'shop-interior.jpg', from: [0, 0, 1.04, 0], to: [-1, -1, 1.16, 0], label: 'The Wine Shop' },
+      { src: 'shop-advisor.jpg', from: [2, 0, 1.06, 0], to: [0, -1, 1.14, 0], label: 'Personal advice' },
+      { src: 'hero-cradle.jpg', from: [2, 0, 1.1, 0], to: [-2, 0, 1.18, 0], label: 'The Wine Shop' },
+      { src: 'o-dining.jpg', from: [0, 2, 1.1, 0], to: [0, -2, 1.16, 0], label: 'Private dining' },
+      { src: 'o-tasting.jpg', from: [-2, 0, 1.06, 0], to: [1, -1, 1.14, 0], label: 'Private tastings' },
+      { src: 'shop-exit.jpg', from: [0, -3, 1.12, 0], to: [0, 1, 1.06, 0], label: 'AVU · Melide, Switzerland' }
+    ] },
+    shop: { shot: 3, fade: 0.9, shots: [
       { src: 'shop-facade.jpg', from: [0, 0, 1.05, 0], to: [0, -4, 1.18, 0] },
       { src: 'shop-entrance.jpg', from: [0, 0, 1.04, 0], to: [0, -7, 1.3, 0] },
       { src: 'shop-floor.jpg', from: [2, 0, 1.1, 0], to: [-1, -2, 1.2, 0] },
-      { src: 'shop-floor-2.jpg', from: [-3, 0, 1.12, 0.3], to: [3, 0, 1.12, -0.3] },
-      { src: 'shop-drc.jpg', from: [0, 0, 1.06, 0], to: [-2, -1, 1.16, 0] }
-    ],
-    club: [
+      { src: 'shop-shelves.jpg', from: [3, 0, 1.1, 0], to: [-3, 0, 1.1, 0] },
+      { src: 'shop-floor-2.jpg', from: [-3, 0, 1.12, 0.3], to: [3, 0, 1.12, -0.3] }
+    ] },
+    club: { shot: 3, fade: 0.9, shots: [
+      { src: 'club-wall.jpg', from: [0, 0, 1.05, 0], to: [0, -2, 1.16, 0] },
       { src: 'club-table.jpg', from: [0, 0, 1.05, 0], to: [-1, 0, 1.25, 0] },
-      { src: 'club-table-2.jpg', from: [2, 0, 1.12, 0], to: [-2, 0, 1.12, 0] },
+      { src: 'club-lockers-table.jpg', from: [3, 0, 1.1, 0], to: [-3, 0, 1.1, 0] },
       { src: 'club-lockers.jpg', from: [4, 0, 1.12, 0], to: [-4, 0, 1.12, 0] },
-      { src: 'club-dining.jpg', from: [0, 2, 1.08, 0], to: [0, -2, 1.16, 0] },
       { src: 'club-terrace.jpg', from: [0, 2, 1.08, 0], to: [0, -2, 1.18, 0] }
-    ]
+    ] }
   };
-  var SHOT = 3, FADE = 0.9;
   function lerp(a, b, t) { return a + (b - a) * t; }
   function ease(t) { return t * 0.7 + (0.5 - 0.5 * Math.cos(Math.PI * t)) * 0.3; }
   function smooth(t) { return t * t * (3 - 2 * t); }
 
   document.querySelectorAll('[data-film]').forEach(function (el) {
-    var shots = FILMS[el.getAttribute('data-film')];
+    var cfg = FILMS[el.getAttribute('data-film')];
+    var shots = cfg.shots, SHOT = cfg.shot, FADE = cfg.fade;
     var stage = el.querySelector('.film__stage');
     var pauseBtn = el.querySelector('.film__pause');
+    var place = el.querySelector('.film__place'), shownLabel = null;
     var imgs = shots.map(function (s, i) {
       var im = document.createElement('img');
       im.src = P + s.src; im.alt = ''; im.decoding = 'async';
@@ -651,6 +655,10 @@ p { margin: 0 0 1em; }
           im.style.opacity = '0';
         }
       });
+      if (place && shots[0].label) {
+        var label = shots[Math.floor(((t + FADE * 0.5) % total) / SHOT) % shots.length].label;
+        if (label !== shownLabel) { shownLabel = label; place.textContent = label; }
+      }
     }
     function frame(now) {
       if (last !== null) elapsed += Math.min(0.1, (now - last) / 1000);
