@@ -108,42 +108,44 @@ def label(x, y, title, sub, anchor, color):
 
 
 def plan(seated=True):
-    """Top view of the office set: wine wall at the top, camera at the bottom."""
-    W, H, S = 600, 420, 80
+    """Top view: two people side by side, one camera, cross-key from behind, soft fill at the camera."""
+    W, H, S = 600, 440, 80
     wall = 46
-    G = (300, wall + 1.75 * S)
-    A = (300, G[1] + 1.7 * S)
-    I = (300 - 0.72 * S, A[1] + 4)
-    K = polar(*G, 52, 1.1 * S, -1)
-    F = polar(*G, 62, 1.6 * S, +1)
-    R = polar(*G, 145, 0.95 * S, +1)
+    P1 = (250, wall + 1.8 * S)  # guest, frame-left
+    P2 = (350, wall + 1.8 * S)  # interviewer, frame-right
+    A = (300, P1[1] + 2.3 * S)
+    K1 = (450, P1[1] - 42)      # Raleno behind the interviewer: key on the guest, rim on the interviewer
+    K2 = (150, P1[1] - 42)      # M20C behind the guest: key on the interviewer, rim on the guest
+    F = (300, A[1] + 40)        # Raleno above the camera: soft fill for both
+    mid = (P1[0] + P2[0]) / 2
     s = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">']
     # wine wall: rails with bottles seen from above
     s.append(f'<rect x="20" y="14" width="560" height="{wall-14}" rx="4" fill="#F1EEE7"/>')
     for i, x in enumerate(range(52, 560, 64)):
         s.append(f'<line x1="{x}" y1="18" x2="{x}" y2="{wall-4}" stroke="#B39B6A" stroke-width="2"/>')
         s.append(f'<rect x="{x-24 + (i % 2) * 6}" y="{24 + (i % 3) * 3}" width="{40 + (i % 3) * 8}" height="9" rx="4.5" fill="#2B2A2E"/>')
-    s.append(f'<text x="300" y="{wall + 20}" text-anchor="middle" font-family="Roboto" font-size="12" letter-spacing="2" fill="{GOLD_DK}">WINE WALL</text>')
-    # distance from the wall
-    dx = G[0] - 70
-    s.append(f'<line x1="{dx}" y1="{wall+4}" x2="{dx}" y2="{G[1]}" stroke="{GOLD_DK}" stroke-dasharray="2 3"/>'
-             f'<line x1="{dx}" y1="{G[1]}" x2="{G[0]-28}" y2="{G[1]}" stroke="{GOLD_DK}" stroke-dasharray="2 3"/>')
-    s.append(f'<rect x="{dx-32}" y="{(wall+G[1])/2 - 8}" width="64" height="20" rx="10" fill="#fff" stroke="{GOLD}"/>'
-             f'<text x="{dx}" y="{(wall+G[1])/2 + 6}" text-anchor="middle" font-family="Roboto" font-size="12" font-weight="500" fill="{INK}">1.5–2 m</text>')
-    s.append(panel(*K, *G, KEY_C, 0.5))
-    s.append(panel(*F, *G, FILL_C, 0.3))
-    s.append(m20c(*R, *G))
+    s.append(f'<text x="470" y="{wall + 20}" text-anchor="middle" font-family="Roboto" font-size="12" letter-spacing="2" fill="{GOLD_DK}">WINE WALL</text>')
+    # camera frame
+    for ex in (P1[0] - 110, P2[0] + 110):
+        s.append(f'<line x1="{A[0]}" y1="{A[1]-14}" x2="{ex}" y2="{wall+6}" stroke="{INK}" stroke-opacity=".22" stroke-dasharray="4 5"/>')
+    s.append(f'<line x1="{mid}" y1="{wall+4}" x2="{mid}" y2="{P1[1]-6}" stroke="{GOLD_DK}" stroke-opacity=".7" stroke-dasharray="2 3"/>')
+    s.append(f'<rect x="{mid-32}" y="{(wall+P1[1])/2-18}" width="64" height="20" rx="10" fill="#fff" stroke="{GOLD}"/>'
+             f'<text x="{mid}" y="{(wall+P1[1])/2-3.5}" text-anchor="middle" font-family="Roboto" font-size="12" font-weight="500" fill="{INK}">1.5–2 m</text>')
+    s.append(panel(*F, mid, P1[1], FILL_C, 0.28))
+    s.append(panel(*K1, *P1, KEY_C, 0.45))
+    s.append(m20c(*K2, *P2))
     if not seated:
-        s.append(f'<g stroke="{GOLD_DK}" stroke-width="3"><line x1="{G[0]-16}" y1="{G[1]+28}" x2="{G[0]+16}" y2="{G[1]+28}"/><line x1="{G[0]}" y1="{G[1]+28}" x2="{G[0]}" y2="{G[1]+42}"/></g>')
-    s.append(camera(*A, *G))
-    s.append(person(*I, *G, guest=False, seated=seated))
-    s.append(person(*G, *I, guest=True, seated=seated))
-    s.append(label(K[0] - 34, K[1] + 6, "KEY", "Raleno · 45°, above the eyes", "end", KEY_T))
-    s.append(label(F[0] + 34, F[1] - 2, "FILL", "Raleno · low", "start", FILL_T))
-    s.append(label(R[0] + 26, R[1] - 6, "HIGHLIGHT", "M20C · behind, on hair", "start", RIM_T))
-    s.append(label(G[0] + 34, G[1] - 2, "GUEST", "", "start", GOLD_DK))
-    s.append(label(A[0] + 28, A[1] + 6, "CAMERA", "lens at eye level", "start", INK))
-    s.append(label(I[0] - 34, I[1] + 4, "INTERVIEWER", "next to the lens", "end", INK))
+        for p in (P1, P2):
+            s.append(f'<g stroke="{GOLD_DK}" stroke-width="3"><line x1="{p[0]-14}" y1="{p[1]+28}" x2="{p[0]+14}" y2="{p[1]+28}"/><line x1="{p[0]}" y1="{p[1]+28}" x2="{p[0]}" y2="{p[1]+40}"/></g>')
+    s.append(camera(A[0], A[1], mid, P1[1]))
+    s.append(person(*P2, P2[0] - 100, P2[1] + 100, guest=False, seated=seated))
+    s.append(person(*P1, P1[0] + 100, P1[1] + 100, guest=True, seated=seated))
+    s.append(label(P1[0] - 6, P1[1] + 52, "GUEST", "", "end", GOLD_DK))
+    s.append(label(P2[0] + 6, P2[1] + 52, "INTERVIEWER", "", "start", INK))
+    s.append(label(K1[0] + 30, K1[1] - 4, "KEY · RALENO", "lights the guest", "start", KEY_T))
+    s.append(label(K2[0] - 26, K2[1] - 4, "KEY · M20C", "lights the interviewer", "end", RIM_T))
+    s.append(label(F[0] + 34, F[1] + 4, "FILL · RALENO", "above the camera, low", "start", FILL_T))
+    s.append(label(A[0] - 30, A[1] + 4, "ONE CAMERA", "", "end", INK))
     s.append("</svg>")
     return "".join(s)
 
@@ -170,7 +172,7 @@ def credit(*names):
     return f'<p class="credit">Reference photos: {" · ".join(parts)}</p>' if parts else ""
 
 
-FOCUS = {"ref-seated": "50% 30%"}
+FOCUS = {}
 
 
 def photo(name, cls=""):
@@ -199,9 +201,9 @@ def slide_cover():
 def slide_light(seated, ref, n):
     title = "Seated" if seated else "Standing"
     rows = [
-        (KEY_C, "Key", "Raleno S192K", "45° to the side, above the eyes"),
-        (FILL_C, "Fill", "Raleno S192K", "other side, low power"),
-        (RIM_C, "Highlight", "Zhiyun M20C", "behind the guest, on hair and shoulders"),
+        (KEY_C, "Key", "Raleno S192K", "behind the interviewer, out of frame · lights the guest"),
+        (RIM_C, "Key", "Zhiyun M20C", "behind the guest, out of frame · lights the interviewer"),
+        (FILL_C, "Fill", "Raleno S192K", "above the camera, low power · for both"),
     ]
     lights = "".join(f'<div class="lrow"><i style="background:{c}"></i><div><h3>{t} <em>{m}</em></h3><p>{d}</p></div></div>' for c, t, m, d in rows)
     return f"""
@@ -214,7 +216,8 @@ def slide_light(seated, ref, n):
     <div class="side">
       {photo(ref, "ref")}
       <div class="lights">{lights}</div>
-      <p class="fmt">4K 16:9 for YouTube · guest in the centre for the 9:16 Instagram crop</p>
+      <p class="note">Each back light also gives the person in front of it a highlight on hair and shoulders.</p>
+      <p class="fmt">One camera, 4K 16:9 · for Instagram the 9:16 crop follows who is speaking</p>
     </div>
   </div>
   {credit(ref)}
@@ -310,6 +313,7 @@ h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; 
 .p-text { align-self: center; padding-right: 18mm; }
 .p-text h2 { margin-bottom: 9mm; }
 .lead { font-size: 13pt; color: var(--muted); line-height: 1.5; }
+.note { margin-top: 3mm; font-size: 10pt; color: var(--muted); }
 .fmt { margin-top: 4mm; font-size: 8.5pt; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dk); }
 .spec { margin-top: 9mm; font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-dk); border-top: 1px solid var(--line); padding-top: 4mm; }
 """
