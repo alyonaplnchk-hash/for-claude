@@ -232,11 +232,11 @@ def top_view(seated=True):
     s.append(dim_line(A[0] + 24, G[1] + 34, A[0] + 24, A[1] - 22))
     s.append(pill(A[0] + 24, (G[1] + A[1]) / 2 + 12, "1.5–2 m"))
     # labels
-    s.append(label(K[0] - 32, K[1] + 2, "KEY", ["Raleno S192K #1", "camera-left, ≈45°", "1–1.2 m from the face", "above eye level"], "end", KEY_T))
-    s.append(label(F[0] + 32, F[1] - 8, "FILL", ["Raleno S192K #2", "camera-right, eye level", "1.5–2 m, low power"], "start", FILL_T))
-    s.append(label(R[0] + 26, R[1] - 30, "RIM / HIGHLIGHT", ["Zhiyun Fiveray M20C", "behind, opposite the key", "high, aimed at hair + shoulder"], "start", RIM_T))
+    s.append(label(K[0] - 32, K[1] + 2, "KEY", ["Raleno S192K #1", "camera-left, ≈45°", "1–1.2 m, above eye level", "power 70–90 %"], "end", KEY_T))
+    s.append(label(F[0] + 32, F[1] - 8, "FILL", ["Raleno S192K #2", "camera-right, eye level", "1.5–2 m, power 20–35 %"], "start", FILL_T))
+    s.append(label(R[0] + 26, R[1] - 30, "HIGHLIGHT", ["Zhiyun Fiveray M20C", "behind, opposite the key", "aimed at hair + shoulders", "barn doors on, power 30–50 %"], "start", RIM_T))
     s.append(label(A[0] + 16, A[1] + 40, "CAMERA A", ["medium shot · lens at eye level"], "middle", FG))
-    s.append(label(B[0] + 24, B[1] + 12, "CAMERA B (optional)", ["close-up, ≈30° off A"], "start", FG))
+    s.append(label(B[0] + 24, B[1] + 12, "CAMERA B", ["optional close-up"], "start", FG))
     s.append(label(I[0] - 32, I[1] + 12, "INTERVIEWER", ["right next to the lens"], "end", FG))
     gl = ["sitting, chair turned", "≈30° to interviewer"] if seated else ["standing on a tape “T”,", "hand on a barrel"]
     s.append(label(G[0] - 46, G[1] - 40, "GUEST", gl, "end", GOLD_DK))
@@ -353,124 +353,6 @@ def side_view(seated=True):
     return "".join(out)
 
 
-# ---------------------------------------------------------------- framing (16:9 with 9:16 window)
-
-def silhouette(cx, top, scale, opacity=0.22):
-    """Front-facing head & shoulders, head top at `top`, width scaled."""
-    s = scale
-    hx, hy = cx, top + 26 * s
-    return (
-        f'<path d="M{cx-74*s},{top+320*s} L{cx-74*s},{top+200*s} C{cx-72*s},{top+100*s} {cx-40*s},{top+92*s} {cx-14*s},{top+70*s} '
-        f'L{cx-12*s},{top+56*s} L{cx+12*s},{top+56*s} L{cx+14*s},{top+70*s} C{cx+40*s},{top+92*s} {cx+72*s},{top+100*s} {cx+74*s},{top+200*s} L{cx+74*s},{top+320*s} Z" '
-        f'fill="{GOLD}" fill-opacity="{opacity}" stroke="{FG}" stroke-opacity=".55" stroke-width="1.2"/>'
-        f'<path d="M{cx-14*s},{top+70*s} L{cx},{top+118*s} L{cx+14*s},{top+70*s}" fill="none" stroke="{FG}" stroke-opacity=".45" stroke-width="1.1"/>'
-        f'<ellipse cx="{hx}" cy="{hy}" rx="{22*s}" ry="{29*s}" fill="{GOLD}" fill-opacity="{opacity+0.08}" stroke="{FG}" stroke-opacity=".6" stroke-width="1.2"/>'
-        f'<path d="M{hx-22*s},{hy-4*s} Q{hx-24*s},{hy-34*s} {hx},{hy-31*s} Q{hx+24*s},{hy-34*s} {hx+22*s},{hy-4*s} Q{hx+14*s},{hy-22*s} {hx},{hy-20*s} Q{hx-14*s},{hy-22*s} {hx-22*s},{hy-4*s} Z" fill="{GOLD}" fill-opacity=".7"/>'
-    )
-
-
-def frame_bg(x, y, w, h):
-    gid = uid("fb")
-    out = [f'<defs><radialGradient id="{gid}" cx=".5" cy=".45" r=".75"><stop offset="0" stop-color="#FBF8F1"/><stop offset="1" stop-color="#E9E0CB"/></radialGradient></defs>',
-           f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="url(#{gid})"/>']
-    # faint shelves
-    for i in range(1, 5):
-        yy = y + h * i / 5
-        out.append(f'<line x1="{x}" y1="{yy}" x2="{x+w}" y2="{yy}" stroke="{GOLD}" stroke-opacity=".18"/>')
-    for i in range(1, 12):
-        xx = x + w * i / 12
-        out.append(f'<line x1="{xx}" y1="{y}" x2="{xx}" y2="{y+h}" stroke="{GOLD}" stroke-opacity=".08"/>')
-    return "".join(out)
-
-
-def framing_main():
-    W, H = 680, 330
-    fx, fy, fw, fh = 20, 20, 520, 292.5
-    cx = fx + fw * 0.64
-    vw = fh * 9 / 16
-    out = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" class="diagram">']
-    out.append(frame_bg(fx, fy, fw, fh))
-    out.append(f'<clipPath id="clipA"><rect x="{fx}" y="{fy}" width="{fw}" height="{fh}"/></clipPath>')
-    out.append(f'<g clip-path="url(#clipA)">{silhouette(cx, fy + 42, 1.05)}</g>')
-    # thirds
-    for i in (1, 2):
-        out.append(f'<line x1="{fx + fw*i/3}" y1="{fy}" x2="{fx + fw*i/3}" y2="{fy+fh}" stroke="{FG}" stroke-opacity=".22"/>')
-        out.append(f'<line x1="{fx}" y1="{fy + fh*i/3}" x2="{fx+fw}" y2="{fy + fh*i/3}" stroke="{FG}" stroke-opacity=".22"/>')
-    # dim outside the vertical window
-    out.append(f'<rect x="{fx}" y="{fy}" width="{cx - vw/2 - fx}" height="{fh}" fill="#FFFFFF" fill-opacity=".55"/>')
-    out.append(f'<rect x="{cx + vw/2}" y="{fy}" width="{fx + fw - cx - vw/2}" height="{fh}" fill="#FFFFFF" fill-opacity=".55"/>')
-    out.append(f'<rect x="{cx - vw/2}" y="{fy}" width="{vw}" height="{fh}" fill="none" stroke="{GOLD_DK}" stroke-width="2.2" stroke-dasharray="8 5"/>')
-    out.append(f'<rect x="{fx}" y="{fy}" width="{fw}" height="{fh}" fill="none" stroke="{FG}" stroke-width="1.6"/>')
-    # look-room arrow
-    ay = fy + fh / 3 + 6
-    out.append(f'<line x1="{cx - 40}" y1="{ay}" x2="{fx + 70}" y2="{ay}" stroke="{GOLD_DK}" stroke-width="1.5"/>'
-               f'<path d="M{fx+70},{ay} l10,-5 l0,10 z" fill="{GOLD_DK}"/>')
-    out.append(f'<text x="{fx + 82}" y="{ay - 9}" font-family="Roboto" font-size="10.5" font-weight="700" letter-spacing="1" fill="{GOLD_DK}">LOOK ROOM</text>')
-    out.append(f'<text x="{fx + 10}" y="{fy + 18}" font-family="Roboto" font-size="10.5" font-weight="700" letter-spacing="1.2" fill="{FG}">YOUTUBE · 16:9 · FULL FRAME</text>')
-    out.append(f'<text x="{cx}" y="{fy + 17}" text-anchor="middle" font-family="Roboto" font-size="10.5" font-weight="700" letter-spacing="1.2" fill="{GOLD_DK}">INSTAGRAM 9:16</text>')
-    out.append(f'<text x="{fx + fw - 8}" y="{fy + fh/3 - 6}" text-anchor="end" font-family="Roboto" font-size="9.5" fill="{FG}" fill-opacity=".65">eye line</text>')
-    # side notes
-    nx = fx + fw + 18
-    out.append(label(nx, fy + 30, "THE RULE", ["Camera A: head and", "shoulders always inside", "the gold 9:16 window", "(≈ ⅓ of the frame)."], "start", GOLD_DK))
-    out.append(label(nx, fy + 128, "THE EDIT", ["YouTube uses the", "full frame; Instagram", "cuts the window", "out of the same shot."], "start", FG))
-    out.append(label(nx, fy + 226, "NEVER", ["zoom during answers", "or let gestures and", "props leave the", "window."], "start", FG))
-    out.append("</svg>")
-    return "".join(out)
-
-
-def framing_small(kind):
-    """kind: 'B' close-up 16:9, or 'IG' the resulting 9:16 crop."""
-    if kind == "B":
-        W, H = 340, 210
-        fx, fy, fw, fh = 10, 10, 320, 180
-        cx = fx + fw * 0.62
-        out = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" class="diagram">', frame_bg(fx, fy, fw, fh),
-               f'<clipPath id="clipB"><rect x="{fx}" y="{fy}" width="{fw}" height="{fh}"/></clipPath>',
-               f'<g clip-path="url(#clipB)">{silhouette(cx, fy + 4, 1.42)}</g>']
-        vw = fh * 9 / 16
-        out.append(f'<rect x="{cx - vw/2}" y="{fy}" width="{vw}" height="{fh}" fill="none" stroke="{GOLD_DK}" stroke-width="1.8" stroke-dasharray="6 4"/>')
-        out.append(f'<rect x="{fx}" y="{fy}" width="{fw}" height="{fh}" fill="none" stroke="{FG}" stroke-width="1.4"/>')
-        out.append(f'<text x="{fx+8}" y="{fy+16}" font-family="Roboto" font-size="10" font-weight="700" letter-spacing="1.1" fill="{FG}">CAMERA B · CLOSE-UP</text>')
-        out.append("</svg>")
-        return "".join(out)
-    W, H = 130, 222
-    fx, fy, fh = 10, 6, 190
-    fw = fh * 9 / 16
-    cx = fx + fw / 2
-    out = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" class="diagram">', frame_bg(fx, fy, fw, fh),
-           f'<clipPath id="clipIG"><rect x="{fx}" y="{fy}" width="{fw}" height="{fh}"/></clipPath>',
-           f'<g clip-path="url(#clipIG)">{silhouette(cx, fy + 26, 0.72)}</g>',
-           f'<rect x="{fx}" y="{fy}" width="{fw}" height="{fh}" rx="6" fill="none" stroke="{GOLD_DK}" stroke-width="1.8"/>',
-           f'<text x="{cx}" y="{fy + fh + 15}" text-anchor="middle" font-family="Roboto" font-size="10" font-weight="700" letter-spacing="1" fill="{GOLD_DK}">REEL 9:16</text>',
-           "</svg>"]
-    return "".join(out)
-
-
-# ---------------------------------------------------------------- portrait lighting mini top view
-
-def portrait_light():
-    W, H = 360, 300
-    G = (180, 120)
-    A = (180, 265)
-    K = polar(*G, 38, 105, -1)
-    F = polar(*G, 55, 130, +1)
-    R = polar(*G, 150, 92, +1)
-    s = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" class="diagram">']
-    s.append(f'<rect x="20" y="8" width="320" height="18" rx="3" fill="#F1ECDF" stroke="{GOLD}" stroke-opacity=".5"/>')
-    s.append(f'<text x="180" y="21" text-anchor="middle" font-family="Roboto" font-size="9" letter-spacing="1.1" fill="{GOLD_DK}">PLAIN, DARK BACKGROUND · 2 M+ BEHIND</text>')
-    s.append(panel(*K, *G, KEY_C, 0.46))
-    s.append(panel(*F, *G, FILL_C, 0.3))
-    s.append(m20c(*R, *G))
-    s.append(camera(*A, *G, 13, "A"))
-    s.append(person(*G, *A, guest=True, seated=False))
-    s.append(label(K[0] - 30, K[1] + 8, "KEY", ["30–45°, soft"], "end", KEY_T))
-    s.append(label(F[0] + 30, F[1] + 4, "FILL", ["low"], "start", FILL_T))
-    s.append(label(R[0] + 20, R[1] - 4, "RIM", ["hair + shoulders"], "start", RIM_T))
-    s.append(label(A[0] + 26, A[1] + 4, "85 mm", ["2–3 m away"], "start", FG))
-    s.append("</svg>")
-    return "".join(s)
-
-
 # ---------------------------------------------------------------- B-roll pictograms (160 x 90)
 
 def figure(x, y, s=1.0, walk=False, arm=None):
@@ -557,26 +439,6 @@ def picto(kind):
     return "".join(o)
 
 
-# ---------------------------------------------------------------- cover art
-
-def cover_art():
-    W, H = 420, 420
-    G = (210, 210)
-    s = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" class="cover-art">']
-    for r in (60, 110, 160, 205):
-        s.append(f'<circle cx="{G[0]}" cy="{G[1]}" r="{r}" fill="none" stroke="{GOLD}" stroke-opacity=".22"/>')
-    K = polar(*G, 52, 160, -1)
-    F = polar(*G, 60, 185, +1)
-    R = polar(*G, 145, 150, +1)
-    s.append(panel(*K, *G, KEY_C, 0.5))
-    s.append(panel(*F, *G, FILL_C, 0.3))
-    s.append(m20c(*R, *G))
-    s.append(camera(G[0], G[1] + 175, *G, 16, "A"))
-    s.append(person(*G, G[0] - 30, G[1] + 175, guest=True, seated=False))
-    s.append("</svg>")
-    return "".join(s)
-
-
 # ---------------------------------------------------------------- assets
 
 def logo_svg(height_mm):
@@ -604,202 +466,31 @@ def ul(items, cls="list"):
     return f'<ul class="{cls}">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
 
 
-def checklist(title, items):
-    return f'<div class="check"><h4>{title}</h4>' + "".join(f'<label><i></i><span>{i}</span></label>' for i in items) + "</div>"
-
-
-def page_cover():
-    return f"""
-<section class="page cover">
-  <div class="cover-top">{logo_svg(16)}<span class="tag">Internal · crew memo</span></div>
-  <div class="cover-art-wrap">{cover_art()}</div>
-  <div class="cover-body">
-    <p class="eyebrow">Producer Spotlight</p>
-    <h1>How to film<br>the interview</h1>
-    <p class="lead">A field guide for the crew: how to light the guest, which shots to take around the conversation and how to get the cover portrait. Two lighting setups inside, seated and standing.</p>
-  </div>
-  <div class="deliver">
-    <div class="d"><span class="num">01</span><div><h3>The interview</h3><p>Three lights, seated or standing. 4K 16:9 for YouTube, cropped to 9:16 for Instagram.</p></div><span class="pg">p. 3–6</span></div>
-    <div class="d"><span class="num">02</span><div><h3>Additional shots</h3><p>Arrival, greeting, the pour, the details, the outro: the shots that make the edit work.</p></div><span class="pg">p. 7</span></div>
-    <div class="d"><span class="num">03</span><div><h3>The portrait</h3><p>One sharp, well-lit photo of the guest for the cover, like the Lynch-Bages reference.</p></div><span class="pg">p. 8</span></div>
-  </div>
-  <div class="cover-foot"><span>Plan of the day &amp; kit list, p. 2</span><span>AVU SA · October 2026</span></div>
-</section>"""
-
-
-def page_plan():
-    steps = [
-        ("Arrive 90 min early", "Choose the spot: 2–3 m of depth behind the guest, no window in the shot, the quietest room you can get."),
-        ("Build light &amp; cameras", "Seated or standing setup (p. 5–6). Use a crew member as a stand-in while you light."),
-        ("Establishing &amp; details", "While the room is still free, film the estate, cellar, bottles and labels (p. 7)."),
-        ("Guest arrives", "If the greeting happens naturally, film it. If you miss it, re-stage it after the interview."),
-        ("Mic up &amp; sound check", "Lav mics on guest and interviewer. Listen in headphones before you roll."),
-        ("The interview", "Both cameras rolling the whole time. Don't stop between questions."),
-        ("Portrait, straight after", "Same light, guest still camera-ready. Take the mic off first (p. 8)."),
-        ("Additional shots", "Walk &amp; talk, the pour, tasting, reactions, the outro (p. 7)."),
-        ("Wrap", "Back up every card to two drives before you leave. Write down the guest's name, title and the wines tasted."),
-    ]
-    tl = "".join(f'<div class="step"><span class="dot">{i+1}</span><div><h4>{t}</h4><p>{d}</p></div></div>' for i, (t, d) in enumerate(steps))
-    kit = (
-        checklist("Light", ["2 × Raleno S192K panels, charged + chargers", "Zhiyun Fiveray M20C combo: barn doors, grid, diffuser", "USB-C power bank for the M20C", "3 light stands (one tall, 2.2 m+) + sandbags", "Extension cord + power strip", "White reflector (optional fill)"])
-        + checklist("Camera", ["Camera A + Camera B (optional), 2 tripods", "Lenses: 24–70 mm, 50 mm, 85 mm", "Gimbal for walking shots", "Spare batteries, empty formatted cards", "Phone for vertical behind-the-scenes"])
-        + checklist("Sound", ["2 lav mics (guest + interviewer) + receivers", "Headphones", "Backup recorder / second track", "Spare batteries"])
-        + checklist("Small things", ["Gaffer tape (cables + floor marks)", "Blotting paper / powder for shiny skin", "Lens cloth", "Printed question list", "Guest's name &amp; title, spelled correctly"])
-    )
-    return f"""
-<section class="page">
-  {head(2, "Plan &amp; kit")}
-  <p class="eyebrow">Before you start</p>
-  <h2>Plan of the day</h2>
-  <div class="two">
-    <div class="timeline">{tl}</div>
-    <div class="kit"><h3 class="mini">Kit checklist</h3>{kit}</div>
-  </div>
-  <div class="rules3">
-    <h3 class="mini">If you remember only three things</h3>
-    <div class="r3">
-      <div><span class="num">1</span><h4>Light the face, not the room</h4><p>Key on the side the guest looks to. The background stays darker than the face.</p></div>
-      <div><span class="num">2</span><h4>Stay inside the 9:16 window</h4><p>Every interview frame must also work as an Instagram Reel.</p></div>
-      <div><span class="num">3</span><h4>Back up before you leave</h4><p>Two copies of every card, checked, before anything is formatted.</p></div>
-    </div>
-  </div>
-</section>"""
-
-
-def page_framing():
-    settings = [
-        ("Resolution", "4K UHD 3840 × 2160, 16:9"),
-        ("Frame rate", "25 fps · 50 fps for slow-motion B-roll"),
-        ("Shutter", "1/50 s (1/100 s at 50 fps)"),
-        ("Aperture", "f/2.8–f/4: face sharp, background soft"),
-        ("ISO", "as low as the light allows"),
-        ("White balance", "manual, same Kelvin as the lights, same on A and B"),
-        ("Focus", "face / eye AF, or manual. Re-check after every break"),
-        ("Picture profile", "identical on both cameras"),
-    ]
-    rows = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in settings)
-    return f"""
-<section class="page">
-  {head(3, "Cameras &amp; framing")}
-  <p class="eyebrow">One shoot, two formats</p>
-  <h2>Frame for YouTube <span class="amp">&amp;</span> Instagram</h2>
-  <p class="intro">Shoot everything <b>horizontal, in 4K</b>. YouTube gets the full 16:9 frame; the editor cuts the vertical 9:16 version out of the same shot. That only works if the guest stays inside the vertical window.</p>
-  <div class="figure">{framing_main()}</div>
-  <div class="row3">
-    <div class="figure tight">{framing_small("B")}</div>
-    <div class="figure tight ig">{framing_small("IG")}</div>
-    <div class="notes">
-      <h4>Camera A: medium shot</h4><p>Top of the head to the belt. Guest on the right third, looking left towards the interviewer.</p>
-      <h4>Camera B: close-up</h4><p>Top of the head to mid-chest, about 30° to the side of A, same side of the 180° line.</p>
-    </div>
-  </div>
-  <div class="two">
-    <div><h3 class="mini">Camera settings</h3><table class="spec">{rows}</table>
-      <p class="note">25 fps matches Europe's 50 Hz mains, so lamps in the background won't flicker.</p></div>
-    <div><h3 class="mini">Sound</h3>{ul([
-        "Lav mic hidden under the shirt or jacket, 15–20 cm below the chin. No rustling fabric.",
-        "Headphones on for the whole interview.",
-        "Switch off wine fridges, air-con and ventilation during takes if you can. Phones in flight mode.",
-        "Record 30 seconds of room silence at the end. The editor needs it.",
-        "Two cameras: one clap in view of both at the start.",
-    ])}</div>
-  </div>
-</section>"""
-
-
-def light_card(cls, tag, name, role, rows):
-    r = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
-    return f'<div class="lcard {cls}"><p class="ltag">{tag}</p><h3>{name}</h3><p class="role">{role}</p><table>{r}</table></div>'
-
-
-def page_light():
-    cards = (
-        light_card("key", "Key light", "Raleno S192K #1", "The main light on the face. It decides the look.",
-                   [("Where", "camera-left, ≈45° from the guest's nose, on the side the guest looks to"),
-                    ("Distance", "1–1.2 m. The panel is soft but not strong: keep it close"),
-                    ("Height", "above eye level, tilted down ≈30°"),
-                    ("Power", "start at 70–90 %")])
-        + light_card("fill", "Fill light", "Raleno S192K #2", "Softens the shadows on the other side. It should not remove them.",
-                     [("Where", "camera-right, ≈60°, or bounced off a white wall / reflector"),
-                      ("Distance", "1.5–2 m"),
-                      ("Height", "eye level"),
-                      ("Power", "20–35 %, about a third of the key")])
-        + light_card("rim", "Highlight / rim", "Zhiyun Fiveray M20C", "A thin warm edge on hair and shoulders that lifts the guest off the dark background.",
-                     [("Where", "behind the guest, camera-right (opposite the key)"),
-                      ("Height", "≈2 m, aimed down at the back of the head and the shoulder"),
-                      ("Shape", "barn doors + grid on, so it never shines into the lens"),
-                      ("Power", "30–50 %, colour 300–500 K warmer than the key")])
-    )
-    steps = [
-        "Put the guest's chair or tape mark 2–3 m in front of the background.",
-        "Set Camera A at eye level and the interviewer right beside the lens.",
-        "Switch off ceiling lights and close curtains on windows that hit the set.",
-        "Key on. Move it until the face looks shaped, with a soft shadow on the far cheek.",
-        "Fill on. Raise it until the shadow side looks soft but still darker.",
-        "Rim on. Move it until a thin glowing edge appears on hair and shoulder in the monitor.",
-        "Background: a lamp, candle or softly lit shelf. Always darker than the face.",
-    ]
-    checks = [
-        "Catch-light (small reflection of the key) in both eyes",
-        "No light, stand or cable in the frame",
-        "No flare from the rim: close the barn doors",
-        "Glasses: no reflection. Raise the key or move it wider",
-        "Forehead and nose not shiny: blot or powder",
-        "Skin looks natural on both cameras",
-    ]
-    return f"""
-<section class="page">
-  {head(4, "The light")}
-  <p class="eyebrow">Three lights, one look</p>
-  <h2>The light setup</h2>
-  <p class="intro">Classic three-point light. The face is lit from the side the guest is looking towards. The background stays darker than the face, and a thin warm edge separates the guest from it. <span class="hint">Camera-left / camera-right = as seen standing behind the camera.</span></p>
-  <div class="cards">{cards}</div>
-  <div class="kelvin">
-    <div><h4>One colour temperature for everything</h4>
-    <p>All lights on the <b>same Kelvin</b>. Set white balance on <b>both cameras</b> to the same number manually, never auto. Only the M20C rim goes slightly warmer.</p></div>
-    <div class="k"><span class="kv">5600 K</span><span>Daylight from a window reaches the set</span></div>
-    <div class="k"><span class="kv">3200–4300 K</span><span>Cellar or interior with warm lamps only</span></div>
-  </div>
-  <div class="two">
-    <div><h3 class="mini">Build it in this order</h3><ol class="steps">{"".join(f"<li>{s}</li>" for s in steps)}</ol></div>
-    <div><h3 class="mini">Check on the monitor</h3>{checklist("", checks)}
-      <p class="note">Batteries: the M20C runs about 40 min at full power, so keep it on a USB-C power bank. Charge both Raleno panels the night before and keep their chargers on set.</p></div>
-  </div>
-</section>"""
-
-
 def page_option(seated):
+    n, title = (1, "Seated interview") if seated else (2, "Standing interview")
     if seated:
-        tag, title, n = "Option A", "Seated interview", 5
-        sub = "Best for long conversations (20 min and more). Calm and relaxed, the classic Producer Spotlight look."
         notes = [
-            "Chairs without wheels, armrests or swivel. Guest sits on the front half of the seat, back straight.",
-            "Guest's chair turned ≈30° towards the interviewer, so the body is not square to the lens.",
-            "Interviewer sits right next to Camera A, eyes at lens height. The guest looks just past the lens.",
-            "Never shoot down on the guest: lens at their eye level.",
-            "Optional: a barrel or small table with a glass and the producer's bottle (label to camera), outside the 9:16 window.",
+            "Interviewer sits right next to the lens, so the guest looks just past it.",
+            "Guest's chair turned ≈30° towards the interviewer.",
         ]
     else:
-        tag, title, n = "Option B", "Standing interview", 6
-        sub = "Good for short interviews or a cellar or tasting-room setting. More energy, more hand gestures."
         notes = [
-            "Tape a “T” on the floor where the guest stands. Standing people drift and sway.",
-            "Something to lean on or rest a hand on: a barrel or a high tasting table.",
-            "Feet slightly staggered, body ≈30° to the interviewer, who stands next to the lens.",
-            "Stands fully extended (key ≈2.1 m, rim ≈2.2 m). Sandbag them.",
-            "Camera A a little wider, from mid-thigh up: gestures matter more standing. Keep them inside the 9:16 window.",
+            "Tape a “T” on the floor where the guest stands. A barrel or table to rest a hand on.",
+            "Interviewer stands right next to the lens.",
         ]
+    notes += [
+        "All lights and both cameras on the same Kelvin. White balance manual.",
+        "Shoot 4K 16:9 for YouTube. Keep the guest in the middle third so the 9:16 crop for Instagram works.",
+    ]
     return f"""
 <section class="page">
-  {head(n, tag)}
-  <p class="eyebrow">{tag}</p>
+  {head(n, "Light setup")}
+  <p class="eyebrow">1 · Light setup</p>
   <h2>{title}</h2>
-  <p class="intro">{sub}</p>
-  <h3 class="mini">Top view</h3>
   <div class="figure">{top_view(seated)}</div>
   <div class="legend">
-    <span><i class="lg key"></i>Key · Raleno</span><span><i class="lg fill"></i>Fill · Raleno</span><span><i class="lg rim"></i>Rim · M20C</span>
-    <span><i class="lg cam"></i>Camera + field of view</span><span><i class="lg guest"></i>Guest</span><span><i class="lg int"></i>Interviewer</span>
+    <span><i class="lg key"></i>Key · Raleno</span><span><i class="lg fill"></i>Fill · Raleno</span><span><i class="lg rim"></i>Highlight · M20C</span>
+    <span><i class="lg cam"></i>Camera</span><span><i class="lg guest"></i>Guest</span><span><i class="lg int"></i>Interviewer</span>
   </div>
   <div class="two side">
     <div><h3 class="mini">Side view: heights</h3><div class="figure">{side_view(seated)}</div></div>
@@ -810,84 +501,59 @@ def page_option(seated):
 
 def page_broll():
     shots = [
-        ("estate", "Establishing", "The estate, entrance, vineyard, cellar. Slow pan or static, 10 s each.", "Wide"),
-        ("arrival", "The arrival", "Guest walks in through a door or along the cellar. Static wide, then follow from behind.", "Wide · Medium"),
-        ("greeting", "The greeting", "Handshake or hello with the AVU host. A two-shot, then a close-up of the handshake.", "Medium · Close"),
-        ("walk", "Walk &amp; talk", "Guest and host walk side by side through the barrel room. Camera walks backwards in front.", "Gimbal · Medium"),
-        ("pour", "Open &amp; pour", "Cork out, wine into the glass, label turned to the camera.", "Close · 50 fps"),
-        ("taste", "Swirl, nose, taste", "Glass close-up, then the guest tasting in profile with the rim light behind the glass.", "Close · 50 fps"),
-        ("details", "Hands &amp; details", "Hands on a barrel, labels, vintages, corks, tools: everything the guest talks about.", "Close"),
-        ("listen", "Listening &amp; reactions", "Guest listening, smiling, nodding. Get the interviewer too. The edit needs these cutaways.", "Medium · Close"),
-        ("cheers", "The outro", "Guest raises a glass to the camera (“Santé!”). The closing shot for the Reel.", "Medium"),
+        ("estate", "Establishing", "Estate, entrance, vineyard, cellar."),
+        ("arrival", "The arrival", "Guest walks in through a door or along the cellar."),
+        ("greeting", "The greeting", "Handshake or hello with the AVU host."),
+        ("walk", "Walk &amp; talk", "Guest and host walk through the barrel room."),
+        ("pour", "Open &amp; pour", "Cork out, wine into the glass, label to camera."),
+        ("taste", "Swirl &amp; taste", "Glass close-up, guest tasting in profile."),
+        ("details", "Details", "Hands, barrels, labels, vintages, corks."),
+        ("listen", "Reactions", "Guest listening, smiling, nodding."),
+        ("cheers", "The outro", "Guest raises a glass to the camera."),
     ]
     cards = "".join(
-        f'<div class="shot"><div class="thumb">{picto(k)}<span class="sn">{i+1:02d}</span></div>'
-        f'<h4>{t}</h4><p>{d}</p><span class="chip">{c}</span></div>'
-        for i, (k, t, d, c) in enumerate(shots)
+        f'<div class="shot"><div class="thumb">{picto(k)}<span class="sn">{i+1:02d}</span></div><h4>{t}</h4><p>{d}</p></div>'
+        for i, (k, t, d) in enumerate(shots)
     )
-    rules = [
-        "<b>Hold every shot 10 seconds.</b> No zooming while recording.",
-        "<b>Every action in 3 sizes:</b> wide, then medium, then close.",
-        "<b>Repeat each action 2–3 times.</b> The first take is usually stiff.",
-        "<b>Move slowly</b>, on a gimbal or tripod. 50 fps for slow-motion moments.",
-        "The guest <b>doesn't look into the camera</b> in B-roll, except in the outro.",
-        "Horizontal 4K like the interview. Film behind-the-scenes vertical on a phone for Stories.",
-    ]
     return f"""
 <section class="page">
-  {head(7, "Additional shots")}
-  <p class="eyebrow">Coverage for the edit</p>
+  {head(3, "Additional shots")}
+  <p class="eyebrow">2 · Additional shots</p>
   <h2>Additional shots</h2>
-  <p class="intro">The edit needs pictures to cut away to and to tell the story around the conversation. Shoot them before and after the interview, in the same light where possible.</p>
+  <p class="intro">Shoot before or after the interview. Hold every shot 10 seconds, no zooming.</p>
   <div class="shots">{cards}</div>
-  <div class="rules"><h3 class="mini">Rules for every shot</h3>{ul(rules, "list cols")}</div>
 </section>"""
 
 
 def page_portrait():
     return f"""
 <section class="page">
-  {head(8, "The portrait")}
-  <p class="eyebrow">The cover photo</p>
+  {head(4, "Portrait")}
+  <p class="eyebrow">3 · Portrait</p>
   <h2>The portrait</h2>
-  <p class="intro">One high-quality photo of the guest for the cover. The guest is cut out and placed on a branded background, as in the reference, so the photo needs <b>clean edges, even light and room to crop</b>.</p>
+  <p class="intro">One high-quality photo of the guest, like this sample.</p>
   <div class="portrait">
-    <div class="ref">
-      <div class="refimg"><img src="{img_b64('portrait-reference.jpg')}" alt="Reference cover portrait">
-        <span class="mk" style="left:90%;top:35%">1</span>
-        <span class="mk" style="left:84%;top:22%">2</span>
-        <span class="mk" style="left:50%;top:72%">3</span>
-        <span class="mk" style="left:92%;top:63%">4</span>
-        <span class="mk" style="left:7%;top:40%">5</span>
-      </div>
-      <p class="cap">Reference: our cover with Jean-Charles Cazes, Château Lynch-Bages.</p>
+    <div class="refimg"><img src="{img_b64('portrait-reference.jpg')}" alt="Sample portrait">
+      <span class="mk" style="left:90%;top:35%">1</span>
+      <span class="mk" style="left:84%;top:22%">2</span>
+      <span class="mk" style="left:50%;top:72%">3</span>
+      <span class="mk" style="left:92%;top:63%">4</span>
+      <span class="mk" style="left:7%;top:40%">5</span>
+    </div>
+    <div>
       <ol class="mk-list">
-        <li>Eyes in the upper third, looking straight into the lens.</li>
-        <li>Rim light on hair and shoulders: a clean edge for the cut-out.</li>
+        <li>Looking straight into the lens, eyes in the upper third.</li>
+        <li>Highlight on hair and shoulders, plain background behind.</li>
         <li>Arms crossed, relaxed, natural smile.</li>
         <li>Shoot wider than this crop: never cut elbows or hands.</li>
-        <li>Space on one side for the title.</li>
+        <li>Leave space on one side for the title.</li>
       </ol>
-    </div>
-    <div class="pinfo">
-      <h3 class="mini">Light</h3>
-      <div class="figure tight">{portrait_light()}</div>
-      <p class="small">Keep the interview lights and turn the guest to face the lens. Key closer to the camera (30–45°) for a more even face. Plain, uncluttered background: no plants or bottles growing out of the head, no coloured walls.</p>
-      <h3 class="mini">Camera</h3>
       <table class="spec">
-        <tr><th>Format</th><td>RAW + JPEG</td></tr>
-        <tr><th>Lens</th><td>85 mm (70–105 mm)</td></tr>
-        <tr><th>Aperture</th><td>f/4–f/5.6, whole face sharp</td></tr>
-        <tr><th>Shutter / ISO</th><td>1/200 s · ISO 100–400</td></tr>
-        <tr><th>Focus</th><td>eye AF on the nearest eye</td></tr>
-        <tr><th>Height</th><td>camera at eye level or slightly below</td></tr>
+        <tr><th>Light</th><td>same three lights, guest turned to the camera</td></tr>
+        <tr><th>Camera</th><td>85 mm · f/4–5.6 · RAW</td></tr>
+        <tr><th>Frames</th><td>vertical and a few horizontal</td></tr>
       </table>
     </div>
-  </div>
-  <div class="three">
-    <div><h3 class="mini">Frame</h3>{ul(["Vertical first, from the top of the head to mid-thigh.", "Also a few <b>horizontal</b> frames with space on one side for YouTube thumbnails.", "Leave space around the guest. The designer crops, we can't add."])}</div>
-    <div><h3 class="mini">Poses</h3>{ul(["Arms crossed, like the reference.", "Hands in pockets · holding a glass.", "Holding their bottle, label to camera and no glare.", "Body turned 20–30°, face to the lens, chin slightly forward."])}</div>
-    <div><h3 class="mini">Before you click</h3>{checklist("", ["Mic and cable removed", "Collar, hair, jacket buttons, lint", "Phone and keys out of pockets", "Glasses: no reflections", "50+ frames. Zoom to 100 % to check the eyes are sharp before the guest leaves"])}</div>
   </div>
 </section>"""
 
@@ -911,95 +577,21 @@ body { font-family: 'Roboto', Arial, sans-serif; color: var(--ink); font-size: 9
 .runner em { font-style: normal; font-family: 'Playfair Display', Georgia, serif; font-size: 11pt; color: var(--gold-dk); letter-spacing: 0; margin-left: 2mm; }
 .eyebrow { font-size: 7.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-dk); font-weight: 700; margin-bottom: 1.6mm; }
 h1, h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; letter-spacing: -.01em; line-height: 1.04; }
-h2 { font-size: 25pt; margin-bottom: 3mm; }
+h2 { font-size: 25pt; margin-bottom: 5mm; }
 h2 .amp { color: var(--gold-dk); font-style: italic; }
 h3.mini { font-size: 7.6pt; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-dk); font-weight: 700;
           margin: 0 0 2.4mm; padding-bottom: 1.6mm; border-bottom: 1px solid var(--line); }
 .intro { color: var(--muted); max-width: 165mm; margin-bottom: 5mm; font-size: 9.8pt; }
 .intro b, .list b { color: var(--ink); font-weight: 500; }
-.hint { display: block; margin-top: 1.4mm; font-size: 8.4pt; color: var(--gold-dk); }
 .figure { background: var(--panel); border: 1px solid rgba(137,118,75,.28); border-radius: 3mm; padding: 2mm; margin-bottom: 4mm; }
-.figure.tight { padding: 1.4mm; margin-bottom: 2.4mm; }
 .figure svg { display: block; width: 100%%; height: auto; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
-.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; }
 .list { list-style: none; }
 .list li { position: relative; padding-left: 4.6mm; margin-bottom: 1.8mm; color: var(--muted); }
 .list li::before { content: ""; position: absolute; left: 0; top: 1.9mm; width: 2.2mm; height: 1px; background: var(--gold-dk); }
-.list.cols { columns: 2; column-gap: 8mm; }
-.list.cols li { break-inside: avoid; }
-.note { font-size: 8.2pt; color: var(--gold-dk); margin-top: 2.6mm; line-height: 1.4; }
-.small { font-size: 8.4pt; color: var(--muted); margin-bottom: 3mm; }
 table.spec { width: 100%%; border-collapse: collapse; font-size: 8.7pt; }
 table.spec th { text-align: left; font-weight: 500; color: var(--gold-dk); padding: 1.3mm 3mm 1.3mm 0; width: 31%%; vertical-align: top; white-space: nowrap; }
 table.spec td { color: var(--ink); padding: 1.3mm 0; border-bottom: 1px solid var(--hair); }
-table.spec th { border-bottom: 1px solid var(--hair); }
-.check h4 { font-size: 8pt; font-weight: 700; color: var(--ink); margin: 2.6mm 0 1.4mm; letter-spacing: .04em; }
-.check h4:empty { display: none; }
-.check label { display: flex; gap: 2.4mm; align-items: flex-start; margin-bottom: 1.3mm; color: var(--muted); font-size: 8.7pt; }
-.check i { flex: 0 0 3.1mm; height: 3.1mm; border: 1px solid var(--gold-dk); border-radius: .6mm; margin-top: .5mm; }
-
-/* cover */
-.cover { padding: 16mm 17mm 14mm; background: radial-gradient(70%% 45%% at 80%% 28%%, #F6EFDF 0%%, var(--bg) 70%%); }
-.cover::after { content: ""; position: absolute; inset: 7mm; border: 1px solid var(--line); pointer-events: none; }
-.cover-top { display: flex; justify-content: space-between; align-items: center; }
-.cover-top .tag { font-size: 7.5pt; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
-.cover-art-wrap { position: absolute; right: 2mm; top: 30mm; width: 118mm; opacity: .95; }
-.cover-art { width: 100%%; height: auto; }
-.cover-body { margin-top: 92mm; position: relative; }
-.cover h1 { font-size: 46pt; margin: 3mm 0 6mm; }
-.cover .lead { font-size: 11pt; color: var(--muted); max-width: 128mm; line-height: 1.5; }
-.deliver { margin-top: 13mm; border-top: 1px solid var(--line); }
-.deliver .d { display: grid; grid-template-columns: 18mm 1fr 18mm; gap: 4mm; align-items: center; padding: 4.4mm 0; border-bottom: 1px solid var(--line); }
-.deliver .num { font-family: 'Playfair Display', serif; font-size: 22pt; color: var(--gold-dk); }
-.deliver h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; margin-bottom: .8mm; }
-.deliver p { color: var(--muted); font-size: 9.2pt; }
-.deliver .pg { text-align: right; font-size: 8pt; color: var(--gold-dk); letter-spacing: .1em; }
-.cover-foot { position: absolute; left: 17mm; right: 17mm; bottom: 13mm; display: flex; justify-content: space-between;
-              font-size: 7.6pt; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-
-/* plan */
-.timeline { position: relative; }
-.timeline::before { content: ""; position: absolute; left: 3.4mm; top: 2mm; bottom: 4mm; width: 1px; background: var(--line); }
-.step { display: grid; grid-template-columns: 7mm 1fr; gap: 3.4mm; margin-bottom: 3.6mm; position: relative; }
-.step .dot { width: 7mm; height: 7mm; border-radius: 50%%; background: var(--bg); border: 1px solid var(--gold-dk); color: var(--gold-dk);
-             font-family: 'Playfair Display', serif; font-size: 9.5pt; display: flex; align-items: center; justify-content: center; }
-.step h4 { font-size: 9.6pt; font-weight: 700; margin-bottom: .5mm; }
-.step p { color: var(--muted); font-size: 8.7pt; }
-.rules3 { position: absolute; left: 15mm; right: 15mm; bottom: 14mm; }
-.r3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
-.r3 .num { font-family: 'Playfair Display', serif; font-size: 26pt; color: var(--gold-dk); line-height: 1; display: block; margin-bottom: 1.6mm; }
-.r3 h4 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 12pt; margin-bottom: 1mm; }
-.r3 p { color: var(--muted); font-size: 8.7pt; }
-.kit { background: var(--panel); border: 1px solid rgba(137,118,75,.28); border-radius: 3mm; padding: 4.5mm 5mm 3mm; align-self: start; }
-
-/* framing */
-.row3 { display: grid; grid-template-columns: 70mm 27mm 1fr; gap: 4mm; align-items: start; margin-bottom: 1mm; }
-.row3 .notes h4 { font-size: 8.6pt; font-weight: 700; color: var(--gold-dk); margin-bottom: .6mm; }
-.row3 .notes p { color: var(--muted); font-size: 8.6pt; margin-bottom: 2.6mm; }
-
-/* light */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-bottom: 4mm; }
-.lcard { background: var(--panel); border: 1px solid rgba(137,118,75,.28); border-top: 1.2mm solid var(--key); border-radius: 2.4mm; padding: 3.6mm 3.8mm 2.6mm; }
-.lcard.fill { border-top-color: var(--fill); }
-.lcard.rim { border-top-color: var(--rim); }
-.ltag { font-size: 7.2pt; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; color: %(KEY_T)s; }
-.lcard.fill .ltag { color: %(FILL_T)s; } .lcard.rim .ltag { color: %(RIM_T)s; }
-.lcard h3 { font-family: 'Playfair Display', serif; font-size: 13pt; font-weight: 600; margin: .8mm 0 1.4mm; }
-.lcard .role { font-size: 8.5pt; color: var(--muted); margin-bottom: 2mm; min-height: 9mm; }
-.lcard table { width: 100%%; border-collapse: collapse; font-size: 8.1pt; }
-.lcard th { text-align: left; vertical-align: top; color: var(--gold-dk); font-weight: 500; padding: 1.1mm 2mm 1.1mm 0; width: 16mm; border-top: 1px solid var(--hair); }
-.lcard td { padding: 1.1mm 0; border-top: 1px solid var(--hair); }
-.kelvin { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4mm; align-items: center; border: 1px solid var(--line); border-radius: 2.4mm; padding: 3.4mm 4mm; margin-bottom: 5mm; }
-.kelvin h4 { font-size: 9pt; font-weight: 700; margin-bottom: .8mm; }
-.kelvin p { font-size: 8.4pt; color: var(--muted); }
-.kelvin b { color: var(--ink); font-weight: 500; }
-.kelvin .k { display: flex; flex-direction: column; gap: .6mm; border-left: 1px solid var(--line); padding-left: 4mm; font-size: 8.2pt; color: var(--muted); }
-.kelvin .kv { font-family: 'Playfair Display', serif; font-size: 15pt; color: var(--gold-dk); }
-ol.steps { list-style: none; counter-reset: s; }
-ol.steps li { counter-increment: s; position: relative; padding-left: 7.5mm; margin-bottom: 2mm; color: var(--muted); font-size: 8.8pt; }
-ol.steps li::before { content: counter(s); position: absolute; left: 0; top: -.2mm; width: 5mm; height: 5mm; border-radius: 50%%; border: 1px solid var(--gold-dk);
-                      color: var(--gold-dk); font-size: 7.4pt; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
 /* options */
 .legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 7.8pt; color: var(--muted); margin: -2mm 0 5mm; }
@@ -1015,24 +607,21 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: -.2
 .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.4mm; margin-bottom: 4.5mm; }
 .shot { background: var(--panel); border: 1px solid rgba(137,118,75,.28); border-radius: 2.4mm; padding: 2.4mm 2.6mm 3mm; position: relative; }
 .thumb { position: relative; background: radial-gradient(90%% 90%% at 50%% 40%%, #FFFFFF, #F1EADB); border-radius: 1.6mm; margin-bottom: 2.4mm; border: 1px solid var(--hair); }
-.thumb svg { display: block; width: 100%%; height: 23mm; }
+.thumb svg { display: block; width: 100%%; height: 30mm; }
 .sn { position: absolute; left: 2mm; top: 1.4mm; font-family: 'Playfair Display', serif; font-size: 9pt; color: var(--gold-dk); }
 .shot h4 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 11pt; margin-bottom: .8mm; }
-.shot p { font-size: 8.1pt; color: var(--muted); line-height: 1.36; margin-bottom: 2mm; min-height: 10.5mm; }
-.chip { display: inline-block; font-size: 6.9pt; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dk); border: 1px solid var(--line); border-radius: 3mm; padding: .5mm 2.2mm; }
+.shot p { font-size: 8.6pt; color: var(--muted); line-height: 1.36; }
 
 /* portrait */
-.portrait { display: grid; grid-template-columns: 70mm 1fr; gap: 7mm; margin-bottom: 4mm; }
+.portrait { display: grid; grid-template-columns: 92mm 1fr; gap: 8mm; align-items: start; }
 .refimg { position: relative; border-radius: 2.4mm; overflow: hidden; border: 1px solid var(--line); }
 .refimg img { display: block; width: 100%%; height: auto; }
 .mk { position: absolute; transform: translate(-50%%, -50%%); width: 5.6mm; height: 5.6mm; border-radius: 50%%; background: var(--gold-dk); color: #FFFFFF;
        font-weight: 700; font-size: 8.4pt; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.2mm rgba(255,255,255,.75); }
-ol.mk-list { list-style: none; counter-reset: m; margin-top: 3mm; }
-ol.mk-list li { counter-increment: m; position: relative; padding-left: 7mm; margin-bottom: 1.6mm; font-size: 8.5pt; color: var(--muted); }
+ol.mk-list { list-style: none; counter-reset: m; margin-bottom: 6mm; }
+ol.mk-list li { counter-increment: m; position: relative; padding-left: 8mm; margin-bottom: 3.4mm; font-size: 10pt; color: var(--ink); }
 ol.mk-list li::before { content: counter(m); position: absolute; left: 0; top: .1mm; width: 4.6mm; height: 4.6mm; border-radius: 50%%; background: var(--gold-dk);
                         color: #FFFFFF; font-size: 7.2pt; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.cap { font-size: 7.6pt; color: var(--muted); margin-top: 1.6mm; font-style: italic; }
-.pinfo .small { margin-top: 0; }
 """
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">'
@@ -1040,7 +629,7 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="
 
 def build():
     css = CSS % dict(BG=BG, PANEL=PANEL, GOLD=GOLD, GOLD_DK=GOLD_DK, FG=FG, KEY_C=KEY_C, RIM_C=RIM_C, FILL_C=FILL_C, KEY_T=KEY_T, FILL_T=FILL_T, RIM_T=RIM_T)
-    pages = [page_cover(), page_plan(), page_framing(), page_light(), page_option(True), page_option(False), page_broll(), page_portrait()]
+    pages = [page_option(True), page_option(False), page_broll(), page_portrait()]
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Producer Spotlight · Filming memo</title>{FONTS}<style>{css}</style></head>
 <body>{''.join(pages)}</body></html>"""
     (HERE / "filming-memo.html").write_text(html)
