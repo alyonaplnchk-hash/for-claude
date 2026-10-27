@@ -111,8 +111,8 @@ def plan(seated=True):
     """Top view: two people side by side, one camera, cross-key from behind, soft fill at the camera."""
     W, H, S = 600, 440, 80
     wall = 46
-    P1 = (250, wall + 1.8 * S)  # guest, frame-left
-    P2 = (350, wall + 1.8 * S)  # interviewer, frame-right
+    P1 = (240, wall + 1.8 * S)  # guest, frame-left
+    P2 = (360, wall + 1.8 * S)  # interviewer, frame-right
     A = (300, P1[1] + 2.3 * S)
     K1 = (450, P1[1] - 42)      # Raleno behind the interviewer: key on the guest, rim on the interviewer
     K2 = (150, P1[1] - 42)      # M20C behind the guest: key on the interviewer, rim on the guest
@@ -128,7 +128,7 @@ def plan(seated=True):
     # camera frame
     for ex in (P1[0] - 110, P2[0] + 110):
         s.append(f'<line x1="{A[0]}" y1="{A[1]-14}" x2="{ex}" y2="{wall+6}" stroke="{INK}" stroke-opacity=".22" stroke-dasharray="4 5"/>')
-    s.append(f'<line x1="{mid}" y1="{wall+4}" x2="{mid}" y2="{P1[1]-6}" stroke="{GOLD_DK}" stroke-opacity=".7" stroke-dasharray="2 3"/>')
+    s.append(f'<line x1="{mid}" y1="{wall+4}" x2="{mid}" y2="{P1[1]-36}" stroke="{GOLD_DK}" stroke-opacity=".7" stroke-dasharray="2 3"/>')
     s.append(f'<rect x="{mid-32}" y="{(wall+P1[1])/2-18}" width="64" height="20" rx="10" fill="#fff" stroke="{GOLD}"/>'
              f'<text x="{mid}" y="{(wall+P1[1])/2-3.5}" text-anchor="middle" font-family="Roboto" font-size="12" font-weight="500" fill="{INK}">1.5–2 m</text>')
     s.append(panel(*F, mid, P1[1], FILL_C, 0.28))
@@ -140,6 +140,11 @@ def plan(seated=True):
     s.append(camera(A[0], A[1], mid, P1[1]))
     s.append(person(*P2, P2[0] - 100, P2[1] + 100, guest=False, seated=seated))
     s.append(person(*P1, P1[0] + 100, P1[1] + 100, guest=True, seated=seated))
+    # where the guest looks: at the interviewer, so the Raleno behind the interviewer's shoulder is in front of the guest's face
+    ey = P1[1] - 2
+    s.append(f'<line x1="{P1[0]+18}" y1="{ey}" x2="{P2[0]-30}" y2="{ey}" stroke="{GOLD_DK}" stroke-width="2.4"/>'
+             f'<path d="M{P2[0]-22},{ey} l-11,-6 l0,12 z" fill="{GOLD_DK}"/>')
+    s.append(f'<text x="{mid}" y="{ey-20}" text-anchor="middle" font-family="Roboto" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="{GOLD_DK}" {HALO}>LOOKS HERE</text>')
     s.append(label(P1[0] - 6, P1[1] + 52, "GUEST", "", "end", GOLD_DK))
     s.append(label(P2[0] + 6, P2[1] + 52, "INTERVIEWER", "", "start", INK))
     s.append(label(K1[0] + 30, K1[1] - 4, "KEY · RALENO", "lights the guest", "start", KEY_T))
@@ -201,8 +206,8 @@ def slide_cover():
 def slide_light(seated, ref, n):
     title = "Seated" if seated else "Standing"
     rows = [
-        (KEY_C, "Key", "Raleno S192K", "behind the interviewer, out of frame · lights the guest"),
-        (RIM_C, "Key", "Zhiyun M20C", "behind the guest, out of frame · lights the interviewer"),
+        (KEY_C, "Key", "Raleno S192K", "behind the interviewer's shoulder, where the guest looks · lights the guest"),
+        (RIM_C, "Key", "Zhiyun M20C", "behind the guest's shoulder, where the interviewer looks · lights the interviewer"),
         (FILL_C, "Fill", "Raleno S192K", "above the camera, low power · for both"),
     ]
     lights = "".join(f'<div class="lrow"><i style="background:{c}"></i><div><h3>{t} <em>{m}</em></h3><p>{d}</p></div></div>' for c, t, m, d in rows)
