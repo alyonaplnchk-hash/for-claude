@@ -75,7 +75,7 @@
 .avu-proofs b { font: 600 12px/1.9 var(--avu-f-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--avu-gold-deep); }
 @media (max-width: 860px) { .avu-spread { grid-template-columns: 1fr; } .avu-spread--flip > :first-child { order: 0; } }
 
-/* ---------- Bottle cards ---------- */
+/* ---------- Bottle cards: examples of rarity (AVU does not sell online, so no price, stock or per-bottle action) ---------- */
 .avu-bottles__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
 .avu-bottles__grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 24px; align-items: start; }
 .avu-bottles__grid--even { grid-template-columns: repeat(3, 1fr); }
@@ -231,3 +231,89 @@
 .avu-ph { display: grid; place-items: center; aspect-ratio: 4 / 5; width: 100%; padding: 16px; text-align: center; background: repeating-linear-gradient(135deg, rgba(46, 34, 24, .04) 0 12px, transparent 12px 24px), var(--avu-paper); border: 1px solid var(--avu-line); color: var(--avu-label); font: 500 12px/1.5 var(--avu-f-sans); letter-spacing: .12em; text-transform: uppercase; }
 .avu-ph--wide { aspect-ratio: 3 / 2; }
 .avu-ph--square { aspect-ratio: 1 / 1; }
+.avu-ph--film { aspect-ratio: 16 / 9; }
+.avu-ph--night { background: repeating-linear-gradient(135deg, rgba(238, 229, 215, .04) 0 12px, transparent 12px 24px), var(--avu-night-2); border-color: var(--avu-night-line); color: var(--avu-night-ink-2); }
+
+/* ---------- Header with a menu: Menu · logo · Contact, for sites with more sections than a split bar holds ---------- */
+.avu-header--menu .avu-menu-btn { display: inline-block; justify-self: start; }
+.avu-header__end { display: flex; justify-content: flex-end; align-items: center; gap: 26px; font: 400 14px/1 var(--avu-f-sans); }
+.avu-header__end a { text-decoration: none; }
+.avu-header__end a:hover { color: var(--avu-gold-light); }
+.avu-header.is-solid .avu-header__end a:hover, .avu-header--solid .avu-header__end a:hover { color: var(--avu-gold-deep); }
+.avu-header.is-menu-open { background: transparent; color: var(--avu-night-ink); border-color: transparent; backdrop-filter: none; }
+.avu-header.is-menu-open .avu-wordmark { color: var(--avu-gold-light); }
+.avu-menu { display: none; position: fixed; inset: 0; z-index: 49; overflow-y: auto; background: var(--avu-night); color: var(--avu-night-ink); padding-block: calc(84px + 40px + env(safe-area-inset-top, 0px)) 48px; }
+.avu-menu.is-open { display: block; }
+.avu-menu__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; }
+.avu-menu__main { list-style: none; margin: 0; padding: 0; }
+.avu-menu__main a { display: inline-block; padding: 6px 0; font: 300 clamp(26px, 3.2vw, 42px)/1.2 var(--avu-f-sans); text-decoration: none; transition: color .4s var(--avu-ease); }
+.avu-menu__main a:hover, .avu-menu__main a[aria-current="page"] { color: var(--avu-gold-light); }
+.avu-menu__side { font: 400 15px/1.8 var(--avu-f-sans); color: var(--avu-night-ink-2); }
+.avu-menu__side h4 { font: 600 11px/1 var(--avu-f-sans); letter-spacing: .22em; text-transform: uppercase; color: var(--avu-gold-light); margin: 0 0 16px; }
+.avu-menu__side a { text-decoration: none; }
+@media (max-width: 760px) { .avu-menu__grid { grid-template-columns: 1fr; } .avu-header__end .avu-hide-sm { display: none; } }
+
+/* ---------- Page opening without a film: crumbs, eyebrow, H1, one line, centred ---------- */
+.avu-page-intro { padding-top: calc(84px + env(safe-area-inset-top, 0px) + clamp(56px, 7vw, 104px)); padding-bottom: clamp(48px, 6vw, 88px); text-align: center; }
+.avu-page-intro .avu-display { max-width: 15em; margin-inline: auto; }
+.avu-page-intro .avu-lede { margin: 22px auto 0; }
+.avu-crumbs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 0 28px; font: 600 11px/1.4 var(--avu-f-sans); letter-spacing: .2em; text-transform: uppercase; color: var(--avu-label); }
+.avu-crumbs a { text-decoration: none; }
+.avu-crumbs a:hover { color: var(--avu-gold-deep); }
+
+/* ---------- Wide picture band ---------- */
+.avu-band-img { margin: 0; }
+.avu-band-img img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; }
+.avu-band-img figcaption, .avu-spread__media figcaption { margin-top: 12px; font: 500 11px/1.4 var(--avu-f-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--avu-label); }
+@media (max-width: 700px) { .avu-band-img img { aspect-ratio: 4 / 3; } }
+
+/* ---------- Pillars: picture, name, one line, link; the homepage index of the site ---------- */
+.avu-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(36px, 4vw, 56px) clamp(20px, 3vw, 40px); }
+.avu-pillar { display: block; min-width: 0; text-decoration: none; }
+.avu-pillar__img { overflow: hidden; margin-bottom: 20px; background: var(--avu-paper); }
+.avu-pillar__img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 1.2s var(--avu-ease); }
+.avu-pillar:hover .avu-pillar__img img { transform: scale(1.03); }
+.avu-pillar__name { font: 300 26px/1.2 var(--avu-f-sans); margin: 0 0 8px; }
+.avu-pillar p { font-size: 17px; color: var(--avu-ink-2); margin-bottom: 12px; }
+@media (max-width: 960px) { .avu-pillars { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .avu-pillars { grid-template-columns: 1fr; } }
+
+/* ---------- Columns with hairlines: destinations, contact details ---------- */
+.avu-cols { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--avu-line); }
+.avu-cols > div { min-width: 0; padding: 26px 24px 8px 0; }
+.avu-cols > div + div { padding-left: 24px; border-left: 1px solid var(--avu-line); }
+.avu-cols__name { font: 300 26px/1.15 var(--avu-f-sans); margin: 0 0 10px; }
+.avu-cols__text { font-size: 17px; color: var(--avu-ink-2); }
+@media (max-width: 960px) {
+  .avu-cols { grid-template-columns: 1fr 1fr; }
+  .avu-cols > div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .avu-cols > div:nth-child(n+3) { border-top: 1px solid var(--avu-line); }
+}
+@media (max-width: 560px) {
+  .avu-cols { grid-template-columns: 1fr; }
+  .avu-cols > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--avu-line); }
+}
+
+/* ---------- Values, each with its proof ---------- */
+.avu-values { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(32px, 5vw, 72px); border-top: 1px solid var(--avu-line); }
+.avu-value { min-width: 0; padding: 28px 0 22px; border-bottom: 1px solid var(--avu-line); }
+.avu-value h3 { font: 300 26px/1.2 var(--avu-f-sans); margin: 0 0 10px; }
+.avu-value p { font-size: 17px; color: var(--avu-ink-2); }
+@media (max-width: 860px) { .avu-values { grid-template-columns: 1fr; } }
+
+/* ---------- Text filters (region, type): caps text buttons, no dropdown chrome ---------- */
+.avu-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 28px; margin: 0 0 40px; }
+.avu-filters button { background: none; border: 0; border-bottom: 1px solid transparent; padding: 8px 0; cursor: pointer; font: 600 12px/1 var(--avu-f-sans); letter-spacing: .22em; text-transform: uppercase; color: var(--avu-label); transition: color .5s var(--avu-ease), border-color .5s var(--avu-ease); }
+.avu-filters button:hover { color: var(--avu-ink); }
+.avu-filters button[aria-pressed="true"] { color: var(--avu-ink); border-color: currentColor; }
+
+/* ---------- Producer list grouped by region (for many producers) ---------- */
+.avu-region { display: grid; grid-template-columns: 220px 1fr; gap: 16px 32px; padding: 28px 0; border-top: 1px solid var(--avu-line); }
+.avu-region[hidden] { display: none; }
+.avu-region h3 { font: 300 26px/1.2 var(--avu-f-sans); margin: 0; }
+.avu-region h3 small { display: block; margin-top: 6px; font: 600 11px/1.4 var(--avu-f-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--avu-label); }
+.avu-region ul { list-style: none; margin: 0; padding: 0; columns: 3 200px; column-gap: 32px; }
+.avu-region li { break-inside: avoid; padding: 6px 0 10px; font: 400 16px/1.4 var(--avu-f-sans); }
+.avu-region li span { display: block; font: italic 400 14px/1.4 var(--avu-f-serif); color: var(--avu-label); }
+.avu-region li a { font: 600 11px/1.8 var(--avu-f-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--avu-gold-deep); text-decoration: none; }
+@media (max-width: 700px) { .avu-region { grid-template-columns: 1fr; } }

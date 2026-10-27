@@ -18,10 +18,12 @@ Read this before writing any number, quote, membership term or founder fact. Eac
 
 - **Never mention ARVI**, anywhere: copy, alt text, captions, file names, code comments, metadata.
 - **Fabio Cattaneo's story comes only from the Forbes Italia interview** (forbes.it, 9 October 2026, "Fabio Cattaneo, AVU, business globale vini lusso": https://forbes.it/2026/10/09/fabio-cattaneo-avu-business-globale-vini-lusso). Do not add facts from elsewhere, and do not name his former employer.
-- **"Among the largest buyers of Mouton Rothschild and Cheval Blanc" is AVU's own statement**, not an endorsement by the châteaux. Never present it as a quote from them.
+- **"Among the largest buyers of Mouton Rothschild, Cheval Blanc and many other top estates" is AVU's own statement**, not an endorsement by the châteaux. Never present it as a quote from them.
+- **The homepage names no estates.** It says AVU is among the largest buyers of many of the world's top estates. Estate names, these two included, appear on the Producers page among many producers.
 - **Producer endorsements only on the record.** A statement from an owner, CEO or estate director counts only when filmed or written and approved in writing by the estate. Until then the slot shows a clearly marked placeholder.
 - **Photos are licensed** (photographer Marco Reggi). Never commit them to a public repository and never write Google Drive links or file IDs into anything public.
-- **No prices, no cart.** AVU sells through personal contact; the action is always an enquiry or an invitation request.
+- **AVU does not sell online** (confirmed by AVU): no shop, prices, stock list, "in stock" labels or product pages. The action is always an enquiry, an invitation request or a visit.
+- **Rare bottles are examples of rarity**, not an offer. They may no longer be available, so they carry no price, availability or enquiry button.
 
 ## 2. Who AVU is
 
@@ -47,7 +49,7 @@ UVA–AVU: AVU read backwards is UVA, the grape. A quiet philosophy thread: "The
 
 | Fact | Wording to use | Source | Status |
 | --- | --- | --- | --- |
-| Among the largest buyers of Mouton Rothschild and Cheval Blanc | "AVU is among the largest buyers of Mouton Rothschild and Cheval Blanc." | Fabio's brief | AVU's claim; usable as AVU's own statement |
+| Among the largest buyers of top estates | Home: "AVU is among the largest buyers of many of the world's top estates." Producers: "Today AVU is among the largest buyers of Mouton Rothschild, Cheval Blanc and many other top estates." | Fabio's brief | AVU's claim; usable as AVU's own statement |
 | 600,000+ bottles | "600,000+ Bottles in stock" | Fabio's brief and mockup | Confirm current count and what is counted |
 | 400+ producers | "400+ Producers in our selection" | Mockup | Never "partners" or "partnerships" |
 | 5 warehouses | "5 Warehouses" | Mockup | Confirm number and what counts as a warehouse |
@@ -122,7 +124,7 @@ Episodes used in the mockup:
 
 Selected producers shown in the constellation (12 of the 400+): Bordeaux: Mouton Rothschild, Latour, Lynch-Bages, Margaux, Cheval Blanc, Le Pin. Champagne: Krug, Dom Pérignon, Louis Roederer, Billecart-Salmon. Tuscany: Masseto, Ornellaia.
 
-Rare bottles shown in the mockup: Giacomo Conterno Barolo Riserva Monfortino; Domaine de la Romanée-Conti La Tâche; Soldera Case Basse. Vintage and format: to be confirmed by AVU from the current stock list.
+Rare bottles in the mockups, shown as examples of rarity (not for sale, so no vintage, format or price): Giacomo Conterno Barolo Riserva Monfortino; Domaine de la Romanée-Conti La Tâche; Soldera Case Basse; Tenuta San Guido Sassicaia; Pétrus.
 
 Planned: filmed producer conversations from a Bordeaux trip. Until approved statements exist, show the "Producer conversations" slot as a marked placeholder.
 
@@ -140,7 +142,7 @@ Contact form topics and the button text each one sets:
 | Topic | Button |
 | --- | --- |
 | A general enquiry | Send your enquiry |
-| A specific wine | Enquire about this wine |
+| Looking for a rare bottle | Ask us to find a bottle |
 | An invitation to AVU Membership | Request an invitation |
 | A visit to Melide or The Wine Club | Plan your visit |
 

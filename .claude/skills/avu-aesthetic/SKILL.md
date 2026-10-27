@@ -67,20 +67,25 @@ Two button systems only: a solid dark rectangle for the one main action of a blo
 
 ## Page architecture
 
-The agreed homepage order (keep it unless the user changes it):
+The agreed sitemap, taken line by line from Fabio's brief (keep it unless the user changes it):
+
+Home · Producers · Rare Bottles · Stock & Storage · Personal Wine Butler · Worldwide Delivery · The Wine Club & Experiences · Membership · About AVU · Contact
+
+**AVU does not sell online.** No shop, no prices, no "in stock" labels, no product pages. The only transaction is an enquiry, an invitation request or a visit.
+
+Nine sections do not fit a split header bar, so the header is Menu on the left, the logo centred, Contact and EN / DE on the right; the menu opens a full-screen list (patek.com works the same way).
+
+Homepage order (general information only, **no estate names**):
 
 1. **First screen** — film of the building (wide → medium → close), one headline, one line saying what AVU is ("A Swiss fine wine merchant serving private clients worldwide."), one link (Request an invitation). The shade sits behind the text, not over the whole picture.
-2. **Statement and proof of scale** — one centred sentence, four facts with exact labels, the Forbes Italia link.
-3. **Producers** — filmed producer conversations (when approved), AVU Wine Stories episodes, a compact constellation of selected producers.
-4. **Stock, storage and rare bottles** — a spread with the shop film framed beside three proofs (sourced, stored, checked), then three bottle cards.
-5. **Personal service** — Personal Wine Butler and worldwide delivery in one spread, with the Los Angeles case.
-6. **The Wine Club** — full-screen evening film, lower on the page.
-7. **Membership** — Silver, Gold, Platinum explained, separate from The Wine Club.
-8. **Our story** — Fabio's portrait, the Forbes facts, one value with its proof.
-9. **Contact** — visit Melide on one side, "Speak to our team" with a topic selector on the other.
-10. **Footer** — dark, logo, phone and email, link columns, the UVA line.
+2. **Statement and proof of scale** — AVU is among the largest buyers of many of the world's top estates and serves private clients across the globe; four facts with exact labels; the Forbes Italia link.
+3. **The six pillars** — each a picture, one line and a link to its page.
+4. **The Wine Club** — full-screen evening film with the experiences, lower on the page.
+5. **Membership** — Silver, Gold, Platinum in one row.
+6. **Founder** — Fabio's portrait, two lines, link to About AVU.
+7. **Contact** — visit Melide on one side, "Speak to our team" with a topic selector on the other; then the dark footer with the UVA line.
 
-Three films at most per page. Inner pages (Our Wines, a bottle, Producers, Services, The Wine Club, Membership, Our story) have templates in `references/patterns.md`.
+Three films at most per page. Every inner page has a template in `references/patterns.md`.
 
 ## Photography and film
 
@@ -99,14 +104,16 @@ Three films at most per page. Inner pages (Our Wines, a bottle, Producers, Servi
 - English first (German second). Plain, calm, exact. Short sentences, active voice, "we" for AVU.
 - Headlines of two to seven words in sentence case; one supporting line under them.
 - Specific beats grand: "The vast majority of our collection is physically owned by AVU" (AVU's own wording), not "all our wine is ours".
-- Names of things people recognise: Personal Wine Butler (with the explanation "your dedicated private wine advisor"), The Wine Club (a place), AVU Membership (a status), Our Wines, Our story.
-- Button text states the result: "Enquire about this wine", "Request an invitation", "Read the Forbes Italia interview", "Plan your visit". Never "Learn more" or "Click here".
+- Names of things people recognise: Personal Wine Butler (with the explanation "your dedicated private wine advisor"), The Wine Club (a place), AVU Membership (a status), Rare Bottles, Stock & Storage, About AVU.
+- Button text states the result: "Request an invitation", "Speak to an advisor", "Plan your visit", "Read the Forbes Italia interview". Never "Learn more" or "Click here".
 - No prices, no carts, no "Exclusive!" badges, no exclamation marks.
 - A claim about a producer relationship needs a source. An AVU Wine Stories film is editorial, not an endorsement; only a filmed statement approved in writing by the estate counts as one.
 
 ## AVU-specific rules
 
 - **Logo:** `assets/avu-logo-lockup.svg` (horizontal, as on the building's sign) in the header; `assets/avu-logo-mark.svg` (mark with AVU) as an emblem; `assets/avu-logo-full.svg` (stacked, with LUXURY WINES) in the footer. All use `currentColor`: white over films, brand gold on cream, light gold on night. Never stretch, recolour outside the palette or redraw.
+- **Estate names:** the homepage names no estates. Producer names, Mouton Rothschild and Cheval Blanc included, appear on the Producers page, among many others.
+- **Rare bottles are examples of rarity**, not an offer: photo, producer, wine and one line on why it is rare. No price, availability or enquiry button per bottle; one general "Looking for a rare bottle? Speak to our team" at the end.
 - **UVA–AVU:** AVU read backwards is UVA, Italian for grape. Keep it a quiet thread: the footer line "The grape · The producer · The terroir · The vintage · The bottle" and one sentence on the About page. No animations or gimmicks built on it.
 - **Facts and sources:** read `references/avu-facts.md` before writing any number, membership term, warehouse, founder fact or quote. It also lists what is still unconfirmed and what must never appear.
 
@@ -116,11 +123,14 @@ Three films at most per page. Inner pages (Our Wines, a bottle, Producers, Servi
 - Use pure white or pure black grounds, more than one accent colour, rounded pill buttons, drop shadows on cards, or emoji.
 - Put two full-screen photo blocks with centred captions back to back, or more than three films on a page.
 - Invent vintages, formats, prices, client counts, quotes, awards or endorsements.
+- Build a shop, product pages, prices or "in stock" labels: AVU does not sell online.
+- Name estates on the homepage.
 - Show the building from the unwatermarked pre-pavilion photos.
 
 ## Checklist before showing a page
 
 - [ ] The first screen says what AVU is, and there is exactly one action on it.
+- [ ] The homepage names no estates; rare bottles carry no price, availability or per-bottle enquiry.
 - [ ] Every block has one job, one headline, one action; button text says what happens.
 - [ ] Rhythm alternates big frame, light spread and compact object block; grounds alternate cream, paper and night.
 - [ ] Only tokens from `avu-tokens.css`; small text uses `--avu-label` or `--avu-gold-deep`, never `--avu-gold`.

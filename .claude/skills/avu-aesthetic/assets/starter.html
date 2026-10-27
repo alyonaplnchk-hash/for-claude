@@ -4,294 +4,243 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AVU Page Starter</title>
-<!-- AVU starter page. Copy this folder (tokens, components, film.js, constellation.js) next to it.
-     Photos: put AVU's photos in photos/ (they are licensed and never go in a public repo).
-     Blocks and page templates: references/patterns.md. Facts and approved copy: references/avu-facts.md. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
 <link rel="stylesheet" href="avu-tokens.css">
 <link rel="stylesheet" href="avu-components.css">
+<style>
+/* AVU page starter: the agreed homepage. Copy it next to avu-tokens.css, avu-components.css and film.js,
+   and put AVU's photos in photos/ (they are licensed and never go in a public repository).
+   Inner pages: references/patterns.md. Facts and approved copy: references/avu-facts.md. */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--avu-night); }
+html.menu-open { overflow: hidden; }
+.gap-top { margin-top: clamp(64px, 8vw, 112px); }
+.more { margin-top: 36px; text-align: center; }
+.copy { max-width: var(--avu-measure); margin: 0 auto; }
+.langs { font: 300 clamp(26px, 3.4vw, 44px)/1.3 var(--avu-f-sans); letter-spacing: -.01em; max-width: 20em; margin: 0 auto 18px; text-wrap: balance; }
+.source-card { aspect-ratio: 4 / 5; display: flex; flex-direction: column; justify-content: center; padding: clamp(24px, 3vw, 40px); background: var(--avu-paper); border: 1px solid var(--avu-line); }
+.source-card .avu-h3 { margin-bottom: 12px; }
+.source-card p { font-size: 17px; color: var(--avu-ink-2); }
+@media (max-width: 860px) { .source-card { aspect-ratio: auto; } }
+.mock-note { margin-top: 18px; font-size: 12px; opacity: .7; max-width: 60em; }
+</style>
 </head>
 <body>
-
-<header class="avu-header" id="top-bar">
+<header class="avu-header avu-header--menu" id="top-bar">
   <div class="avu-wrap avu-header__inner">
-    <nav class="avu-nav" aria-label="Main, left">
-      <a href="#wines">Our Wines</a>
-      <a href="#producers">Producers</a>
-      <a href="#service">Services</a>
-      <a href="#club">The Wine Club</a>
-    </nav>
-    <button class="avu-menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav">Menu</button>
-    <a class="avu-wordmark" href="#top" aria-label="AVU Luxury Wines, back to top"><svg viewBox="0 0 141 31.9" aria-hidden="true" focusable="false" fill="currentColor"><g transform="translate(-8.3 -3.6)"><path d="M15.6,11.5c1.9,0.2,3.4,1.5,4.3,3.2c0.7,1.3,1.3,2.6,1.8,4c2,4.7,4.2,10.2,6.3,14.9c0,0.1,0.2,0.4,0.2,0.4 s0.1-0.1,0.7-0.2c3.3-0.9,6.4-4,6.6-7.4c0.2-2.7,0.1-5.5,0.2-8.2c0-1,0-1.9,0-2.9V3.6L49,3.7c0,0-0.1,14.4,0,21 c0.1,4.7-2.5,7.9-6.7,9.5c-2.4,0.9-4.8,1.3-7.4,1.3c-3,0-6.1,0-9.1-0.1c-3.3,0-5.5-1.6-6.8-4.4c-1.6-3.5-3-7.1-4.6-10.6 c-0.9-2-1.8-4-2.8-5.9c-0.7-1.3-1.7-2.4-3.3-3.2C10.9,11.4,13.2,11.3,15.6,11.5"/></g><g transform="translate(46.7 0) scale(1.5871) translate(-2.7 -39.4)"><path d="M48.2,39.7h-4.2V40h2v4.4c0,0.5,0,1,0,1.5c0,1.3-0.2,2.5-1.3,3.3c-1.7,1.4-3.4,0.3-3.6,0.1 c-0.5-0.5-0.8-1.2-0.8-2c0-2.5,0-5,0-7.5H38v0h-0.7v0h-2.1L35,40l-3.3,7.5l-3.2-7.9H26v0h-1.6V40h1.8l4.5,10.7L35.4,40H38l0,0h0 v6.4c0,3,2.2,4.3,4.3,4.3c1.7,0,3-1.3,3.7-2.7h0v2.5h4.2v-0.3h-2L48.2,39.7L48.2,39.7z"/><polygon points="26.8,50.2 25,50.2 20.5,39.4 15.8,50.2 14.6,50.2 14.6,50.5 16,50.5 16.1,50.2 19.5,42.6 21.1,46.7 19.4,46.7 19.4,47.6 21.5,47.6 22.7,50.5 25.3,50.5 25.3,50.5 26.8,50.5 "/><polygon points="2.7,59.4 2.7,56.1 3.4,56.1 3.4,59.1 6.6,59.1 6.6,59.4 "/><path d="M7.6,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3C8.8,58.9,9,59,9.2,59s0.4,0.1,0.6,0.1 s0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2H12v2.2c0,0.2-0.1,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3s-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2c-0.2-0.1-0.4-0.2-0.5-0.3 C7.7,58.6,7.6,58.5,7.6,58.3"/><polygon points="12.9,59.4 14.9,57.7 13.1,56.1 13.8,56.1 15.2,57.4 16.6,56.1 17.4,56.1 15.6,57.7 17.5,59.4 16.7,59.4 15.2,58 13.7,59.4 "/><path d="M18.5,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3s0.2,0.2,0.3,0.3S19.8,59,20,59c0.2,0,0.4,0.1,0.6,0.1 c0.2,0,0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2s0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2h0.7v2.2c0,0.2,0,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3c-0.2,0.1-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2 c-0.2-0.1-0.3-0.2-0.5-0.3C18.5,58.6,18.5,58.5,18.5,58.3"/><path d="M24.5,59.4v-3.3h2.4c0.3,0,0.5,0,0.8,0.1s0.4,0.1,0.6,0.2c0.2,0.1,0.3,0.2,0.4,0.3c0.1,0.1,0.1,0.2,0.1,0.4 c0,0.2-0.1,0.4-0.4,0.6s-0.6,0.2-1,0.3l1.5,1.5h-0.8l-1.4-1.5h-1.5v1.5L24.5,59.4L24.5,59.4z M25.2,57.6h1.7c0.4,0,0.7,0,0.9-0.2 c0.2-0.1,0.4-0.2,0.4-0.5s-0.1-0.3-0.4-0.5c-0.2-0.1-0.5-0.2-0.9-0.2h-1.7V57.6z"/><polygon points="29.4,56.1 30.1,56.1 31.6,57.7 33.1,56.1 33.8,56.1 32,58 32,59.4 31.3,59.4 31.3,58 "/><polygon points="36.2,56.1 36.9,56.1 38.1,58.7 39.5,56.1 40.1,56.1 41.4,58.7 42.6,56.1 43.3,56.1 41.8,59.3 41.2,59.3 39.8,56.7 38.4,59.3 37.8,59.3 "/><rect x="44.4" y="56.1" width="0.7" height="3.2"/><polygon points="46.8,59.3 46.8,56.1 47.5,56.1 50.7,58.7 50.7,56.1 51.4,56.1 51.4,59.3 50.8,59.3 47.5,56.8 47.5,59.3 "/><polygon points="53.2,59.3 53.2,56.1 57,56.1 57,56.4 53.8,56.4 53.8,57.6 56.6,57.6 56.6,57.9 53.8,57.9 53.8,59 57,59 57,59.3 "/><path d="M57.9,58.9l0.5-0.2c0.2,0.1,0.5,0.2,0.8,0.3c0.3,0,0.6,0.1,0.9,0.1c0.5,0,0.8,0,1.1-0.2 c0.3-0.1,0.4-0.2,0.4-0.4c0-0.1,0-0.2-0.1-0.2s-0.1-0.1-0.2-0.2C61.1,58,61,58,60.8,58c-0.1,0-0.3,0-0.5-0.1l-0.7-0.1 c-0.5,0-0.9-0.1-1.1-0.2C58.2,57.4,58,57.2,58,57c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.4-0.3s0.4-0.1,0.6-0.2 c0.2,0,0.5-0.1,0.8-0.1c0.4,0,0.7,0,1,0.1c0.3,0.1,0.6,0.2,0.8,0.3l-0.4,0.2c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.5-0.1-0.8-0.1 c-0.4,0-0.7,0-1,0.2c-0.2,0.1-0.3,0.2-0.3,0.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0,0.2,0.1,0.3,0.1c0.1,0,0.3,0,0.4,0.1l0.7,0.1 c0.2,0,0.3,0,0.4,0c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3,0.1s0.2,0,0.2,0.1c0.4,0.2,0.6,0.4,0.6,0.7c0,0.1,0,0.3-0.2,0.4 c-0.1,0.1-0.2,0.2-0.4,0.3c-0.2,0.1-0.4,0.1-0.7,0.2c-0.3,0-0.5,0.1-0.9,0.1c-0.5,0-0.9,0-1.2-0.1C58.5,59.2,58.2,59.1,57.9,58.9"/></g></svg></a>
-    <nav class="avu-nav avu-nav--right" aria-label="Main, right">
-      <a href="#membership">Membership</a>
-      <a href="https://www.youtube.com/@AVUWineStories" target="_blank" rel="noopener">Stories</a>
-      <a href="#contact">Contact</a>
-      <span class="avu-lang"><b>EN</b><span aria-disabled="true">DE</span></span>
-    </nav>
-    <span class="avu-lang avu-lang--mobile"><b>EN</b><span aria-disabled="true">DE</span></span>
+    <button class="avu-menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <a class="avu-wordmark" href="#home" aria-label="AVU Luxury Wines, home"><svg viewBox="0 0 141 31.9" aria-hidden="true" focusable="false" fill="currentColor"><g transform="translate(-8.3 -3.6)"><path d="M15.6,11.5c1.9,0.2,3.4,1.5,4.3,3.2c0.7,1.3,1.3,2.6,1.8,4c2,4.7,4.2,10.2,6.3,14.9c0,0.1,0.2,0.4,0.2,0.4 s0.1-0.1,0.7-0.2c3.3-0.9,6.4-4,6.6-7.4c0.2-2.7,0.1-5.5,0.2-8.2c0-1,0-1.9,0-2.9V3.6L49,3.7c0,0-0.1,14.4,0,21 c0.1,4.7-2.5,7.9-6.7,9.5c-2.4,0.9-4.8,1.3-7.4,1.3c-3,0-6.1,0-9.1-0.1c-3.3,0-5.5-1.6-6.8-4.4c-1.6-3.5-3-7.1-4.6-10.6 c-0.9-2-1.8-4-2.8-5.9c-0.7-1.3-1.7-2.4-3.3-3.2C10.9,11.4,13.2,11.3,15.6,11.5"/></g><g transform="translate(46.7 0) scale(1.5871) translate(-2.7 -39.4)"><path d="M48.2,39.7h-4.2V40h2v4.4c0,0.5,0,1,0,1.5c0,1.3-0.2,2.5-1.3,3.3c-1.7,1.4-3.4,0.3-3.6,0.1 c-0.5-0.5-0.8-1.2-0.8-2c0-2.5,0-5,0-7.5H38v0h-0.7v0h-2.1L35,40l-3.3,7.5l-3.2-7.9H26v0h-1.6V40h1.8l4.5,10.7L35.4,40H38l0,0h0 v6.4c0,3,2.2,4.3,4.3,4.3c1.7,0,3-1.3,3.7-2.7h0v2.5h4.2v-0.3h-2L48.2,39.7L48.2,39.7z"/><polygon points="26.8,50.2 25,50.2 20.5,39.4 15.8,50.2 14.6,50.2 14.6,50.5 16,50.5 16.1,50.2 19.5,42.6 21.1,46.7 19.4,46.7 19.4,47.6 21.5,47.6 22.7,50.5 25.3,50.5 25.3,50.5 26.8,50.5 "/><polygon points="2.7,59.4 2.7,56.1 3.4,56.1 3.4,59.1 6.6,59.1 6.6,59.4 "/><path d="M7.6,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3C8.8,58.9,9,59,9.2,59s0.4,0.1,0.6,0.1 s0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2H12v2.2c0,0.2-0.1,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3s-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2c-0.2-0.1-0.4-0.2-0.5-0.3 C7.7,58.6,7.6,58.5,7.6,58.3"/><polygon points="12.9,59.4 14.9,57.7 13.1,56.1 13.8,56.1 15.2,57.4 16.6,56.1 17.4,56.1 15.6,57.7 17.5,59.4 16.7,59.4 15.2,58 13.7,59.4 "/><path d="M18.5,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3s0.2,0.2,0.3,0.3S19.8,59,20,59c0.2,0,0.4,0.1,0.6,0.1 c0.2,0,0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2s0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2h0.7v2.2c0,0.2,0,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3c-0.2,0.1-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2 c-0.2-0.1-0.3-0.2-0.5-0.3C18.5,58.6,18.5,58.5,18.5,58.3"/><path d="M24.5,59.4v-3.3h2.4c0.3,0,0.5,0,0.8,0.1s0.4,0.1,0.6,0.2c0.2,0.1,0.3,0.2,0.4,0.3c0.1,0.1,0.1,0.2,0.1,0.4 c0,0.2-0.1,0.4-0.4,0.6s-0.6,0.2-1,0.3l1.5,1.5h-0.8l-1.4-1.5h-1.5v1.5L24.5,59.4L24.5,59.4z M25.2,57.6h1.7c0.4,0,0.7,0,0.9-0.2 c0.2-0.1,0.4-0.2,0.4-0.5s-0.1-0.3-0.4-0.5c-0.2-0.1-0.5-0.2-0.9-0.2h-1.7V57.6z"/><polygon points="29.4,56.1 30.1,56.1 31.6,57.7 33.1,56.1 33.8,56.1 32,58 32,59.4 31.3,59.4 31.3,58 "/><polygon points="36.2,56.1 36.9,56.1 38.1,58.7 39.5,56.1 40.1,56.1 41.4,58.7 42.6,56.1 43.3,56.1 41.8,59.3 41.2,59.3 39.8,56.7 38.4,59.3 37.8,59.3 "/><rect x="44.4" y="56.1" width="0.7" height="3.2"/><polygon points="46.8,59.3 46.8,56.1 47.5,56.1 50.7,58.7 50.7,56.1 51.4,56.1 51.4,59.3 50.8,59.3 47.5,56.8 47.5,59.3 "/><polygon points="53.2,59.3 53.2,56.1 57,56.1 57,56.4 53.8,56.4 53.8,57.6 56.6,57.6 56.6,57.9 53.8,57.9 53.8,59 57,59 57,59.3 "/><path d="M57.9,58.9l0.5-0.2c0.2,0.1,0.5,0.2,0.8,0.3c0.3,0,0.6,0.1,0.9,0.1c0.5,0,0.8,0,1.1-0.2 c0.3-0.1,0.4-0.2,0.4-0.4c0-0.1,0-0.2-0.1-0.2s-0.1-0.1-0.2-0.2C61.1,58,61,58,60.8,58c-0.1,0-0.3,0-0.5-0.1l-0.7-0.1 c-0.5,0-0.9-0.1-1.1-0.2C58.2,57.4,58,57.2,58,57c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.4-0.3s0.4-0.1,0.6-0.2 c0.2,0,0.5-0.1,0.8-0.1c0.4,0,0.7,0,1,0.1c0.3,0.1,0.6,0.2,0.8,0.3l-0.4,0.2c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.5-0.1-0.8-0.1 c-0.4,0-0.7,0-1,0.2c-0.2,0.1-0.3,0.2-0.3,0.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0,0.2,0.1,0.3,0.1c0.1,0,0.3,0,0.4,0.1l0.7,0.1 c0.2,0,0.3,0,0.4,0c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3,0.1s0.2,0,0.2,0.1c0.4,0.2,0.6,0.4,0.6,0.7c0,0.1,0,0.3-0.2,0.4 c-0.1,0.1-0.2,0.2-0.4,0.3c-0.2,0.1-0.4,0.1-0.7,0.2c-0.3,0-0.5,0.1-0.9,0.1c-0.5,0-0.9,0-1.2-0.1C58.5,59.2,58.2,59.1,57.9,58.9"/></g></svg></a>
+    <div class="avu-header__end">
+      <a class="avu-hide-sm" href="#contact">Contact</a>
+      <span class="avu-lang"><b>EN</b><span aria-disabled="true" title="The German version follows once the English one is approved">DE</span></span>
+    </div>
   </div>
 </header>
-<nav class="avu-mobile-nav" id="mobile-nav" aria-label="Main">
-  <a href="#wines">Our Wines</a>
-  <a href="#producers">Producers</a>
-  <a href="#service">Personal Wine Butler</a>
-  <a href="#club">The Wine Club</a>
-  <a href="#membership">Membership</a>
-  <a href="#contact">Contact</a>
-</nav>
+<div class="avu-menu" id="site-menu">
+  <div class="avu-wrap avu-menu__grid">
+    <nav aria-label="Main">
+      <ul class="avu-menu__main">
+        <li><a href="#producers" data-nav="producers">Producers</a></li>
+        <li><a href="#rare-bottles" data-nav="rare-bottles">Rare Bottles</a></li>
+        <li><a href="#stock-storage" data-nav="stock-storage">Stock &amp; Storage</a></li>
+        <li><a href="#butler" data-nav="butler">Personal Wine Butler</a></li>
+        <li><a href="#delivery" data-nav="delivery">Worldwide Delivery</a></li>
+        <li><a href="#club" data-nav="club">The Wine Club &amp; Experiences</a></li>
+        <li><a href="#membership" data-nav="membership">Membership</a></li>
+        <li><a href="#about" data-nav="about">About AVU</a></li>
+        <li><a href="#contact" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="avu-menu__side">
+      <h4>Visit</h4>
+      <p>AVU SA Building<br>Via Carona 2, 6815 Melide, Switzerland<br>+41 91 252 48 88<br>members@avu.wine</p>
+      <h4 style="margin-top:32px">Follow</h4>
+      <p><a href="https://www.youtube.com/@AVUWineStories" target="_blank" rel="noopener">AVU Wine Stories</a><br><a href="https://www.instagram.com/avu_sa/" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.linkedin.com/company/avu-sa/" target="_blank" rel="noopener">LinkedIn</a></p>
+    </div>
+  </div>
+</div>
 
-<main id="top">
-  <!-- Big frame: first-screen film -->
+<main>
+
+<!-- ================= HOME: general information, no estate names ================= -->
+<div class="view" data-view="home" data-film-top>
   <section class="avu-film" data-film="building" aria-label="The AVU SA Building in Melide">
     <div class="avu-film__stage"></div>
     <div class="avu-film__caption avu-wrap">
       <p class="avu-eyebrow">Melide · Lake Lugano · Switzerland</p>
       <h1 class="avu-display avu-h1">Access to the world's greatest wines</h1>
       <p class="avu-film__line">A Swiss fine wine merchant serving private clients worldwide.</p>
-      <a class="avu-link" href="#membership">Request an invitation</a>
+      <a class="avu-link" href="#membership" data-topic="membership">Request an invitation</a>
     </div>
     <p class="avu-film__place">The AVU SA Building · Melide</p>
-    <button class="avu-film__pause" aria-pressed="false" aria-label="Pause film"></button>
+    <button class="avu-film__pause" type="button" aria-pressed="false" aria-label="Pause film"></button>
   </section>
 
-  <!-- Compact: statement and facts -->
-  <section class="avu-statement-block avu-wrap avu-reveal" aria-labelledby="statement-title">
+  <section class="avu-statement-block avu-wrap" aria-labelledby="home-statement">
     <p class="avu-eyebrow">AVU · Since 2016</p>
-    <h2 id="statement-title" class="avu-statement">AVU is among the largest buyers of Mouton Rothschild and Cheval Blanc. These long-standing relationships give our private clients access to exceptional wines.</h2>
+    <h2 id="home-statement" class="avu-statement">AVU is among the largest buyers of many of the world's top estates. Our relationships with producers give private clients across the globe access to exceptional wines.</h2>
     <div class="avu-facts">
       <div class="avu-fact"><div class="avu-fact__n">600,000+</div><div class="avu-fact__l">Bottles in stock</div></div>
       <div class="avu-fact"><div class="avu-fact__n">400+</div><div class="avu-fact__l">Producers in our selection</div></div>
       <div class="avu-fact"><div class="avu-fact__n">5</div><div class="avu-fact__l">Warehouses</div></div>
       <div class="avu-fact"><div class="avu-fact__n">85</div><div class="avu-fact__l">Team members</div></div>
     </div>
+    <p class="avu-note" style="margin-top:18px">Figures to be confirmed by AVU before launch.</p>
+    <p>Featured in Forbes Italia <a class="avu-link" href="https://forbes.it/2026/10/09/fabio-cattaneo-avu-business-globale-vini-lusso" target="_blank" rel="noopener" style="margin-left:10px">Read the interview ↗</a></p>
   </section>
 
-  <!-- Night: producers and the constellation -->
-  <section id="producers" class="avu-section avu-band--night avu-on-dark" aria-labelledby="producers-title" style="overflow:hidden">
+  <section class="avu-section avu-band--paper" aria-labelledby="home-pillars">
     <div class="avu-wrap">
       <div class="avu-head">
-        <p class="avu-eyebrow">Producers</p>
-        <h2 id="producers-title" class="avu-display avu-h2">Relationships that open cellar doors</h2>
-        <p class="avu-lede">Long-term relationships with the world's finest producers create opportunities that simply cannot be bought.</p>
+        <p class="avu-eyebrow">What makes AVU exceptional</p>
+        <h2 id="home-pillars" class="avu-display avu-h2">Why clients trust AVU</h2>
       </div>
-      <div class="avu-cards">
-        <div class="avu-card avu-card--pending">
-          <p class="avu-eyebrow avu-eyebrow--left">Producer conversations</p>
-          <h3 class="avu-display avu-h3">In their own words</h3>
-          <p>Owners and directors of leading estates on working with AVU, filmed on our visits to their cellars.</p>
-          <p class="avu-note">Placeholder: published only with the estate's written approval.</p>
-        </div>
-        <div class="avu-card">
-          <p class="avu-eyebrow avu-eyebrow--left">AVU Wine Stories</p>
-          <h3 class="avu-display avu-h3">The history behind great estates</h3>
-          <ul class="avu-episodes">
-            <li><a href="https://www.youtube.com/watch?v=Rkzcw_c3QbA" target="_blank" rel="noopener"><span>Château Mouton Rothschild: ambition, art and excellence</span><span>Watch ↗</span></a></li>
-            <li><a href="https://www.youtube.com/watch?v=J9AGlVDvncU" target="_blank" rel="noopener"><span>Château Cheval Blanc: the symphony of 56 parcels</span><span>Watch ↗</span></a></li>
-          </ul>
-          <a class="avu-link" href="https://www.youtube.com/@AVUWineStories" target="_blank" rel="noopener">All episodes on YouTube ↗</a>
-        </div>
-      </div>
-      <div style="margin-top:clamp(56px,7vw,88px);text-align:center">
-        <h3 class="avu-display avu-h3">Selected producers</h3>
-        <p class="avu-note">Each point of light is one of the more than 400 producers in our selection.</p>
-        <div class="avu-sky">
-          <canvas aria-hidden="true"></canvas>
-          <div class="avu-sky__layer">
-            <svg viewBox="0 0 1000 620" aria-hidden="true" class="avu-sky__svg"></svg>
-            <div class="avu-sky__mark"><svg viewBox="8.3 3.6 41.9 47.1" aria-hidden="true" focusable="false" fill="currentColor"><path d="M15.6,11.5c1.9,0.2,3.4,1.5,4.3,3.2c0.7,1.3,1.3,2.6,1.8,4c2,4.7,4.2,10.2,6.3,14.9c0,0.1,0.2,0.4,0.2,0.4 s0.1-0.1,0.7-0.2c3.3-0.9,6.4-4,6.6-7.4c0.2-2.7,0.1-5.5,0.2-8.2c0-1,0-1.9,0-2.9V3.6L49,3.7c0,0-0.1,14.4,0,21 c0.1,4.7-2.5,7.9-6.7,9.5c-2.4,0.9-4.8,1.3-7.4,1.3c-3,0-6.1,0-9.1-0.1c-3.3,0-5.5-1.6-6.8-4.4c-1.6-3.5-3-7.1-4.6-10.6 c-0.9-2-1.8-4-2.8-5.9c-0.7-1.3-1.7-2.4-3.3-3.2C10.9,11.4,13.2,11.3,15.6,11.5"/><path d="M48.2,39.7h-4.2V40h2v4.4c0,0.5,0,1,0,1.5c0,1.3-0.2,2.5-1.3,3.3c-1.7,1.4-3.4,0.3-3.6,0.1 c-0.5-0.5-0.8-1.2-0.8-2c0-2.5,0-5,0-7.5H38v0h-0.7v0h-2.1L35,40l-3.3,7.5l-3.2-7.9H26v0h-1.6V40h1.8l4.5,10.7L35.4,40H38l0,0h0 v6.4c0,3,2.2,4.3,4.3,4.3c1.7,0,3-1.3,3.7-2.7h0v2.5h4.2v-0.3h-2L48.2,39.7L48.2,39.7z"/><polygon points="26.8,50.2 25,50.2 20.5,39.4 15.8,50.2 14.6,50.2 14.6,50.5 16,50.5 16.1,50.2 19.5,42.6 21.1,46.7 19.4,46.7 19.4,47.6 21.5,47.6 22.7,50.5 25.3,50.5 25.3,50.5 26.8,50.5 "/></svg></div>
-          </div>
-          <div class="avu-sky__info" aria-live="polite"><strong>Bordeaux, Champagne, Tuscany</strong>Hover over an estate to see its region and its AVU Wine Stories film.</div>
-        </div>
-        <div class="avu-sky-list"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Light spread, then compact object block -->
-  <section id="wines" class="avu-section" aria-labelledby="stock-title">
-    <div class="avu-wrap">
-      <div class="avu-spread avu-reveal">
-        <div class="avu-film avu-film--frame" data-film="shop" aria-label="The Wine Shop and its stock">
-          <div class="avu-film__stage"></div>
-          <button class="avu-film__pause" aria-pressed="false" aria-label="Pause film"></button>
-        </div>
-        <div class="avu-spread__text">
-          <p class="avu-eyebrow avu-eyebrow--left">Provenance and care</p>
-          <h2 id="stock-title" class="avu-display avu-h2">Unrivalled stock, ready to ship</h2>
-          <p class="avu-lede">The vast majority of our collection is physically owned by AVU and professionally stored in temperature-controlled warehouses.</p>
-          <ul class="avu-rules avu-proofs">
-            <li><b>Sourced</b><span>Through trusted relationships with leading producers and long-established partners.</span></li>
-            <li><b>Stored</b><span>In temperature- and humidity-controlled warehouses, with in-bond options.</span></li>
-            <li><b>Checked</b><span>We inspect every bottle personally before it leaves us.</span></li>
-          </ul>
-          <a class="avu-link" href="#contact">Discover our stock &amp; storage</a>
-        </div>
-      </div>
-
-      <div style="margin-top:clamp(64px,8vw,112px)">
-        <div class="avu-bottles__head">
-          <div>
-            <p class="avu-eyebrow avu-eyebrow--left">Rare bottles</p>
-            <h2 class="avu-display avu-h2">From our cellars</h2>
-          </div>
-          <p class="avu-note">Vintages and formats come from AVU's current stock list.</p>
-        </div>
-        <div class="avu-bottles__grid avu-bottles__grid--even">
-          <figure class="avu-bottle">
-            <div class="avu-ph">Photo: Monfortino on the backlit shelf</div>
-            <figcaption>
-              <div class="avu-bottle__producer">Giacomo Conterno</div>
-              <div class="avu-bottle__wine">Barolo Riserva Monfortino</div>
-              <p class="avu-bottle__why">Made only in the finest vintages.</p>
-              <p class="avu-bottle__meta">Vintage and format: to be confirmed by AVU</p>
-              <a class="avu-link" href="#contact" data-topic="wine">Enquire about this wine</a>
-            </figcaption>
-          </figure>
-          <figure class="avu-bottle">
-            <div class="avu-ph">Photo: DRC wooden cases</div>
-            <figcaption>
-              <div class="avu-bottle__producer">Domaine de la Romanée-Conti</div>
-              <div class="avu-bottle__wine">La Tâche</div>
-              <p class="avu-bottle__why">A Grand Cru monopole in Vosne-Romanée.</p>
-              <p class="avu-bottle__meta">Vintage and format: to be confirmed by AVU</p>
-              <a class="avu-link" href="#contact" data-topic="wine">Enquire about this wine</a>
-            </figcaption>
-          </figure>
-          <figure class="avu-bottle">
-            <div class="avu-ph">Photo: Soldera on the backlit shelf</div>
-            <figcaption>
-              <div class="avu-bottle__producer">Soldera</div>
-              <div class="avu-bottle__wine">Case Basse</div>
-              <p class="avu-bottle__why">Sangiovese from Montalcino, Tuscany.</p>
-              <p class="avu-bottle__meta">Vintage and format: to be confirmed by AVU</p>
-              <a class="avu-link" href="#contact" data-topic="wine">Enquire about this wine</a>
-            </figcaption>
-          </figure>
-        </div>
+      <div class="avu-pillars">
+        <a class="avu-pillar" href="#producers">
+          <div class="avu-pillar__img"><img src="photos/club-corridor.jpg" width="1000" height="667" alt="A corridor lined floor to ceiling with bottles in The Wine Club" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Trusted producer relationships</h3>
+          <p>Long-term relationships with the world's finest producers.</p>
+          <span class="avu-link">Our producers</span>
+        </a>
+        <a class="avu-pillar" href="#membership">
+          <div class="avu-pillar__img"><img src="photos/lounge-1.jpg" width="1000" height="667" alt="Armchairs in the lounge of the AVU SA Building" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Selective access to highly allocated wines</h3>
+          <p>Members hear first about new and limited releases.</p>
+          <span class="avu-link">Membership</span>
+        </a>
+        <a class="avu-pillar" href="#stock-storage">
+          <div class="avu-pillar__img"><img src="photos/shop-racks-close.jpg" width="2000" height="1125" alt="Bottles resting on brass racks in The Wine Shop" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Provenance and authenticity</h3>
+          <p>Most of our collection is owned by AVU and stored in temperature-controlled warehouses.</p>
+          <span class="avu-link">Stock &amp; Storage</span>
+        </a>
+        <a class="avu-pillar" href="#rare-bottles">
+          <div class="avu-pillar__img"><img src="photos/hero-cradle.jpg" width="2000" height="1125" alt="A brass decanting cradle holding a bottle in front of backlit shelves" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Rare and collectible bottles</h3>
+          <p>Examples of the rarities collectors ask us for.</p>
+          <span class="avu-link">Rare Bottles</span>
+        </a>
+        <a class="avu-pillar" href="#butler">
+          <div class="avu-pillar__img"><img src="photos/shop-advisor.jpg" width="2000" height="1333" alt="An AVU advisor showing a bottle to a client in The Wine Shop" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Personal service</h3>
+          <p>Your dedicated private wine advisor, in your language.</p>
+          <span class="avu-link">Personal Wine Butler</span>
+        </a>
+        <a class="avu-pillar" href="#delivery">
+          <div class="avu-pillar__img"><img src="photos/shop-gift.jpg" width="960" height="1200" alt="A bottle presented in its gift box, ready to be sent" loading="lazy"></div>
+          <h3 class="avu-pillar__name">Worldwide delivery</h3>
+          <p>To your home, your villa, your yacht or your private jet.</p>
+          <span class="avu-link">Worldwide Delivery</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Paper: personal service -->
-  <section id="service" class="avu-section avu-band--paper" aria-labelledby="service-title">
-    <div class="avu-wrap">
-      <div class="avu-head avu-reveal">
-        <p class="avu-eyebrow">Personal service</p>
-        <h2 id="service-title" class="avu-display avu-h2">We know your cellar, and we bring it to you</h2>
-      </div>
-      <div class="avu-duo">
-        <div>
-          <div class="avu-ph avu-ph--wide" style="margin-bottom:28px">Photo: an advisor with a client</div>
-          <p class="avu-eyebrow avu-eyebrow--left">Personal Wine Butler</p>
-          <h3 class="avu-display avu-h3">Your dedicated private wine advisor</h3>
-          <p>One advisor who knows your cellar and your tastes. Our multilingual team serves you in your language.</p>
-          <ul class="avu-rules">
-            <li>Builds and manages your collection</li>
-            <li>Tells you when each wine is ready to drink and what to serve with it</li>
-            <li>Organises tastings, wine trips and special requests</li>
-          </ul>
-        </div>
-        <div>
-          <div class="avu-ph avu-ph--wide" style="margin-bottom:28px">Photo: a bottle in its gift box</div>
-          <p class="avu-eyebrow avu-eyebrow--left">Worldwide delivery</p>
-          <h3 class="avu-display avu-h3">Worldwide delivery. Personally arranged.</h3>
-          <p>To your home, your villa, your yacht or your private jet, wherever the wine is needed.</p>
-          <div class="avu-case">
-            <b>When the occasion cannot wait</b>
-            <p>A client urgently needed a rare bottle in Los Angeles the very next day. One of our account managers took the first available flight to deliver it by hand.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Big frame lower on the page: The Wine Club -->
-  <section id="club" class="avu-film avu-film--section" data-film="club" aria-label="The Wine Club">
+  <section class="avu-film avu-film--section" data-film="club" aria-label="The Wine Club">
     <div class="avu-film__stage"></div>
     <div class="avu-film__caption avu-wrap">
       <p class="avu-eyebrow">The Wine Club · Melide</p>
       <h2 class="avu-display avu-h2">Around the table at AVU</h2>
       <p class="avu-film__line">Private dinners, tastings, producer visits and wine events in our pavilion in Melide.</p>
-      <a class="avu-link" href="#contact" data-topic="visit">Discover the Wine Club</a>
+      <a class="avu-link" href="#club">Discover The Wine Club</a>
     </div>
     <p class="avu-film__place">The pavilion, AVU SA Building</p>
-    <button class="avu-film__pause" aria-pressed="false" aria-label="Pause film"></button>
+    <button class="avu-film__pause" type="button" aria-pressed="false" aria-label="Pause film"></button>
   </section>
 
-  <!-- Compact: membership -->
-  <section id="membership" class="avu-section" style="text-align:center" aria-labelledby="membership-title">
-    <div class="avu-wrap avu-reveal">
+  <section class="avu-section" style="text-align:center" aria-labelledby="home-membership">
+    <div class="avu-wrap">
       <p class="avu-eyebrow">AVU Membership</p>
-      <h2 id="membership-title" class="avu-display avu-h2">Three levels of membership</h2>
+      <h2 id="home-membership" class="avu-display avu-h2">Three levels of membership</h2>
       <p class="avu-lede" style="margin-inline:auto">Membership sets your access to offers, new releases and personal services. It is separate from The Wine Club in Melide.</p>
       <div class="avu-tiers">
         <div class="avu-tier"><h3 class="avu-tier__name">Silver</h3><div class="avu-tier__how">When you join</div><p>Access to our collection and weekly offers, with a senior wine consultant to speak to directly.</p></div>
         <div class="avu-tier"><h3 class="avu-tier__name">Gold</h3><div class="avu-tier__how">Over CHF 50,000 a year</div><p>Priority on new and limited releases, your own wine advisor and invitations to tastings.</p></div>
         <div class="avu-tier"><h3 class="avu-tier__name">Platinum</h3><div class="avu-tier__how">By invitation only</div><p>The fullest way to experience everything AVU offers.</p></div>
       </div>
-      <a class="avu-btn" href="#contact" data-topic="membership">Request an invitation</a>
+      <a class="avu-link" href="#membership">Membership in detail</a>
     </div>
   </section>
 
-  <!-- Closing: visit and contact -->
-  <section id="contact" class="avu-section" aria-labelledby="contact-title">
-    <div class="avu-wrap">
-      <div class="avu-visit-card">
-        <div>
-          <div class="avu-visit__media">
-            <div class="avu-ph avu-ph--wide">Photo: the building with the pavilion</div>
-            <h2 class="avu-display avu-h3">Visit AVU in Melide</h2>
-          </div>
-          <address class="avu-address"><b>AVU SA Building</b><br>Via Carona 2, 6815 Melide, Switzerland<br>+41 91 252 48 88 · members@avu.wine</address>
-        </div>
-        <div>
-          <p class="avu-eyebrow avu-eyebrow--left">Contact</p>
-          <h2 id="contact-title" class="avu-display avu-h3">Speak to our team</h2>
-          <form class="avu-form" id="contact-form" novalidate>
-            <div><label for="f-topic">How can we help?</label>
-              <select id="f-topic" name="topic">
-                <option value="general">A general enquiry</option>
-                <option value="wine">A specific wine</option>
-                <option value="membership">An invitation to AVU Membership</option>
-                <option value="visit">A visit to Melide or The Wine Club</option>
-              </select></div>
-            <div class="avu-row">
-              <div><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name"></div>
-              <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
-            </div>
-            <div><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="2"></textarea></div>
-            <div><button class="avu-btn" type="submit" id="f-submit">Send your enquiry</button></div>
-            <p class="avu-form__done" id="form-done" aria-live="polite"></p>
-          </form>
-        </div>
+  <section class="avu-section avu-band--paper" aria-labelledby="home-founder">
+    <div class="avu-wrap avu-portrait-grid">
+      <figure class="avu-portrait">
+        <img src="photos/fabio.jpg" width="1200" height="1500" alt="Portrait of Fabio Cattaneo, founder of AVU" loading="lazy">
+        <figcaption>Fabio Cattaneo, founder</figcaption>
+      </figure>
+      <div>
+        <p class="avu-eyebrow avu-eyebrow--left">About AVU</p>
+        <h2 id="home-founder" class="avu-display avu-h2">A young house, built on relationships</h2>
+        <p class="avu-lede">Fabio Cattaneo founded AVU in 2016 with a clear choice: only the very top, and a personal service instead of a mass online shop.</p>
+        <a class="avu-link" href="#about">Read our story</a>
       </div>
     </div>
   </section>
+</div>
+
+<!-- ================= CLOSING CARD, under every page ================= -->
+<section class="avu-section" id="closing" aria-labelledby="closing-title">
+  <div class="avu-wrap">
+    <div class="avu-visit-card">
+      <div>
+        <div class="avu-visit__media">
+          <img src="photos/b-side.jpg" width="1000" height="667" alt="The AVU SA Building in Melide, with The Wine Club pavilion in front" loading="lazy">
+          <h2 class="avu-display avu-h3">Visit AVU in Melide</h2>
+        </div>
+        <address class="avu-address"><b>AVU SA Building</b><br>Via Carona 2, 6815 Melide, Switzerland<br>+41 91 252 48 88 · members@avu.wine</address>
+        <p class="avu-note">The Wine Shop and The Wine Club are in the AVU SA Building.</p>
+      </div>
+      <div>
+        <p class="avu-eyebrow avu-eyebrow--left">Contact</p>
+        <h2 id="closing-title" class="avu-display avu-h3">Speak to our team</h2>
+        <form class="avu-form" id="contact-form" novalidate>
+          <div><label for="f-topic">How can we help?</label>
+            <select id="f-topic" name="topic">
+              <option value="general">A general enquiry</option>
+              <option value="rare">Looking for a rare bottle</option>
+              <option value="membership">An invitation to AVU Membership</option>
+              <option value="visit">A visit to Melide or The Wine Club</option>
+            </select></div>
+          <div class="avu-row">
+            <div><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name"></div>
+            <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+          </div>
+          <div class="avu-row">
+            <div><label for="f-country">Country</label><input id="f-country" name="country" autocomplete="country-name"></div>
+            <div><label for="f-lang">Preferred language</label>
+              <select id="f-lang" name="lang"><option>English</option><option>Deutsch</option><option>Français</option><option>Italiano</option><option>Español</option></select></div>
+          </div>
+          <div><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="2"></textarea></div>
+          <div><button class="avu-btn" type="submit" id="f-submit">Send your enquiry</button></div>
+          <p class="avu-form__done" id="form-done" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="avu-footer">
   <div class="avu-wrap">
     <div class="avu-footer__grid">
       <div>
-        <a class="avu-wordmark" href="#top" aria-label="AVU Luxury Wines, back to top"><svg viewBox="2.7 3.6 59.3 55.9" aria-hidden="true" focusable="false" fill="currentColor"><path d="M15.6,11.5c1.9,0.2,3.4,1.5,4.3,3.2c0.7,1.3,1.3,2.6,1.8,4c2,4.7,4.2,10.2,6.3,14.9c0,0.1,0.2,0.4,0.2,0.4 s0.1-0.1,0.7-0.2c3.3-0.9,6.4-4,6.6-7.4c0.2-2.7,0.1-5.5,0.2-8.2c0-1,0-1.9,0-2.9V3.6L49,3.7c0,0-0.1,14.4,0,21 c0.1,4.7-2.5,7.9-6.7,9.5c-2.4,0.9-4.8,1.3-7.4,1.3c-3,0-6.1,0-9.1-0.1c-3.3,0-5.5-1.6-6.8-4.4c-1.6-3.5-3-7.1-4.6-10.6 c-0.9-2-1.8-4-2.8-5.9c-0.7-1.3-1.7-2.4-3.3-3.2C10.9,11.4,13.2,11.3,15.6,11.5"/><path d="M48.2,39.7h-4.2V40h2v4.4c0,0.5,0,1,0,1.5c0,1.3-0.2,2.5-1.3,3.3c-1.7,1.4-3.4,0.3-3.6,0.1 c-0.5-0.5-0.8-1.2-0.8-2c0-2.5,0-5,0-7.5H38v0h-0.7v0h-2.1L35,40l-3.3,7.5l-3.2-7.9H26v0h-1.6V40h1.8l4.5,10.7L35.4,40H38l0,0h0 v6.4c0,3,2.2,4.3,4.3,4.3c1.7,0,3-1.3,3.7-2.7h0v2.5h4.2v-0.3h-2L48.2,39.7L48.2,39.7z"/><polygon points="26.8,50.2 25,50.2 20.5,39.4 15.8,50.2 14.6,50.2 14.6,50.5 16,50.5 16.1,50.2 19.5,42.6 21.1,46.7 19.4,46.7 19.4,47.6 21.5,47.6 22.7,50.5 25.3,50.5 25.3,50.5 26.8,50.5 "/><polygon points="2.7,59.4 2.7,56.1 3.4,56.1 3.4,59.1 6.6,59.1 6.6,59.4 "/><path d="M7.6,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3C8.8,58.9,9,59,9.2,59s0.4,0.1,0.6,0.1 s0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2H12v2.2c0,0.2-0.1,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3s-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2c-0.2-0.1-0.4-0.2-0.5-0.3 C7.7,58.6,7.6,58.5,7.6,58.3"/><polygon points="12.9,59.4 14.9,57.7 13.1,56.1 13.8,56.1 15.2,57.4 16.6,56.1 17.4,56.1 15.6,57.7 17.5,59.4 16.7,59.4 15.2,58 13.7,59.4 "/><path d="M18.5,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3s0.2,0.2,0.3,0.3S19.8,59,20,59c0.2,0,0.4,0.1,0.6,0.1 c0.2,0,0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2s0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2h0.7v2.2c0,0.2,0,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3c-0.2,0.1-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2 c-0.2-0.1-0.3-0.2-0.5-0.3C18.5,58.6,18.5,58.5,18.5,58.3"/><path d="M24.5,59.4v-3.3h2.4c0.3,0,0.5,0,0.8,0.1s0.4,0.1,0.6,0.2c0.2,0.1,0.3,0.2,0.4,0.3c0.1,0.1,0.1,0.2,0.1,0.4 c0,0.2-0.1,0.4-0.4,0.6s-0.6,0.2-1,0.3l1.5,1.5h-0.8l-1.4-1.5h-1.5v1.5L24.5,59.4L24.5,59.4z M25.2,57.6h1.7c0.4,0,0.7,0,0.9-0.2 c0.2-0.1,0.4-0.2,0.4-0.5s-0.1-0.3-0.4-0.5c-0.2-0.1-0.5-0.2-0.9-0.2h-1.7V57.6z"/><polygon points="29.4,56.1 30.1,56.1 31.6,57.7 33.1,56.1 33.8,56.1 32,58 32,59.4 31.3,59.4 31.3,58 "/><polygon points="36.2,56.1 36.9,56.1 38.1,58.7 39.5,56.1 40.1,56.1 41.4,58.7 42.6,56.1 43.3,56.1 41.8,59.3 41.2,59.3 39.8,56.7 38.4,59.3 37.8,59.3 "/><rect x="44.4" y="56.1" width="0.7" height="3.2"/><polygon points="46.8,59.3 46.8,56.1 47.5,56.1 50.7,58.7 50.7,56.1 51.4,56.1 51.4,59.3 50.8,59.3 47.5,56.8 47.5,59.3 "/><polygon points="53.2,59.3 53.2,56.1 57,56.1 57,56.4 53.8,56.4 53.8,57.6 56.6,57.6 56.6,57.9 53.8,57.9 53.8,59 57,59 57,59.3 "/><path d="M57.9,58.9l0.5-0.2c0.2,0.1,0.5,0.2,0.8,0.3c0.3,0,0.6,0.1,0.9,0.1c0.5,0,0.8,0,1.1-0.2 c0.3-0.1,0.4-0.2,0.4-0.4c0-0.1,0-0.2-0.1-0.2s-0.1-0.1-0.2-0.2C61.1,58,61,58,60.8,58c-0.1,0-0.3,0-0.5-0.1l-0.7-0.1 c-0.5,0-0.9-0.1-1.1-0.2C58.2,57.4,58,57.2,58,57c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.4-0.3s0.4-0.1,0.6-0.2 c0.2,0,0.5-0.1,0.8-0.1c0.4,0,0.7,0,1,0.1c0.3,0.1,0.6,0.2,0.8,0.3l-0.4,0.2c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.5-0.1-0.8-0.1 c-0.4,0-0.7,0-1,0.2c-0.2,0.1-0.3,0.2-0.3,0.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0,0.2,0.1,0.3,0.1c0.1,0,0.3,0,0.4,0.1l0.7,0.1 c0.2,0,0.3,0,0.4,0c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3,0.1s0.2,0,0.2,0.1c0.4,0.2,0.6,0.4,0.6,0.7c0,0.1,0,0.3-0.2,0.4 c-0.1,0.1-0.2,0.2-0.4,0.3c-0.2,0.1-0.4,0.1-0.7,0.2c-0.3,0-0.5,0.1-0.9,0.1c-0.5,0-0.9,0-1.2-0.1C58.5,59.2,58.2,59.1,57.9,58.9"/></svg></a>
+        <a class="avu-wordmark" href="#home" aria-label="AVU Luxury Wines, home"><svg viewBox="2.7 3.6 59.3 55.9" aria-hidden="true" focusable="false" fill="currentColor"><path d="M15.6,11.5c1.9,0.2,3.4,1.5,4.3,3.2c0.7,1.3,1.3,2.6,1.8,4c2,4.7,4.2,10.2,6.3,14.9c0,0.1,0.2,0.4,0.2,0.4 s0.1-0.1,0.7-0.2c3.3-0.9,6.4-4,6.6-7.4c0.2-2.7,0.1-5.5,0.2-8.2c0-1,0-1.9,0-2.9V3.6L49,3.7c0,0-0.1,14.4,0,21 c0.1,4.7-2.5,7.9-6.7,9.5c-2.4,0.9-4.8,1.3-7.4,1.3c-3,0-6.1,0-9.1-0.1c-3.3,0-5.5-1.6-6.8-4.4c-1.6-3.5-3-7.1-4.6-10.6 c-0.9-2-1.8-4-2.8-5.9c-0.7-1.3-1.7-2.4-3.3-3.2C10.9,11.4,13.2,11.3,15.6,11.5"/><path d="M48.2,39.7h-4.2V40h2v4.4c0,0.5,0,1,0,1.5c0,1.3-0.2,2.5-1.3,3.3c-1.7,1.4-3.4,0.3-3.6,0.1 c-0.5-0.5-0.8-1.2-0.8-2c0-2.5,0-5,0-7.5H38v0h-0.7v0h-2.1L35,40l-3.3,7.5l-3.2-7.9H26v0h-1.6V40h1.8l4.5,10.7L35.4,40H38l0,0h0 v6.4c0,3,2.2,4.3,4.3,4.3c1.7,0,3-1.3,3.7-2.7h0v2.5h4.2v-0.3h-2L48.2,39.7L48.2,39.7z"/><polygon points="26.8,50.2 25,50.2 20.5,39.4 15.8,50.2 14.6,50.2 14.6,50.5 16,50.5 16.1,50.2 19.5,42.6 21.1,46.7 19.4,46.7 19.4,47.6 21.5,47.6 22.7,50.5 25.3,50.5 25.3,50.5 26.8,50.5 "/><polygon points="2.7,59.4 2.7,56.1 3.4,56.1 3.4,59.1 6.6,59.1 6.6,59.4 "/><path d="M7.6,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3C8.8,58.9,9,59,9.2,59s0.4,0.1,0.6,0.1 s0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2H12v2.2c0,0.2-0.1,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3s-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2c-0.2-0.1-0.4-0.2-0.5-0.3 C7.7,58.6,7.6,58.5,7.6,58.3"/><polygon points="12.9,59.4 14.9,57.7 13.1,56.1 13.8,56.1 15.2,57.4 16.6,56.1 17.4,56.1 15.6,57.7 17.5,59.4 16.7,59.4 15.2,58 13.7,59.4 "/><path d="M18.5,58.3v-2.2h0.7v2.2c0,0.1,0,0.2,0.1,0.3s0.2,0.2,0.3,0.3S19.8,59,20,59c0.2,0,0.4,0.1,0.6,0.1 c0.2,0,0.4,0,0.6-0.1c0.2,0,0.4-0.1,0.5-0.2s0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.2,0.1-0.3v-2.2h0.7v2.2c0,0.2,0,0.3-0.2,0.5 s-0.3,0.2-0.5,0.3c-0.2,0.1-0.4,0.2-0.7,0.2c-0.3,0-0.6,0.1-0.9,0.1c-0.3,0-0.6,0-0.9-0.1c-0.3,0-0.5-0.1-0.7-0.2 c-0.2-0.1-0.3-0.2-0.5-0.3C18.5,58.6,18.5,58.5,18.5,58.3"/><path d="M24.5,59.4v-3.3h2.4c0.3,0,0.5,0,0.8,0.1s0.4,0.1,0.6,0.2c0.2,0.1,0.3,0.2,0.4,0.3c0.1,0.1,0.1,0.2,0.1,0.4 c0,0.2-0.1,0.4-0.4,0.6s-0.6,0.2-1,0.3l1.5,1.5h-0.8l-1.4-1.5h-1.5v1.5L24.5,59.4L24.5,59.4z M25.2,57.6h1.7c0.4,0,0.7,0,0.9-0.2 c0.2-0.1,0.4-0.2,0.4-0.5s-0.1-0.3-0.4-0.5c-0.2-0.1-0.5-0.2-0.9-0.2h-1.7V57.6z"/><polygon points="29.4,56.1 30.1,56.1 31.6,57.7 33.1,56.1 33.8,56.1 32,58 32,59.4 31.3,59.4 31.3,58 "/><polygon points="36.2,56.1 36.9,56.1 38.1,58.7 39.5,56.1 40.1,56.1 41.4,58.7 42.6,56.1 43.3,56.1 41.8,59.3 41.2,59.3 39.8,56.7 38.4,59.3 37.8,59.3 "/><rect x="44.4" y="56.1" width="0.7" height="3.2"/><polygon points="46.8,59.3 46.8,56.1 47.5,56.1 50.7,58.7 50.7,56.1 51.4,56.1 51.4,59.3 50.8,59.3 47.5,56.8 47.5,59.3 "/><polygon points="53.2,59.3 53.2,56.1 57,56.1 57,56.4 53.8,56.4 53.8,57.6 56.6,57.6 56.6,57.9 53.8,57.9 53.8,59 57,59 57,59.3 "/><path d="M57.9,58.9l0.5-0.2c0.2,0.1,0.5,0.2,0.8,0.3c0.3,0,0.6,0.1,0.9,0.1c0.5,0,0.8,0,1.1-0.2 c0.3-0.1,0.4-0.2,0.4-0.4c0-0.1,0-0.2-0.1-0.2s-0.1-0.1-0.2-0.2C61.1,58,61,58,60.8,58c-0.1,0-0.3,0-0.5-0.1l-0.7-0.1 c-0.5,0-0.9-0.1-1.1-0.2C58.2,57.4,58,57.2,58,57c0-0.1,0-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.4-0.3s0.4-0.1,0.6-0.2 c0.2,0,0.5-0.1,0.8-0.1c0.4,0,0.7,0,1,0.1c0.3,0.1,0.6,0.2,0.8,0.3l-0.4,0.2c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.5-0.1-0.8-0.1 c-0.4,0-0.7,0-1,0.2c-0.2,0.1-0.3,0.2-0.3,0.4c0,0.2,0.1,0.3,0.2,0.4c0.1,0,0.2,0.1,0.3,0.1c0.1,0,0.3,0,0.4,0.1l0.7,0.1 c0.2,0,0.3,0,0.4,0c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3,0.1s0.2,0,0.2,0.1c0.4,0.2,0.6,0.4,0.6,0.7c0,0.1,0,0.3-0.2,0.4 c-0.1,0.1-0.2,0.2-0.4,0.3c-0.2,0.1-0.4,0.1-0.7,0.2c-0.3,0-0.5,0.1-0.9,0.1c-0.5,0-0.9,0-1.2-0.1C58.5,59.2,58.2,59.1,57.9,58.9"/></svg></a>
         <p>AVU SA Building<br>Via Carona 2, 6815 Melide, Switzerland<br>+41 91 252 48 88<br>members@avu.wine</p>
       </div>
-      <div><h4>Discover</h4><ul><li><a href="#wines">Our Wines</a></li><li><a href="#producers">Producers</a></li><li><a href="#club">The Wine Club</a></li></ul></div>
-      <div><h4>Services</h4><ul><li><a href="#service">Personal Wine Butler</a></li><li><a href="#service">Worldwide delivery</a></li><li><a href="#membership">Membership</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="#producers">Producers</a></li><li><a href="#rare-bottles">Rare Bottles</a></li><li><a href="#stock-storage">Stock &amp; Storage</a></li><li><a href="#club">The Wine Club &amp; Experiences</a></li></ul></div>
+      <div><h4>Services</h4><ul><li><a href="#butler">Personal Wine Butler</a></li><li><a href="#delivery">Worldwide Delivery</a></li><li><a href="#membership">Membership</a></li><li><a href="#about">About AVU</a></li></ul></div>
       <div><h4>Follow</h4><ul><li><a href="https://www.youtube.com/@AVUWineStories" target="_blank" rel="noopener">AVU Wine Stories</a></li><li><a href="https://www.instagram.com/avu_sa/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.linkedin.com/company/avu-sa/" target="_blank" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="avu-uva">
       <span class="avu-uva__line">The grape · The producer · The terroir · The vintage · The bottle</span>
-      <span>AVU is UVA, the grape, read backwards. © AVU SA · Privacy · Terms</span>
+      <span>AVU is UVA, the grape, read backwards. © AVU SA · Privacy · Terms · Imprint</span>
     </div>
+    <p class="mock-note">Mockup for internal review, built from the AVU Website Terms of Reference and the avu-aesthetic design skill. Photos: Marco Reggi; the watermarked previews are the latest photos and will be replaced by their originals. Films are simulated in the browser from still photos. Notes marked "to be confirmed" wait for AVU's answers.</p>
   </div>
 </footer>
 
 <script>
-/* Films: paths are relative to this page; put the photos in photos/ */
 window.AVU_FILMS = {
   building: { base: 'photos/', shot: 3, fade: 0.9, shots: [
     { src: 'b-wide.jpg', from: [0, 0, 1.05, 0], to: [1, 2, 1.15, 0.1] },
@@ -299,13 +248,6 @@ window.AVU_FILMS = {
     { src: 'b-roof.jpg', from: [0, -4, 1.16, 0], to: [0, 3, 1.1, 0] },
     { src: 'b-front.jpg', from: [0, 2, 1.08, 0], to: [0, -2, 1.16, 0] },
     { src: 'b-corner.jpg', from: [0, -2, 1.12, -0.2], to: [0, 1, 1.06, 0.2] }
-  ] },
-  shop: { base: 'photos/', shot: 3, fade: 0.9, shots: [
-    { src: 'shop-facade.jpg', from: [0, 0, 1.05, 0], to: [0, -4, 1.18, 0] },
-    { src: 'shop-entrance.jpg', from: [0, 0, 1.04, 0], to: [0, -7, 1.3, 0] },
-    { src: 'shop-interior.jpg', from: [0, 0, 1.04, 0], to: [-1, -1, 1.16, 0] },
-    { src: 'shop-floor-2.jpg', from: [-2, 0, 1.08, 0.2], to: [1, 0, 1.14, -0.2] },
-    { src: 'shop-racks-close.jpg', from: [2, 0, 1.08, 0], to: [-2, 0, 1.14, 0] }
   ] },
   club: { base: 'photos/', shot: 3, fade: 0.9, shots: [
     { src: 'club-dining-2.jpg', from: [0, 3, 1.1, 0], to: [0, -1, 1.06, 0] },
@@ -315,77 +257,66 @@ window.AVU_FILMS = {
     { src: 'club-lockers.jpg', from: [4, 0, 1.12, 0], to: [-4, 0, 1.12, 0] }
   ] }
 };
-window.AVU_SKY = {
-  stars: 420,
-  nodes: [
-    { id: 'mouton', short: 'Mouton Rothschild', name: 'Château Mouton Rothschild', place: 'Pauillac, Bordeaux · Premier Grand Cru Classé since 1973', region: 'bordeaux', x: 180, y: 210, side: 'r', yt: 'Rkzcw_c3QbA' },
-    { id: 'latour', short: 'Latour', name: 'Château Latour', place: 'Pauillac, Bordeaux · Premier Grand Cru Classé, 1855', region: 'bordeaux', x: 115, y: 305, side: 'l' },
-    { id: 'margaux', short: 'Margaux', name: 'Château Margaux', place: 'Margaux, Bordeaux · Premier Grand Cru Classé, 1855', region: 'bordeaux', x: 300, y: 465, side: 'r' },
-    { id: 'cheval', short: 'Cheval Blanc', name: 'Château Cheval Blanc', place: 'Saint-Émilion, Bordeaux', region: 'bordeaux', x: 330, y: 160, side: 'r', yt: 'J9AGlVDvncU' },
-    { id: 'lepin', short: 'Le Pin', name: 'Le Pin', place: 'Pomerol, Bordeaux', region: 'bordeaux', x: 375, y: 262, side: 'b', yt: 'JAXg_IO27ew' },
-    { id: 'krug', short: 'Krug', name: 'Krug', place: 'Reims, Champagne', region: 'champagne', x: 640, y: 122, side: 'l', yt: 'VLRDnrb-iGs' },
-    { id: 'dp', short: 'Dom Pérignon', name: 'Dom Pérignon', place: 'Champagne', region: 'champagne', x: 760, y: 88, side: 'r', yt: 'Lf2dwSadNmc' },
-    { id: 'billecart', short: 'Billecart-Salmon', name: 'Billecart-Salmon', place: 'Mareuil-sur-Aÿ, Champagne', region: 'champagne', x: 722, y: 205, side: 'b' },
-    { id: 'masseto', short: 'Masseto', name: 'Masseto', place: 'Bolgheri, Tuscany', region: 'tuscany', x: 688, y: 440, side: 'l', yt: 'V8ORSYccgxg' },
-    { id: 'ornellaia', short: 'Ornellaia', name: "Tenuta dell'Ornellaia", place: 'Bolgheri, Tuscany', region: 'tuscany', x: 800, y: 500, side: 'r' }
-  ],
-  regions: [
-    { id: 'bordeaux', label: 'Bordeaux', x: 150, y: 120, hub: 'lepin' },
-    { id: 'champagne', label: 'Champagne', x: 860, y: 58, hub: 'billecart' },
-    { id: 'tuscany', label: 'Tuscany', x: 870, y: 572, hub: 'masseto' }
-  ],
-  links: [['latour', 'mouton'], ['mouton', 'cheval'], ['cheval', 'lepin'], ['latour', 'margaux'], ['mouton', 'lepin'],
-    ['krug', 'dp'], ['dp', 'billecart'], ['billecart', 'krug'], ['masseto', 'ornellaia']]
-};
 </script>
 <script src="film.js"></script>
-<script src="constellation.js"></script>
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Header turns solid once the first film is scrolled past */
   var bar = document.getElementById('top-bar');
-  function onScroll() { bar.classList.toggle('is-solid', window.scrollY > 60); }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  var menuBtn = document.getElementById('menu-btn'), menu = document.getElementById('site-menu');
+  var filmTop = true;
 
-  /* Mobile menu */
-  var menuBtn = document.getElementById('menu-btn'), mobileNav = document.getElementById('mobile-nav');
-  menuBtn.addEventListener('click', function () {
-    var open = mobileNav.classList.toggle('is-open');
+  function onScroll() { bar.classList.toggle('is-solid', !filmTop || window.scrollY > 60); }
+
+  /* Menu: a full-screen list of the nine sections */
+  function setMenu(open) {
+    menu.classList.toggle('is-open', open);
+    bar.classList.toggle('is-menu-open', open);
+    document.documentElement.classList.toggle('menu-open', open);
     menuBtn.setAttribute('aria-expanded', String(open));
     menuBtn.textContent = open ? 'Close' : 'Menu';
-    bar.classList.toggle('is-solid', open || window.scrollY > 60);
-  });
-  mobileNav.addEventListener('click', function (e) {
-    if (e.target.tagName === 'A') { mobileNav.classList.remove('is-open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = 'Menu'; }
-  });
-
-  /* Gentle rise on scroll for .avu-reveal blocks */
-  var reveals = document.querySelectorAll('.avu-reveal');
-  if (reduce || !('IntersectionObserver' in window)) {
-    reveals.forEach(function (el) { el.classList.add('is-in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    reveals.forEach(function (el) { io.observe(el); });
   }
+  menuBtn.addEventListener('click', function () { setMenu(!menu.classList.contains('is-open')); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('is-open')) { setMenu(false); menuBtn.focus(); } });
 
-  /* Contact: links carry a topic, and the button says what will happen */
+  /* Views: one per page of the agreed sitemap, chosen by the plain #name in the address */
+  var views = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-view]'), function (v) { views[v.getAttribute('data-view')] = v; });
+  function route() {
+    var name = location.hash.replace(/^#/, '') || 'home';
+    if (!views[name]) name = 'home';
+    Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
+    filmTop = views[name].hasAttribute('data-film-top');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-nav]'), function (a) {
+      if (a.getAttribute('data-nav') === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+    onScroll();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('hashchange', route);
+  route();
+
+  /* Enquiries: a topic link fills the closing card's form and scrolls to it; the button says what will happen */
   var topic = document.getElementById('f-topic'), submit = document.getElementById('f-submit');
-  var LABELS = { general: 'Send your enquiry', wine: 'Enquire about this wine', membership: 'Request an invitation', visit: 'Plan your visit' };
+  var LABELS = { general: 'Send your enquiry', rare: 'Ask us to find a bottle', membership: 'Request an invitation', visit: 'Plan your visit' };
   function syncTopic() { submit.textContent = LABELS[topic.value]; }
   topic.addEventListener('change', syncTopic);
-  document.querySelectorAll('[data-topic]').forEach(function (a) {
-    a.addEventListener('click', function () { topic.value = a.getAttribute('data-topic'); syncTopic(); });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-topic]');
+    if (!a) return;
+    e.preventDefault();
+    topic.value = a.getAttribute('data-topic');
+    syncTopic();
+    document.getElementById('closing').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   });
   document.getElementById('contact-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    document.getElementById('form-done').textContent = 'Thank you. In this starter, requests are not sent anywhere.';
+    document.getElementById('form-done').textContent = 'Thank you. In the mockup, requests are not sent anywhere.';
   });
 })();
 </script>
+
 </body>
 </html>

@@ -1,0 +1,120 @@
+/* AVU design tokens and base classes.
+   Source: the AVU homepage mockup (v7), tuned against measured patek.com and vacheron-constantin.com values.
+   Fonts for mockups (Google Fonts):
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+   Contrast (WCAG): ink on cream 13.2:1, ink-2 8.6:1, label 5.5:1, gold-deep 5.4:1, gold 3.8:1 (large text and graphics only);
+   on night: night-ink 15:1, night-ink-2 8.4:1, gold-light 10.8:1. */
+
+:root {
+  /* Grounds */
+  --avu-cream: #F4ECE0;      /* page */
+  --avu-paper: #FAF6EF;      /* cards, alternating bands */
+  --avu-white: #FFFDF9;      /* text over films only; never a page ground */
+  --avu-night: #14120F;      /* Wine Club, producers, footer */
+  --avu-night-2: #1D1A16;    /* cards on night */
+
+  /* Text */
+  --avu-ink: #2E2218;
+  --avu-ink-2: #4F3F31;
+  --avu-label: #6F5B47;      /* small caps labels, notes */
+  --avu-night-ink: #EEE5D7;
+  --avu-night-ink-2: #B9AC99;
+
+  /* The one accent: AVU brand gold, from the logo */
+  --avu-gold: #89764B;       /* logo, rules, focus ring, text of 24px and up */
+  --avu-gold-deep: #6E5E36;  /* gold for small text on light grounds */
+  --avu-gold-light: #D9C293; /* gold on night grounds */
+
+  /* Hairlines */
+  --avu-line: rgba(46, 34, 24, .16);
+  --avu-night-line: rgba(238, 229, 215, .16);
+
+  /* Type */
+  --avu-f-sans: "Albert Sans", "Helvetica Neue", Arial, sans-serif;   /* display, labels, UI */
+  --avu-f-serif: "Newsreader", Georgia, "Times New Roman", serif;      /* reading text */
+  --avu-t-h1: clamp(40px, 6vw, 80px);
+  --avu-t-h2: clamp(32px, 4vw, 52px);
+  --avu-t-h3: clamp(24px, 2.4vw, 32px);
+  --avu-t-statement: clamp(24px, 2.7vw, 36px);
+  --avu-t-lede: 20px;
+  --avu-t-body: 18px;
+  --avu-t-small: 15px;
+  --avu-t-label: 12px;
+
+  /* Space and layout */
+  --avu-container: 1280px;
+  --avu-gutter: 16px;                          /* phone */
+  --avu-gutter-wide: 56px;                     /* from 900px */
+  --avu-measure: 34em;                         /* running text column */
+  --avu-section: clamp(80px, 10vw, 144px);     /* section padding, top and bottom */
+  --avu-section-compact: clamp(56px, 7vw, 96px);
+  --avu-gap: clamp(32px, 6vw, 96px);           /* between the halves of a spread */
+
+  /* Motion */
+  --avu-ease: cubic-bezier(.19, 1, .22, 1);    /* patek.com's ease-out */
+  --avu-ease-inout: cubic-bezier(.65, 0, .35, 1); /* vacheron-constantin.com's slide ease */
+  --avu-dur: .6s;
+  --avu-dur-slow: .8s;
+
+  color-scheme: light;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--avu-cream); color: var(--avu-ink); font: 400 var(--avu-t-body)/1.65 var(--avu-f-serif); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+:focus-visible { outline: 2px solid var(--avu-gold); outline-offset: 3px; }
+
+.avu-wrap { max-width: var(--avu-container); margin: 0 auto; padding-left: max(var(--avu-gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--avu-gutter), env(safe-area-inset-right, 0px)); }
+@media (min-width: 900px) { .avu-wrap { padding-left: max(var(--avu-gutter-wide), env(safe-area-inset-left, 0px)); padding-right: max(var(--avu-gutter-wide), env(safe-area-inset-right, 0px)); } }
+.avu-section { padding-block: var(--avu-section); }
+.avu-section--compact { padding-block: var(--avu-section-compact); }
+.avu-band--paper { background: var(--avu-paper); }
+.avu-band--night { background: var(--avu-night); color: var(--avu-night-ink); }
+
+/* Type */
+.avu-display { font-family: var(--avu-f-sans); font-weight: 300; letter-spacing: -.012em; line-height: 1.08; margin: 0; text-wrap: balance; }
+.avu-h1 { font-size: var(--avu-t-h1); }
+.avu-h2 { font-size: var(--avu-t-h2); }
+.avu-h3 { font-size: var(--avu-t-h3); line-height: 1.15; }
+.avu-statement { font: 300 var(--avu-t-statement)/1.25 var(--avu-f-sans); letter-spacing: -.01em; max-width: 26em; margin: 0 auto; text-wrap: balance; }
+.avu-lede { font-size: var(--avu-t-lede); line-height: 1.55; color: var(--avu-ink-2); max-width: var(--avu-measure); }
+.avu-note { font-size: var(--avu-t-small); font-style: italic; color: var(--avu-label); }
+.avu-measure { max-width: var(--avu-measure); }
+.avu-display + .avu-lede, .avu-display + p { margin-top: 18px; }
+
+/* Label: 12px caps with a short gold rule above (centred by default) */
+.avu-eyebrow { font: 600 var(--avu-t-label)/1.3 var(--avu-f-sans); letter-spacing: .22em; text-transform: uppercase; color: var(--avu-label); margin: 0 0 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.avu-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--avu-gold); }
+.avu-eyebrow--left { align-items: flex-start; }
+
+/* Two button systems only */
+.avu-link { display: inline-block; font: 600 var(--avu-t-label)/1 var(--avu-f-sans); letter-spacing: .22em; text-transform: uppercase; text-decoration: none; padding: 6px 0 9px; border-bottom: 1px solid currentColor; transition: color .5s var(--avu-ease), border-color .5s var(--avu-ease); }
+.avu-link:hover { color: var(--avu-gold-deep); border-color: var(--avu-gold-deep); }
+.avu-btn { display: inline-block; font: 600 var(--avu-t-label)/1 var(--avu-f-sans); letter-spacing: .22em; text-transform: uppercase; text-decoration: none; padding: 17px 28px; background: var(--avu-ink); color: var(--avu-paper); border: 1px solid var(--avu-ink); border-radius: 0; cursor: pointer; transition: background .5s var(--avu-ease), color .5s var(--avu-ease); }
+.avu-btn:hover { background: transparent; color: var(--avu-ink); }
+
+/* Dark grounds: add .avu-on-dark to any night section */
+.avu-on-dark { color: var(--avu-night-ink); }
+.avu-on-dark .avu-eyebrow { color: var(--avu-gold-light); }
+.avu-on-dark .avu-lede, .avu-on-dark .avu-note { color: var(--avu-night-ink-2); }
+.avu-on-dark .avu-link:hover { color: var(--avu-gold-light); border-color: var(--avu-gold-light); }
+.avu-on-dark .avu-btn { background: var(--avu-night-ink); color: var(--avu-night); border-color: var(--avu-night-ink); }
+.avu-on-dark .avu-btn:hover { background: transparent; color: var(--avu-night-ink); }
+
+/* Hairline lists (proofs, specs, service points) */
+.avu-rules { list-style: none; margin: 28px 0 30px; padding: 0; border-top: 1px solid var(--avu-line); }
+.avu-rules > li { padding: 14px 0; border-bottom: 1px solid var(--avu-line); font-size: 17px; }
+.avu-on-dark .avu-rules, .avu-on-dark .avu-rules > li { border-color: var(--avu-night-line); }
+
+/* Reveal on scroll: add .avu-reveal; the small observer in starter.html adds .is-in */
+.avu-reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--avu-dur-slow) var(--avu-ease), transform var(--avu-dur-slow) var(--avu-ease); }
+.avu-reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .avu-reveal { opacity: 1; transform: none; transition: none; }
+}

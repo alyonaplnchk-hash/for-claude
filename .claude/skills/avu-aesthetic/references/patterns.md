@@ -5,8 +5,8 @@ Every block below uses classes from `assets/avu-tokens.css` and `assets/avu-comp
 ## Contents
 1. Page setup
 2. Rhythm rules
-3. Blocks: header, film, statement and facts, section head, spread, bottle cards, spec table, quote, cards on night, constellation, two services, tiles, membership tiers, portrait and story, closing visit card with form, footer
-4. Page templates: homepage, Our Wines, a bottle, Producers, Services, The Wine Club, Membership, Our story
+3. Blocks: header (split bar or menu), film, page intro, statement and facts, section head, pillars, spread, picture band, bottle cards, detail table, columns, values, filters and producer list, quote, cards on night, constellation, two services, tiles, membership tiers, portrait and story, closing visit card with form, footer
+4. Page templates for the agreed sitemap: Home, Producers, Rare Bottles, Stock & Storage, Personal Wine Butler, Worldwide Delivery, The Wine Club & Experiences, Membership, About AVU, Contact
 5. Small rules that keep it AVU
 
 ## 1. Page setup
@@ -35,25 +35,30 @@ For a single-file artifact, paste both CSS files into one `<style>` and both scr
 ## 3. Blocks
 
 ### Header
-Transparent and white over a film; solid cream with a gold logo after 60 px of scroll (add `.is-solid` from script, or `.avu-header--solid` on pages without a film). Navigation splits around the centred logo, as on both reference sites.
+Transparent and white over a film; solid cream with a gold logo after 60 px of scroll (add `.is-solid` from script, or `.avu-header--solid` on pages without a film).
+
+**Menu header (the AVU site).** The agreed sitemap has nine sections, more than a split bar holds, so the header is Menu · logo · Contact, as on patek.com. Menu opens a full-screen night panel; while it is open, add `.is-menu-open` to the header so it sits on the panel.
 
 ```html
-<header class="avu-header" id="top-bar">
+<header class="avu-header avu-header--menu" id="top-bar">
   <div class="avu-wrap avu-header__inner">
-    <nav class="avu-nav" aria-label="Main, left">
-      <a href="/wines">Our Wines</a><a href="/producers">Producers</a><a href="/services">Services</a><a href="/club">The Wine Club</a>
-    </nav>
-    <button class="avu-menu-btn" aria-expanded="false" aria-controls="mobile-nav">Menu</button>
-    <a class="avu-wordmark" href="/" aria-label="AVU Luxury Wines, home"><!-- avu-logo-lockup.svg inline --></a>
-    <nav class="avu-nav avu-nav--right" aria-label="Main, right">
-      <a href="/membership">Membership</a><a href="https://www.youtube.com/@AVUWineStories">Stories</a><a href="/contact">Contact</a>
+    <button class="avu-menu-btn" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <a class="avu-wordmark" href="#home" aria-label="AVU Luxury Wines, home"><!-- avu-logo-lockup.svg inline --></a>
+    <div class="avu-header__end">
+      <a class="avu-hide-sm" href="#contact">Contact</a>
       <span class="avu-lang"><b>EN</b><span aria-disabled="true">DE</span></span>
-    </nav>
-    <span class="avu-lang avu-lang--mobile"><b>EN</b><span aria-disabled="true">DE</span></span>
+    </div>
   </div>
 </header>
-<nav class="avu-mobile-nav" id="mobile-nav" aria-label="Main">…same links, plus Personal Wine Butler, Worldwide delivery, Our story…</nav>
+<div class="avu-menu" id="site-menu">
+  <div class="avu-wrap avu-menu__grid">
+    <ul class="avu-menu__main"><li><a href="#producers">Producers</a></li><li><a href="#rare-bottles">Rare Bottles</a></li>…all nine sections…</ul>
+    <div class="avu-menu__side"><h4>Visit</h4><p>AVU SA Building, Via Carona 2, 6815 Melide</p>…</div>
+  </div>
+</div>
 ```
+
+**Split bar** (a site with seven or fewer sections): navigation on both sides of the centred logo, as on vacheron-constantin.com; `.avu-nav` left and `.avu-nav--right` right, with `.avu-mobile-nav` below 1080 px.
 
 ### Film (first screen, section, or framed)
 Three sizes: `.avu-film` (first screen, 100svh), `.avu-film--section` (88svh, lower on the page), `.avu-film--frame` (a square inside a spread, no caption). The caption sits low and centred; the shade is local to it.
@@ -86,13 +91,23 @@ window.AVU_FILMS = {
 
 Camera grammar: `[x %, y %, scale, rotate°]`. Scale stays between 1.04 and 1.3; translation within ±7 %; rotation within ±0.3°. Push in on wides, drift sideways on mediums, small pull-backs or rolls on close-ups. Keep a minimum scale of 1.04 so edges never show.
 
+### Page intro (pages without a film)
+```html
+<section class="avu-page-intro avu-wrap">
+  <nav class="avu-crumbs" aria-label="Breadcrumb">…only on a sub-page…</nav>
+  <p class="avu-eyebrow">Rare Bottles</p>
+  <h1 class="avu-display avu-h1">Rare and collectible bottles</h1>
+  <p class="avu-lede">One line.</p>
+</section>
+```
+
 ### Statement and facts
-One centred sentence, four facts with exact labels, one press link.
+One centred sentence, four facts with exact labels, one press link. On the homepage the sentence names no estates.
 
 ```html
 <section class="avu-statement-block avu-wrap" aria-labelledby="statement-title">
   <p class="avu-eyebrow">AVU · Since 2016</p>
-  <h2 id="statement-title" class="avu-statement">AVU is among the largest buyers of Mouton Rothschild and Cheval Blanc. These long-standing relationships give our private clients access to exceptional wines.</h2>
+  <h2 id="statement-title" class="avu-statement">AVU is among the largest buyers of many of the world's top estates. Our relationships with producers give private clients across the globe access to exceptional wines.</h2>
   <div class="avu-facts">
     <div class="avu-fact"><div class="avu-fact__n">600,000+</div><div class="avu-fact__l">Bottles in stock</div></div>
     <div class="avu-fact"><div class="avu-fact__n">400+</div><div class="avu-fact__l">Producers in our selection</div></div>
@@ -136,8 +151,26 @@ Use `.avu-spread--flip` to put the picture on the right; alternate down a page t
 ```
 For a still picture instead of a film: `<figure class="avu-spread__media"><img …></figure>` (4:5 crop).
 
-### Bottle cards
-4:5 image, producer in caps, wine in light sans, one reason line, the provenance or vintage line in italics, one enquiry link. Three per row; the first may be wider (`.avu-bottles__grid`) or all equal (`--even`).
+### Pillars (homepage index)
+Six entries, one per pillar of the brief, each a picture, a name, one line and a link to its page. Three per row on desktop.
+
+```html
+<div class="avu-pillars">
+  <a class="avu-pillar" href="#producers">
+    <div class="avu-pillar__img"><img src="…" alt="…" loading="lazy"></div>
+    <h3 class="avu-pillar__name">Trusted producer relationships</h3>
+    <p>One line.</p>
+    <span class="avu-link">Our producers</span>
+  </a>
+  …
+</div>
+```
+
+### Picture band
+`<figure class="avu-band-img"><img …><figcaption>Place name</figcaption></figure>` inside `.avu-wrap`: a 21:9 frame (4:3 on phones) between an intro and the first spread.
+
+### Bottle cards (examples of rarity)
+4:5 image, producer in caps, wine in light sans, one line on why it is rare. **No price, vintage, availability or per-bottle button**: AVU does not sell online and the bottles shown may no longer be available. One general action closes the gallery ("Looking for a rare bottle? Speak to our team"). Three per row; the first may be wider (`.avu-bottles__grid`) or all equal (`--even`).
 
 ```html
 <figure class="avu-bottle">
@@ -146,26 +179,28 @@ For a still picture instead of a film: `<figure class="avu-spread__media"><img �
     <div class="avu-bottle__producer">Giacomo Conterno</div>
     <div class="avu-bottle__wine">Barolo Riserva Monfortino</div>
     <p class="avu-bottle__why">Made only in the finest vintages.</p>
-    <p class="avu-bottle__meta">Vintage and format: to be confirmed by AVU</p>
-    <a class="avu-link" href="/contact?topic=wine" data-topic="wine">Enquire about this wine</a>
   </figcaption>
 </figure>
 ```
 
-### Specification table (bottle page)
-Vacheron's "Watch specifications", for wine. Only rows AVU can vouch for.
+### Detail table (storage by country)
+Vacheron's "Watch specifications" layout, used for facts AVU can vouch for, such as storage per country.
 
 ```html
 <table class="avu-specs">
-  <tr><th scope="row">Producer</th><td>Domaine de la Romanée-Conti</td></tr>
-  <tr><th scope="row">Appellation</th><td>La Tâche Grand Cru, Vosne-Romanée</td></tr>
-  <tr><th scope="row">Vintage</th><td>To be confirmed by AVU</td></tr>
-  <tr><th scope="row">Format</th><td>To be confirmed by AVU</td></tr>
-  <tr><th scope="row">Provenance</th><td>Sourced directly / from a long-established partner</td></tr>
-  <tr><th scope="row">Storage</th><td>Temperature- and humidity-controlled, in bond</td></tr>
-  <tr><th scope="row">Condition</th><td>Inspected by AVU before dispatch</td></tr>
+  <tr><th scope="row">Switzerland</th><td>Temperature- and humidity-controlled <span class="avu-note">Details to be confirmed by AVU</span></td></tr>
+  …
 </table>
 ```
+
+### Columns
+Four short items with hairlines (delivery destinations, contact details): `.avu-cols` with `.avu-cols__name` and `.avu-cols__text` in each `<div>`; two columns on tablets, one on phones.
+
+### Values with their proof
+`.avu-values` holds seven `.avu-value` blocks: the value as `<h3>`, one or two sentences of AVU's approved text, and an `.avu-link` to the page that proves it.
+
+### Filters and producer list
+Text filters (`.avu-filters`, buttons with `aria-pressed`) above a list grouped by region: each `.avu-region` has the region name (with its country in `<small>`) and a three-column `<ul>`; each `<li>` holds the estate name, its place in a `<span>`, and an optional "Watch the story" link. Built for hundreds of producers; the constellation stays as the overview above it.
 
 ### Quote
 Patek's President's quote, AVU style. Only approved words, with name and role.
@@ -255,7 +290,7 @@ To add a region, extend `regions`, give it a hub node, and add a `[data-active="
 ### Tiles (2 × 2, Vacheron's services index)
 ```html
 <div class="avu-tiles">
-  <a class="avu-tile" href="/services/butler">
+  <a class="avu-tile" href="#butler">
     <img src="shop-advisor.jpg" alt="" loading="lazy">
     <div class="avu-tile__text"><h3 class="avu-display avu-h3">Personal Wine Butler</h3><span class="avu-link">Meet your advisor</span></div>
   </a>
@@ -318,23 +353,27 @@ Dark, full stacked logo in light gold, address and contacts, three link columns 
 
 ## 4. Page templates
 
-Each list is the block order. Pages without a first-screen film use `.avu-header--solid` and start with an intro (eyebrow, H1, lede, centred) as on patek.com's Collection and Values pages.
+The agreed sitemap comes line by line from Fabio's brief. Each list is the block order; every page ends with the closing visit card and the footer. Pages without a first-screen film use `.avu-header--solid` and start with `.avu-page-intro`, as on patek.com's Collection and Values pages.
 
-**Homepage** (agreed order): building film → statement and facts → producers on night (cards + constellation) → stock spread with framed shop film → rare bottle cards → two services on paper → Wine Club film (`--section`) → membership tiers → portrait and story on paper → visit card with form → footer.
+**Home** (general, no estate names): building film → statement and facts → the six pillars (`.avu-pillars`, each linking to its page) → Wine Club film (`--section`) → membership tiers → founder in the portrait grid on paper.
 
-**Our Wines**: intro ("Our Wines", one line on the stock) → filter row by region and type (text buttons, no dropdown chrome) → bottle cards grid, `--even`, 3 per row → spread on provenance and storage → visit card.
+**Producers**: intro with "Today AVU is among the largest buyers of Mouton Rothschild, Cheval Blanc and many other top estates." → producer interviews from the Bordeaux trip (film or placeholder, approval note) → AVU Wine Stories episodes and the constellation on night → all producers by region (`.avu-filters` + `.avu-region`) → "for suppliers" spread on AVU's international private clientele.
 
-**A bottle** (Vacheron product page): two-up 4:5 images (bottle, label close-up) beside producer caps label, wine name as H1, one line, "Enquire about this wine" button → spec table → producer spread with the AVU Wine Stories episode if one exists → three more bottle cards from the same producer or region → visit card.
+**Rare Bottles**: intro (examples of rarity, as on AVU's social media) → bottle cards with no action → one sourcing block ("Looking for a rare bottle?") with a link to Instagram.
 
-**Producers**: film or wide picture of a cellar visit → statement → the constellation full width on night → region sections, each a zigzag of producer spreads (picture, name, place, one paragraph, episode link) → producer conversations (approved only) → visit card.
+**Stock & Storage**: intro with "Unrivalled Stock, Ready to Ship" → framed shop film beside the approved text and the three proofs → warehouse film (or `.avu-ph--night` placeholder) → storage by country in a detail table.
 
-**Services**: wide picture with H1 → statement ("At AVU, we believe that exceptional service is measured not by what is easy, but by what is possible.") → 2 × 2 tiles (Personal Wine Butler, Worldwide delivery, Storage, Tastings and trips) → the Los Angeles case as a quote-like block → visit card.
+**Personal Wine Butler**: intro → picture band → spread "what your advisor does" → languages band on paper.
 
-**The Wine Club**: club film → statement on what happens there (private dinners, tastings, producer visits, events) → zigzag of three spreads (dining room, the wine wall, members' lockers) → "Plan your visit" visit card. Keep Membership on its own page.
+**Worldwide Delivery**: intro → four destinations in `.avu-cols` (home, villa, yacht, private jet) → spread "how we deliver" → "Our Commitment" with the Los Angeles case as a quote.
 
-**Membership**: intro → tiers → one spread on what membership gives (with a photo of a tasting) → "Request an invitation" button → visit card.
+**The Wine Club & Experiences**: club film → experiences in 2 × 2 tiles (private dinners, tastings, producer visits, wine events) → spread on the pavilion, "Plan your visit".
 
-**Our story**: banner of the building → portrait and story → the seven values as a zigzag, each with its proof → UVA–AVU sentence → visit card.
+**Membership**: intro → tiers → spread on selective access to allocated wines → "Request an invitation".
+
+**About AVU**: intro → founder in the portrait grid (Forbes Italia facts only) → the seven values with their proofs → the building and the team → the UVA–AVU sentence.
+
+**Contact**: intro → address, phone, email and hours in `.avu-cols` → map → the visit card with the form.
 
 ## 5. Small rules that keep it AVU
 
