@@ -7,12 +7,12 @@ const { chromium } = require('playwright');
   const here = __dirname;
   const previewDir = process.argv[2];
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 1.6 });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1.4 });
   await page.goto('file://' + path.join(here, 'filming-memo.html'), { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
 
   if (previewDir) {
-    const pages = await page.$$('section.page');
+    const pages = await page.$$('section.slide');
     for (let i = 0; i < pages.length; i++) {
       await pages[i].screenshot({ path: path.join(previewDir, `page-${String(i + 1).padStart(2, '0')}.png`) });
     }
