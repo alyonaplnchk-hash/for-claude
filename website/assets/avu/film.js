@@ -7,11 +7,17 @@
        ...caption...
        <button class="avu-film__pause" aria-pressed="false" aria-label="Pause film"></button>
      </section>
+   Optional: put the pause button in <div class="avu-film__controls"> next to <div class="avu-film__progress"
+   aria-hidden="true"></div>, and the engine draws one thin line per shot that fills as the shot plays.
 
    Config (before this script runs):
      window.AVU_FILMS = {
        building: { base: 'assets/photos/', shot: 3, fade: 0.9, shots: [
          { src: 'b-wide.jpg',  from: [0, 0, 1.05, 0], to: [1, 2, 1.15, 0.1] },   // [x %, y %, scale, rotate deg]
+         { src: 'cradle.jpg', pos: '60% 40%',                // focal point: crop and zoom centre
+           from: [0, 0, 1.14, 0], to: [0, 0, 1.03, 0],
+           mobile: { src: 'cradle-tall.jpg', pos: '50% 45%', from: [0, 0, 1.12, 0], to: [0, 0, 1.03, 0] } },
+         // below 700 px `mobile` may replace src, pos, from and to; a string replaces src only
          ...
        ] }
      };
@@ -29,14 +35,28 @@
 
   function initFilm(el, cfg, isFirst) {
     var shots = cfg.shots, SHOT = cfg.shot || 3, FADE = cfg.fade || 0.9, base = cfg.base || '';
+    var narrow = window.matchMedia('(max-width: 700px)').matches;
     var stage = el.querySelector('.avu-film__stage');
     var pauseBtn = el.querySelector('.avu-film__pause');
+    /* Below 700 px a shot's `mobile` settings replace its photo, focal point and camera move */
+    shots = shots.map(function (s) {
+      var m = !narrow || !s.mobile ? {} : typeof s.mobile === 'string' ? { src: s.mobile } : s.mobile;
+      return { src: m.src || s.src, pos: m.pos || s.mpos || s.pos, from: m.from || s.from, to: m.to || s.to };
+    });
     var imgs = shots.map(function (s, i) {
       var im = document.createElement('img');
+      var pos = s.pos;
       im.src = base + s.src; im.alt = ''; im.decoding = 'async';
+      if (pos) { im.style.objectPosition = pos; im.style.transformOrigin = pos; }
       if (!isFirst || i > 0) im.loading = 'lazy';
       stage.appendChild(im);
       return im;
+    });
+    /* Optional progress: one thin line per shot */
+    var progress = el.querySelector('.avu-film__progress'), bars = [];
+    if (progress) shots.forEach(function () {
+      var seg = document.createElement('i'), fill = document.createElement('b');
+      seg.appendChild(fill); progress.appendChild(seg); bars.push(fill);
     });
     var total = SHOT * shots.length, elapsed = 0, last = null, playing = !reduce, visible = false, raf = 0;
 
@@ -53,6 +73,10 @@
           im.style.opacity = '0';
         }
       });
+      if (bars.length) {
+        var tt = (t % total + total) % total, active = Math.min(shots.length - 1, Math.floor(tt / SHOT)), p = (tt - active * SHOT) / SHOT;
+        bars.forEach(function (b, k) { b.style.transform = 'scaleX(' + (k < active ? 1 : k === active ? p.toFixed(3) : 0) + ')'; });
+      }
     }
     function frame(now) {
       if (last !== null) elapsed += Math.min(0.1, (now - last) / 1000);

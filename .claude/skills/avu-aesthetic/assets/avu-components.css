@@ -317,3 +317,28 @@
 .avu-region li span { display: block; font: italic 400 14px/1.4 var(--avu-f-serif); color: var(--avu-label); }
 .avu-region li a { font: 600 11px/1.8 var(--avu-f-sans); letter-spacing: .18em; text-transform: uppercase; color: var(--avu-gold-deep); text-decoration: none; }
 @media (max-width: 700px) { .avu-region { grid-template-columns: 1fr; } }
+
+/* ---------- Film variants: caption low on the left (Vacheron), soft grade, progress lines ---------- */
+.avu-film--left .avu-film__caption { text-align: left; bottom: clamp(56px, 10vh, 112px); }
+.avu-film--left .avu-film__caption .avu-display { max-width: 12em; margin: 0 0 18px; font-size: clamp(38px, 4.4vw, 64px); line-height: 1.06; }
+.avu-film--left .avu-film__line { max-width: 28em; margin: 0; }
+.avu-film--left::after { background:
+  linear-gradient(180deg, rgba(12, 9, 6, .42) 0%, rgba(12, 9, 6, 0) 20%),
+  linear-gradient(0deg, rgba(12, 9, 6, .5) 0%, rgba(12, 9, 6, .16) 30%, rgba(12, 9, 6, 0) 52%),
+  radial-gradient(ellipse 62% 58% at 0% 100%, rgba(12, 9, 6, .5) 0%, rgba(12, 9, 6, 0) 72%); }
+.avu-film--graded .avu-film__stage img { filter: saturate(.86) contrast(1.04) brightness(.97); }
+.avu-film__controls { position: absolute; z-index: 5; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 20px; display: flex; align-items: center; gap: 18px; }
+.avu-film__controls .avu-film__pause { position: static; }
+.avu-film__progress { display: flex; gap: 6px; }
+.avu-film__progress i { display: block; width: 28px; height: 1px; background: rgba(255, 253, 249, .32); overflow: hidden; }
+.avu-film__progress b { display: block; height: 100%; background: var(--avu-white); transform: scaleX(0); transform-origin: 0 50%; }
+@media (min-width: 900px) { .avu-film__controls { right: max(var(--avu-gutter-wide), env(safe-area-inset-right, 0px)); bottom: 28px; } }
+@media (max-width: 600px) { .avu-film__progress i { width: 18px; } .avu-film--left .avu-film__caption { bottom: 92px; } }
+/* Phones: the film on top, the caption below it on night, so text never lies over a facade */
+@media (max-width: 600px) {
+  .avu-film--stack-sm { height: auto; min-height: 0; max-height: none; display: flex; flex-direction: column; }
+  .avu-film--stack-sm .avu-film__stage { position: relative; inset: auto; height: 62svh; min-height: 380px; overflow: hidden; }
+  .avu-film--stack-sm::after { background: linear-gradient(180deg, rgba(12, 9, 6, .45) 0%, rgba(12, 9, 6, 0) 16%); bottom: auto; height: 62svh; min-height: 380px; }
+  .avu-film--stack-sm .avu-film__caption { position: relative; bottom: auto; padding-top: 28px; padding-bottom: 40px; background: var(--avu-night); }
+  .avu-film--stack-sm .avu-film__controls { bottom: auto; top: calc(max(62svh, 380px) - 52px); }
+}

@@ -91,6 +91,10 @@ window.AVU_FILMS = {
 
 Camera grammar: `[x %, y %, scale, rotate°]`. Scale stays between 1.04 and 1.3; translation within ±7 %; rotation within ±0.3°. Push in on wides, drift sideways on mediums, small pull-backs or rolls on close-ups. Keep a minimum scale of 1.04 so edges never show.
 
+**First-screen variant (agreed for the AVU homepage):** `.avu-film--left` puts the caption low on the left (Vacheron) with a smaller 64 px headline; `.avu-film--graded` softens the midday colour; `.avu-film--stack-sm` moves the caption below the film on phones so text never lies over a facade. Put the pause button in `.avu-film__controls` next to `.avu-film__progress` to get one thin line per shot.
+
+Per shot, `pos` sets the focal point (crop and zoom centre; `'0% 62%'` zooms from the left edge and pushes the subject right of the caption), and `mobile: { src, pos, from, to }` replaces any of them below 700 px. Keep signage out of the top 10 % of the frame, where it would meet the logo in the header.
+
 ### Page intro (pages without a film)
 ```html
 <section class="avu-page-intro avu-wrap">
