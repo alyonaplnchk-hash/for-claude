@@ -67,8 +67,8 @@ def scheme():
 
 
 def slide_settings():
-    camera = ["4K · vertical 9:16", "25 fps", "On a tripod: stabilisation off"]
-    phone = ["Video 4K · vertical 9:16", "Stabilisation on (no shake)", "Long press on the face to lock focus and exposure", "Airplane mode, enough battery and storage", "Photos: portrait mode"]
+    camera = ["4K, camera turned vertical (90°) on the tripod", "25 fps", "On a tripod: stabilisation off"]
+    phone = ["Video 4K · vertical 9:16", "25 fps, same as the camera (iPhone: Settings → Camera → Record Video → Show PAL Formats)", "Stabilisation on (no shake)", "Long press on the face to lock focus and exposure", "Airplane mode, enough battery and storage", "Photos: portrait mode"]
     col = lambda title, items: f'<div class="col"><h3>{title}</h3><ul class="checks">' + "".join(f"<li>{i}</li>" for i in items) + "</ul></div>"
     return f"""
 <section class="slide">
@@ -84,6 +84,7 @@ def slide_light():
     notes = [
         (1, "About 1 m from each face, just outside the frame."),
         (2, "10–20 cm above the eyes, slight tilt down."),
+        ("", "Set the panels to the same warm colour as the shelf lights."),
     ]
     rows = "".join(f'<div class="nrow">{f"<span class=badge>{n}</span>" if n else "<span class=dot></span>"}<p>{t}</p></div>' for n, t in notes)
     return f"""
