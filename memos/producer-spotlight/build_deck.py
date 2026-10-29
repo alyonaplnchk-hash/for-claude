@@ -61,7 +61,7 @@ def scheme():
     s.append(f'<g opacity=".95"><rect x="945" y="610" width="34" height="80" rx="5" transform="rotate(-18 962 650)" fill="none" stroke="{GOLD}" stroke-width="5" stroke-dasharray="10 7"/>'
              f'<line x1="985" y1="655" x2="1285" y2="722" stroke="{GOLD}" stroke-width="5" stroke-dasharray="14 9"/>'
              f'<path d="M920,700 L920,630" stroke="{GOLD}" stroke-width="6"/><path d="M920,612 l-13,24 l26,0 z" fill="{GOLD}"/></g>')
-    s.append(pill(1010, 628, "higher + tilt down", 200) + badge(2, 1000, 624))
+    s.append(pill(1010, 628, "a bit higher + slight tilt", 250) + badge(2, 1000, 624))
     s.append("</svg>")
     return "".join(s)
 
@@ -83,7 +83,8 @@ def slide_settings():
 def slide_light():
     notes = [
         (1, "About 1 m from each face, just outside the frame."),
-        (2, "20–40 cm above the eyes, tilted down."),
+        (2, "10–20 cm above the eyes, slight tilt down."),
+        ("", "Check the eyes: a small bright spot is right. If the eye sockets go dark, lower the panel."),
     ]
     rows = "".join(f'<div class="nrow">{f"<span class=badge>{n}</span>" if n else "<span class=dot></span>"}<p>{t}</p></div>' for n, t in notes)
     return f"""
