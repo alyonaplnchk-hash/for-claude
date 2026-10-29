@@ -3,6 +3,7 @@
 Run:  python3 build_deck.py && node render.cjs
 """
 import base64
+import json
 import re
 from pathlib import Path
 
@@ -61,18 +62,13 @@ def scheme():
              f'<line x1="985" y1="655" x2="1285" y2="722" stroke="{GOLD}" stroke-width="5" stroke-dasharray="14 9"/>'
              f'<path d="M920,700 L920,630" stroke="{GOLD}" stroke-width="6"/><path d="M920,612 l-13,24 l26,0 z" fill="{GOLD}"/></g>')
     s.append(pill(1010, 628, "higher + tilt down", 200) + badge(2, 1000, 624))
-    # 3: Zhiyun M20C behind the guest, out of frame
-    s.append(f'<defs><linearGradient id="m20" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{RIM_C}" stop-opacity=".85"/><stop offset="1" stop-color="{RIM_C}" stop-opacity="0"/></linearGradient></defs>'
-             f'<polygon points="214,640 236,618 335,672 312,700" fill="url(#m20)"/>'
-             f'<rect x="196" y="608" width="34" height="26" rx="4" transform="rotate(35 213 621)" fill="#fff" stroke="{RIM_C}" stroke-width="5"/>')
-    s.append(pill(64, 656, "M20C · behind", 160) + badge(3, 44, 652))
     s.append("</svg>")
     return "".join(s)
 
 
 def slide_settings():
-    camera = ["4K · 3840×2160 · horizontal 16:9", "25 fps", "Stabilisation on (no shake)", "White balance manual, ≈3200 K like the shelves", "Focus and exposure locked on faces"]
-    phone = ["Video 4K · 25 or 30 fps", "Stabilisation on", "Long press on the face to lock focus and exposure", "Airplane mode, enough battery and storage", "Photos: portrait mode"]
+    camera = ["4K · vertical 9:16", "25 fps", "On a tripod: stabilisation off"]
+    phone = ["Video 4K · vertical 9:16", "Stabilisation on (no shake)", "Long press on the face to lock focus and exposure", "Airplane mode, enough battery and storage", "Photos: portrait mode"]
     col = lambda title, items: f'<div class="col"><h3>{title}</h3><ul class="checks">' + "".join(f"<li>{i}</li>" for i in items) + "</ul></div>"
     return f"""
 <section class="slide">
@@ -86,11 +82,8 @@ def slide_settings():
 
 def slide_light():
     notes = [
-        (1, "About 1 m from each face, just outside the frame. These panels are weak, so keep them close."),
-        (2, "20–40 cm above the eyes, tilted down 15–30°."),
-        (3, "Zhiyun M20C behind the guest, out of frame, barn doors on."),
-        ("", "Keep the room lights on. Panels on the same colour as the shelves (≈3000–3500 K)."),
-        ("", "Check reflections in glasses, bottles and wine glasses. If you see the panel, move it up or to the side."),
+        (1, "About 1 m from each face, just outside the frame."),
+        (2, "20–40 cm above the eyes, tilted down."),
     ]
     rows = "".join(f'<div class="nrow">{f"<span class=badge>{n}</span>" if n else "<span class=dot></span>"}<p>{t}</p></div>' for n, t in notes)
     return f"""
@@ -100,20 +93,35 @@ def slide_light():
   <h2>Light scheme</h2>
   <div class="scheme">
     <div class="img">{scheme()}</div>
-    <div class="notes">{rows}</div>
+    <div class="notes"><p class="lead">So the picture is not too dark, use the LED panels. Place them like this.</p>{rows}</div>
   </div>
 </section>"""
 
 
-def slide_photo():
-    items = ["Several portraits of the guest, at least 10 photos", "Different poses: arms crossed, hands in pockets, smiling, serious", "Close-up and from head to waist", "Vertical, portrait mode", "In front of the wine wall"]
+def slide_broll():
+    shots = [("arrival", "The guest walks in"), ("greeting", "Greets the host"), ("talking", "The two talking")]
+    cards = "".join(f'<figure><div class="ph"><img src="{img("refs/" + k + ".jpg")}" alt=""></div><figcaption>{t}</figcaption></figure>' for k, t in shots)
+    credits = json.loads((HERE / "refs" / "credits.json").read_text())
     return f"""
 <section class="slide">
   {chrome(3)}
+  <p class="eyebrow">03</p>
+  <h2>B-roll</h2>
+  <p class="first">Before and after the interview, film a few short shots. Hold each one about 10 seconds. Examples:</p>
+  <div class="grid">{cards}</div>
+  <p class="credit">Example photos: {" · ".join(credits[k] for k, _ in shots)}</p>
+</section>"""
+
+
+def slide_photo():
+    items = ["A few portraits of the guest", "Different poses: arms crossed, hands in pockets, smiling, serious", "Close-up and from head to waist", "Vertical, portrait mode", "In front of the wine wall"]
+    return f"""
+<section class="slide">
+  {chrome(4)}
   <div class="photo-left">
     <div class="shot"><img src="{img('portrait-reference.jpg')}" alt="Example"><span class="tag">Example</span></div>
     <div class="p-text">
-      <p class="eyebrow">03</p>
+      <p class="eyebrow">04</p>
       <h2>Photos of the guest</h2>
       <p class="lead">This is only an example: any pose works.</p>
       <ul class="checks">{"".join(f"<li>{i}</li>" for i in items)}</ul>
@@ -159,7 +167,7 @@ h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; 
 
 /* extra shots */
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm 6mm; }
-.grid figure .ph { height: 92mm; }
+.grid figure .ph { height: 84mm; }
 .grid figcaption { font-family: 'Playfair Display', serif; font-size: 16pt; margin-top: 3mm; }
 
 /* photo pages */
@@ -188,6 +196,8 @@ h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; 
 .scheme .img svg { display: block; width: 100%%; height: auto; border-radius: 3mm; }
 .nrow { display: flex; gap: 4mm; align-items: flex-start; padding: 3mm 0; border-bottom: 1px solid var(--line); }
 .nrow p { font-size: 11pt; line-height: 1.4; }
+.notes .lead { font-size: 15pt; color: var(--ink); margin-bottom: 6mm; }
+.notes .nrow p { font-size: 12.5pt; }
 .nrow .badge { width: 7mm; height: 7mm; font-size: 10.5pt; }
 .dot { flex: none; width: 7mm; height: 7mm; display: flex; align-items: center; justify-content: center; }
 .dot::before { content: ""; width: 2.4mm; height: 2.4mm; border-radius: 50%%; background: var(--gold); }
@@ -208,7 +218,7 @@ FONTS = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:w
 
 def build():
     css = CSS % dict(GOLD=GOLD, GOLD_DK=GOLD_DK, INK=INK)
-    slides = [slide_settings(), slide_light(), slide_photo()]
+    slides = [slide_settings(), slide_light(), slide_broll(), slide_photo()]
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Producer Spotlight · How to film</title>{FONTS}<style>{css}</style></head>
 <body>{''.join(slides)}</body></html>"""
     (HERE / "filming-memo.html").write_text(html)
