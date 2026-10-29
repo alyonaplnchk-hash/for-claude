@@ -84,7 +84,6 @@ def slide_light():
     notes = [
         (1, "About 1 m from each face, just outside the frame."),
         (2, "10–20 cm above the eyes, slight tilt down."),
-        ("", "Check the eyes: a small bright spot is right. If the eye sockets go dark, lower the panel."),
     ]
     rows = "".join(f'<div class="nrow">{f"<span class=badge>{n}</span>" if n else "<span class=dot></span>"}<p>{t}</p></div>' for n, t in notes)
     return f"""
