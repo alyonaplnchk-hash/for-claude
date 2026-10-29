@@ -38,122 +38,7 @@ def dist(x, y, tx, ty):
     return math.hypot(tx - x, ty - y)
 
 
-def polar(cx, cy, theta_deg, d, side):
-    """Point at distance d from (cx, cy); theta from 'towards camera' (down), side -1 = camera-left."""
-    t = math.radians(theta_deg)
-    return cx + side * d * math.sin(t), cy + d * math.cos(t)
-
-
 # ---------------------------------------------------------------- plan icons (drawn facing up)
-
-def beam(length, w0, w1, color, opacity, start=6):
-    gid = uid("bm")
-    return (
-        f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="{-start}" x2="0" y2="{-length:.1f}">'
-        f'<stop offset="0" stop-color="{color}" stop-opacity="{opacity}"/><stop offset="1" stop-color="{color}" stop-opacity="0"/></linearGradient></defs>'
-        f'<polygon points="{-w0/2},{-start} {w0/2},{-start} {w1/2},{-length:.1f} {-w1/2},{-length:.1f}" fill="url(#{gid})"/>'
-    )
-
-
-def panel(x, y, tx, ty, color, opacity):
-    a, L = ang(x, y, tx, ty), dist(x, y, tx, ty) + 6
-    return (
-        f'<g transform="translate({x:.1f},{y:.1f}) rotate({a:.1f})">' + beam(L, 46, 80, color, opacity)
-        + f'<rect x="-24" y="-6" width="48" height="11" rx="2" fill="#fff" stroke="{color}" stroke-width="1.4"/>'
-        f'<line x1="-22" y1="-6" x2="22" y2="-6" stroke="{color}" stroke-width="3.2" stroke-linecap="round"/></g>'
-    )
-
-
-def m20c(x, y, tx, ty):
-    a, L = ang(x, y, tx, ty), dist(x, y, tx, ty) + 8
-    return (
-        f'<g transform="translate({x:.1f},{y:.1f}) rotate({a:.1f})">' + beam(L, 14, 44, RIM_C, 0.6, start=5)
-        + f'<rect x="-8" y="-5" width="16" height="11" rx="2" fill="#fff" stroke="{RIM_C}" stroke-width="1.4"/>'
-        f'<path d="M-8,-5 L-14,-13 M8,-5 L14,-13" stroke="{RIM_C}" stroke-width="1.8" stroke-linecap="round"/></g>'
-    )
-
-
-def camera(x, y, tx, ty):
-    a = ang(x, y, tx, ty)
-    return (
-        f'<g transform="translate({x:.1f},{y:.1f}) rotate({a:.1f})">'
-        f'<rect x="-8" y="-15" width="16" height="12" rx="1.5" fill="#fff" stroke="{INK}" stroke-width="1.4"/>'
-        f'<rect x="-16" y="-4" width="32" height="22" rx="3" fill="#fff" stroke="{INK}" stroke-width="1.6"/></g>'
-    )
-
-
-def person(x, y, tx, ty, guest=True, seated=True):
-    a = ang(x, y, tx, ty)
-    fill, stroke = (GOLD, GOLD_DK) if guest else ("#fff", INK)
-    out = [f'<g transform="translate({x:.1f},{y:.1f}) rotate({a:.1f})">']
-    if seated:
-        out.append(f'<rect x="-24" y="-24" width="48" height="46" rx="9" fill="{LEATHER if guest else "#EFEBE3"}" fill-opacity="{.85 if guest else 1}"/>'
-                   f'<rect x="-24" y="16" width="48" height="8" rx="4" fill="{LEATHER if guest else "#E2DCCF"}"/>')
-    out.append(
-        f'<ellipse cx="0" cy="2" rx="25" ry="10.5" fill="{fill}" stroke="{stroke}" stroke-width="1.3"/>'
-        f'<circle cx="0" cy="0" r="10.5" fill="{fill if guest else "#fff"}" stroke="{stroke}" stroke-width="1.3"/>'
-        f'<path d="M-3.5,-10 L0,-16 L3.5,-10 Z" fill="{stroke}"/></g>'
-    )
-    return "".join(out)
-
-
-HALO = 'paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round"'
-
-
-def label(x, y, title, sub, anchor, color):
-    t = f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}" font-family="Roboto" font-size="13" font-weight="700" letter-spacing="1.4" fill="{color}" {HALO}>{title}</text>'
-    if sub:
-        t += f'<text x="{x:.1f}" y="{y + 17:.1f}" text-anchor="{anchor}" font-family="Roboto" font-size="13" fill="{INK}" fill-opacity=".8" {HALO}>{sub}</text>'
-    return t
-
-
-def plan(seated=True):
-    """Top view: two people side by side, one camera, cross-key from behind, soft fill at the camera."""
-    W, H, S = 600, 440, 80
-    wall = 46
-    P1 = (240, wall + 1.8 * S)  # guest, frame-left
-    P2 = (360, wall + 1.8 * S)  # interviewer, frame-right
-    A = (300, P1[1] + 2.3 * S)
-    K1 = (450, P1[1] - 42)      # Raleno behind the interviewer: key on the guest, rim on the interviewer
-    K2 = (150, P1[1] - 42)      # M20C behind the guest: key on the interviewer, rim on the guest
-    F = (300, A[1] + 40)        # Raleno above the camera: soft fill for both
-    mid = (P1[0] + P2[0]) / 2
-    s = [f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">']
-    # wine wall: rails with bottles seen from above
-    s.append(f'<rect x="20" y="14" width="560" height="{wall-14}" rx="4" fill="#F1EEE7"/>')
-    for i, x in enumerate(range(52, 560, 64)):
-        s.append(f'<line x1="{x}" y1="18" x2="{x}" y2="{wall-4}" stroke="#B39B6A" stroke-width="2"/>')
-        s.append(f'<rect x="{x-24 + (i % 2) * 6}" y="{24 + (i % 3) * 3}" width="{40 + (i % 3) * 8}" height="9" rx="4.5" fill="#2B2A2E"/>')
-    s.append(f'<text x="470" y="{wall + 20}" text-anchor="middle" font-family="Roboto" font-size="12" letter-spacing="2" fill="{GOLD_DK}">WINE WALL</text>')
-    # camera frame
-    for ex in (P1[0] - 110, P2[0] + 110):
-        s.append(f'<line x1="{A[0]}" y1="{A[1]-14}" x2="{ex}" y2="{wall+6}" stroke="{INK}" stroke-opacity=".22" stroke-dasharray="4 5"/>')
-    s.append(f'<line x1="{mid}" y1="{wall+4}" x2="{mid}" y2="{P1[1]-36}" stroke="{GOLD_DK}" stroke-opacity=".7" stroke-dasharray="2 3"/>')
-    s.append(f'<rect x="{mid-32}" y="{(wall+P1[1])/2-18}" width="64" height="20" rx="10" fill="#fff" stroke="{GOLD}"/>'
-             f'<text x="{mid}" y="{(wall+P1[1])/2-3.5}" text-anchor="middle" font-family="Roboto" font-size="12" font-weight="500" fill="{INK}">1.5–2 m</text>')
-    s.append(panel(*F, mid, P1[1], FILL_C, 0.28))
-    s.append(panel(*K1, *P1, KEY_C, 0.45))
-    s.append(m20c(*K2, *P2))
-    if not seated:
-        for p in (P1, P2):
-            s.append(f'<g stroke="{GOLD_DK}" stroke-width="3"><line x1="{p[0]-14}" y1="{p[1]+28}" x2="{p[0]+14}" y2="{p[1]+28}"/><line x1="{p[0]}" y1="{p[1]+28}" x2="{p[0]}" y2="{p[1]+40}"/></g>')
-    s.append(camera(A[0], A[1], mid, P1[1]))
-    s.append(person(*P2, P2[0] - 100, P2[1] + 100, guest=False, seated=seated))
-    s.append(person(*P1, P1[0] + 100, P1[1] + 100, guest=True, seated=seated))
-    # where the guest looks: at the interviewer, so the Raleno behind the interviewer's shoulder is in front of the guest's face
-    ey = P1[1] - 2
-    s.append(f'<line x1="{P1[0]+18}" y1="{ey}" x2="{P2[0]-30}" y2="{ey}" stroke="{GOLD_DK}" stroke-width="2.4"/>'
-             f'<path d="M{P2[0]-22},{ey} l-11,-6 l0,12 z" fill="{GOLD_DK}"/>')
-    s.append(f'<text x="{mid}" y="{ey-20}" text-anchor="middle" font-family="Roboto" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="{GOLD_DK}" {HALO}>LOOKS HERE</text>')
-    s.append(label(P1[0] - 6, P1[1] + 52, "GUEST", "", "end", GOLD_DK))
-    s.append(label(P2[0] + 6, P2[1] + 52, "INTERVIEWER", "", "start", INK))
-    s.append(label(K1[0] + 30, K1[1] - 4, "KEY · RALENO", "lights the guest", "start", KEY_T))
-    s.append(label(K2[0] - 26, K2[1] - 4, "KEY · M20C", "lights the interviewer", "end", RIM_T))
-    s.append(label(F[0] + 34, F[1] + 4, "FILL · RALENO", "above the camera, low", "start", FILL_T))
-    s.append(label(A[0] - 30, A[1] + 4, "ONE CAMERA", "", "end", INK))
-    s.append("</svg>")
-    return "".join(s)
-
 
 # ---------------------------------------------------------------- assets
 
@@ -190,42 +75,56 @@ def chrome(n):
     return f'<div class="brand">{logo_svg(7)}<span>Producer Spotlight</span></div><div class="pno">{n:02d}</div>'
 
 
-def slide_cover():
-    return f"""
-<section class="slide cover">
-  <div class="c-text">
-    {logo_svg(17)}
-    <p class="eyebrow">Producer Spotlight</p>
-    <h1>How to film<br>the interview</h1>
-    <ol class="toc"><li><span>01</span>Light</li><li><span>02</span>Extra shots</li><li><span>03</span>Portrait</li></ol>
-  </div>
-  <div class="c-img"><img src="{img('portrait-reference.jpg')}" alt=""></div>
-</section>"""
+def lamp(n, x, y, tx, ty, color, w=70):
+    """LED panel drawn on the photo at (x, y), glowing towards (tx, ty), with a number badge."""
+    a = ang(x, y, tx, ty)
+    L = dist(x, y, tx, ty)
+    gid = uid("lb")
+    return (
+        f'<g transform="translate({x:.0f},{y:.0f}) rotate({a:.1f})">'
+        f'<defs><linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="{-L:.0f}">'
+        f'<stop offset="0" stop-color="{color}" stop-opacity=".75"/><stop offset="1" stop-color="{color}" stop-opacity="0"/></linearGradient></defs>'
+        f'<polygon points="{-w/2},-8 {w/2},-8 {w*1.6:.0f},{-L:.0f} {-w*1.6:.0f},{-L:.0f}" fill="url(#{gid})"/>'
+        f'<line x1="0" y1="-14" x2="0" y2="{-L+40:.0f}" stroke="#fff" stroke-width="4" stroke-dasharray="14 10" opacity=".9"/>'
+        f'<rect x="{-w/2}" y="-10" width="{w}" height="22" rx="5" fill="#fff" stroke="{color}" stroke-width="5"/></g>'
+        f'<circle cx="{x:.0f}" cy="{y:.0f}" r="26" fill="{GOLD}" stroke="#fff" stroke-width="5"/>'
+        f'<text x="{x:.0f}" y="{y+11:.0f}" text-anchor="middle" font-family="Roboto" font-size="32" font-weight="700" fill="#fff">{n}</text>'
+    )
 
 
-def slide_light(seated, ref, n):
-    title = "Seated" if seated else "Standing"
+def light_photo():
+    """The office photo with the three LED lights drawn on it (image pixel coordinates)."""
+    W, H = 958, 1420
+    face_l, face_r = (264, 350), (664, 420)
+    return (
+        f'<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'
+        f'<image href="{img("office-setup.jpg")}" width="{W}" height="{H}"/>'
+        + lamp(1, 828, 215, *face_l, KEY_C, 90)
+        + lamp(2, 128, 205, *face_r, RIM_C, 44)
+        + lamp(3, 479, 1340, 479, 420, FILL_C, 110)
+        + "</svg>"
+    )
+
+
+def slide_light():
     rows = [
-        (KEY_C, "Key", "Raleno S192K", "behind the interviewer's shoulder, where the guest looks · lights the guest"),
-        (RIM_C, "Key", "Zhiyun M20C", "behind the guest's shoulder, where the interviewer looks · lights the interviewer"),
-        (FILL_C, "Fill", "Raleno S192K", "above the camera, low power · for both"),
+        (1, "Raleno S192K", "behind the host's shoulder, lights the guest's face"),
+        (2, "Zhiyun M20C", "behind the guest's shoulder, lights the host's face"),
+        (3, "Raleno S192K", "above the camera, low power, soft light for both"),
     ]
-    lights = "".join(f'<div class="lrow"><i style="background:{c}"></i><div><h3>{t} <em>{m}</em></h3><p>{d}</p></div></div>' for c, t, m, d in rows)
+    legend = "".join(f'<div class="lrow"><span class="badge">{n}</span><div><h3>{m}</h3><p>{d}</p></div></div>' for n, m, d in rows)
     return f"""
 <section class="slide">
-  {chrome(n)}
-  <p class="eyebrow">01 · Light</p>
-  <h2>{title}</h2>
-  <div class="split">
-    <div class="fig plan">{plan(seated)}</div>
-    <div class="side">
-      {photo(ref, "ref")}
-      <div class="lights">{lights}</div>
-      <p class="note">Each back light also gives the person in front of it a highlight on hair and shoulders.</p>
-      <p class="fmt">One camera, 4K 16:9 · for Instagram the 9:16 crop follows who is speaking</p>
+  {chrome(1)}
+  <div class="photo-left">
+    <div class="shot">{light_photo()}</div>
+    <div class="p-text">
+      <p class="eyebrow">01</p>
+      <h2>Light scheme</h2>
+      <div class="lights">{legend}</div>
+      <p class="note">Lights 1 and 2 stand just outside the frame.</p>
     </div>
   </div>
-  {credit(ref)}
 </section>"""
 
 
@@ -233,24 +132,27 @@ def slide_shots(shots):
     cards = "".join(f'<figure>{photo(k)}<figcaption>{t}</figcaption></figure>' for k, t in shots)
     return f"""
 <section class="slide">
-  {chrome(4)}
-  <p class="eyebrow">02 · Extra shots</p>
-  <h2>Before and after the interview</h2>
+  {chrome(2)}
+  <p class="eyebrow">02</p>
+  <h2>B-roll examples</h2>
   <div class="grid">{cards}</div>
   {credit(*[k for k, _ in shots])}
 </section>"""
 
 
-def slide_portrait():
+def slide_photo():
+    checks = ["Wipe the camera lens", "Turn on stabilisation (no shake)", "Shoot in 4K or portrait mode"]
+    items = "".join(f"<li>{c}</li>" for c in checks)
     return f"""
 <section class="slide">
-  {chrome(5)}
-  <div class="portrait">
-    <div class="p-img"><img src="{img('portrait-reference.jpg')}" alt=""></div>
+  {chrome(3)}
+  <div class="photo-left">
+    <div class="shot"><img src="{img('portrait-reference.jpg')}" alt="Example"><span class="tag">Example</span></div>
     <div class="p-text">
-      <p class="eyebrow">03 · Portrait</p>
-      <h2>One photo<br>for the cover</h2>
-      <p class="lead">A high-quality photo of the guest, like this sample.</p>
+      <p class="eyebrow">03</p>
+      <h2>We need a photo<br>of the guest</h2>
+      <p class="lead">This is only an example: any pose works.</p>
+      <ul class="checks">{items}</ul>
     </div>
   </div>
 </section>"""
@@ -279,16 +181,6 @@ h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; 
 .credit { position: absolute; left: 18mm; bottom: 7.5mm; right: 40mm; font-size: 6pt; color: rgba(26,26,26,.45); }
 .cap { font-size: 9pt; color: var(--muted); margin-top: 3mm; }
 
-/* cover */
-.cover { display: grid; grid-template-columns: 1fr 92mm; gap: 14mm; padding: 0 0 0 22mm; }
-.c-text { align-self: center; }
-.cover .eyebrow { margin-top: 14mm; }
-.cover h1 { font-size: 50pt; margin: 2mm 0 12mm; }
-.toc { list-style: none; display: flex; gap: 9mm; border-top: 1px solid var(--line); padding-top: 5mm; }
-.toc li { font-family: 'Playfair Display', serif; font-size: 13pt; }
-.toc span { display: block; font-family: 'Roboto', sans-serif; font-size: 8pt; letter-spacing: .2em; color: var(--gold-dk); margin-bottom: 1mm; }
-.c-img img { display: block; height: 190.5mm; width: 100%%; object-fit: cover; }
-
 /* layouts */
 .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12mm; align-items: start; }
 .split.wide-left { grid-template-columns: 1.55fr 1fr; align-items: center; }
@@ -312,6 +204,19 @@ h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14pt; 
 .grid figure .ph { height: 92mm; }
 .grid figcaption { font-family: 'Playfair Display', serif; font-size: 16pt; margin-top: 3mm; }
 
+/* photo pages */
+.photo-left { display: grid; grid-template-columns: 112mm 1fr; gap: 16mm; height: 100%%; margin: -15mm 0 -12mm -18mm; }
+.photo-left .shot { position: relative; height: 190.5mm; overflow: hidden; }
+.photo-left .shot svg, .photo-left .shot img { display: block; width: 100%%; height: 100%%; object-fit: cover; }
+.badge { flex: none; width: 8mm; height: 8mm; border-radius: 50%%; background: var(--gold); color: #fff; font-weight: 700; font-size: 12pt; display: flex; align-items: center; justify-content: center; }
+.lights .lrow { gap: 5mm; padding: 4mm 0; }
+.lights h3 { font-size: 15pt; }
+.lights p { font-size: 11.5pt; }
+.tag { position: absolute; left: 6mm; top: 6mm; background: #fff; color: var(--gold-dk); font-size: 9pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; padding: 1.5mm 3.5mm; border-radius: 4mm; }
+.checks { list-style: none; margin-top: 10mm; border-top: 1px solid var(--line); }
+.checks li { font-size: 14pt; padding: 4mm 0 4mm 10mm; border-bottom: 1px solid var(--line); position: relative; }
+.checks li::before { content: ""; position: absolute; left: 0; top: 5mm; width: 4.5mm; height: 4.5mm; border: 1.5px solid var(--gold); border-radius: 1mm; }
+
 /* portrait */
 .portrait { display: grid; grid-template-columns: 96mm 1fr; gap: 16mm; height: 100%%; margin: -15mm 0 -12mm -18mm; }
 .p-img img { display: block; height: 190.5mm; width: 100%%; object-fit: cover; }
@@ -328,7 +233,7 @@ FONTS = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:w
 
 def build():
     css = CSS % dict(GOLD=GOLD, GOLD_DK=GOLD_DK, INK=INK)
-    slides = [slide_cover(), slide_light(True, "ref-seated", 2), slide_light(False, "ref-standing", 3), slide_shots(SHOTS), slide_portrait()]
+    slides = [slide_light(), slide_shots(SHOTS), slide_photo()]
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Producer Spotlight · How to film</title>{FONTS}<style>{css}</style></head>
 <body>{''.join(slides)}</body></html>"""
     (HERE / "filming-memo.html").write_text(html)
