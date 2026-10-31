@@ -1,0 +1,12 @@
+{
+  "name": "bordeaux-voiceover",
+  "private": true,
+  "type": "module",
+  "description": "Generates the English narration for the Bordeaux film with the open Kokoro-82M TTS model (runs locally, no API key).",
+  "scripts": {
+    "generate": "node generate.mjs"
+  },
+  "dependencies": {
+    "kokoro-js": "^1.2.1"
+  }
+}

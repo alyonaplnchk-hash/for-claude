@@ -5,3 +5,9 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# rendered 3D layer (regenerate with tools/render3d)
+public/frames3d
+public/audio/*.wav
+tools/audio/timeline.json
+tools/*/node_modules

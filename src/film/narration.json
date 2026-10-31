@@ -1,0 +1,25 @@
+{
+  "voice": "af_heart",
+  "speed": 0.97,
+  "lines": [
+    { "id": "hook1", "text": "Squeeze a red grape... and the juice runs clear." },
+    { "id": "hook2", "text": "So where does Bordeaux get its deep, ruby red?" },
+    { "id": "map1", "text": "Bordeaux, in south-west France. Right on the forty-fifth parallel, the [Garonne](/ɡəɹˈɑːn/) and [Dordogne](/dɔːɹdˈɔɪn/) rivers meet, to form the [Gironde](/ʒiɹˈɑːnd/) estuary." },
+    { "id": "map2", "text": "It splits the vineyards in two: the Left Bank... and the Right Bank." },
+    { "id": "soil1", "text": "On the Left Bank, deep gravel drains the rain and stores the sun's heat. Perfect for [Cabernet Sauvignon](/kˌæbɚnˈeɪ sˌoʊvɪnjˈɑːn/)." },
+    { "id": "soil2", "text": "On the Right Bank, cooler clay and limestone favor [Merlot](/mɚlˈoʊ/)." },
+    { "id": "grapes1", "text": "[Merlot](/mɚlˈoʊ/) is the region's most planted red grape, with [Cabernet Sauvignon](/kˌæbɚnˈeɪ sˌoʊvɪnjˈɑːn/) and [Cabernet Franc](/kˌæbɚnˈeɪ fɹˈɑːŋk/) close behind." },
+    { "id": "harvest1", "text": "Through the summer, the berries turn from green to purple. Sugar climbs, acidity falls..." },
+    { "id": "harvest2", "text": "and in September, the harvest begins. Often by hand, into small crates." },
+    { "id": "sort1", "text": "At the winery, the grapes are sorted, destemmed, and gently crushed." },
+    { "id": "ferm1", "text": "Inside the vat, yeasts turn sugar into alcohol, and carbon dioxide." },
+    { "id": "ferm2", "text": "And here's the answer. The color lives in the skins." },
+    { "id": "ferm3", "text": "For up to a month, the juice soaks with them, drawing out pigments called [anthocyanins](/ˌænθoʊsˈaɪənɪnz/), along with tannins." },
+    { "id": "press1", "text": "The new wine is pressed off the skins, and a second fermentation softens its sharp [malic](/mˈælɪk/) acid." },
+    { "id": "barrel1", "text": "Then it rests in French oak [barriques](/bəɹˈiːks/), two hundred and twenty-five liters each, for twelve to twenty-four months." },
+    { "id": "barrel2", "text": "Oak lets in tiny amounts of oxygen, rounding the tannins, and adding notes of vanilla, toast and spice." },
+    { "id": "blend1", "text": "Then comes Bordeaux's signature art: the blend. Left Bank wines lean on [Cabernet Sauvignon](/kˌæbɚnˈeɪ sˌoʊvɪnjˈɑːn/). Right Bank wines, on [Merlot](/mɚlˈoʊ/)." },
+    { "id": "bottle1", "text": "Once bottled, the finest vintages can keep evolving for decades." },
+    { "id": "end1", "text": "Sun, soil, skins and oak. That's the red of Bordeaux." }
+  ]
+}
