@@ -20,6 +20,10 @@ answers the question at the fermentation stage.
 | 11–12 | Press, cellar | Basket press and malolactic fermentation, then the barrel chai and a cut-away barrique with oxygen |
 | 13–14 | Blend, bottle | Left Bank and Right Bank example blends, a pour at sunset, and the end card |
 
+## Watch
+
+[`video/bordeaux-red-wine.mp4`](video/bordeaux-red-wine.mp4): 1920×1080, 30 fps, 1:59, English narration, music and SFX (H.264/AAC, ~49 MB).
+
 ## How it is built
 
 ```
