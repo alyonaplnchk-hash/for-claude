@@ -57,14 +57,14 @@ const goldenEnv = (sun: V3) => ({
   fogCol: hex("#e9a870"),
 });
 
-export const BUNCH_POS: Record<string, V3> = { merlot: [-0.34, 1.02, 0], cs: [0.0, 1.0, 0.04], cf: [0.33, 1.03, -0.02] };
+export const BUNCH_POS: Record<string, V3> = { merlot: [-0.31, 1.02, 0], cs: [0.0, 1.0, 0.04], cf: [0.29, 1.03, -0.02] };
 
 export const grapes: ShotFactory = (dur) => {
   let heroes: Hero[] = [], leaves: InstBuf, leaf: Mesh, cane: Mesh, hedge: Mesh, hedgeI: InstBuf, ground: Mesh, berry: Mesh;
   const G = B.grapes;
   const cam = (t: number): Camera => {
     const k = easeInOut(t / dur);
-    return { pos: [lerp(-0.3, 0.2, k), 0.97 + noise1(t * 0.6) * 0.006, lerp(0.78, 0.7, k)], target: [lerp(0.14, 0.4, k), 0.95, 0], fov: 40 };
+    return { pos: [lerp(-0.2, 0.1, k), 1.0 + noise1(t * 0.6) * 0.006, lerp(0.86, 0.8, k)], target: [lerp(-0.08, 0.12, k), 1.035, 0], fov: 40 };
   };
   return {
     init(e) {
@@ -82,7 +82,7 @@ export const grapes: ShotFactory = (dur) => {
       ground = cached(e, "ground-80", () => groundPlane(80));
     },
     camera: cam,
-    anchors: () => ({ merlot: [BUNCH_POS.merlot[0], 0.95, 0], cs: [BUNCH_POS.cs[0], 0.92, 0.04], cf: [BUNCH_POS.cf[0], 0.95, -0.02] }),
+    anchors: () => ({ merlot: [BUNCH_POS.merlot[0], 0.84, 0], cs: [BUNCH_POS.cs[0], 0.83, 0.04], cf: [BUNCH_POS.cf[0], 0.85, -0.02] }),
     frame(t) {
       const draws: Draw[] = [];
       const colors = [hex("#1d1236"), hex("#120a20"), hex("#2c1030")];

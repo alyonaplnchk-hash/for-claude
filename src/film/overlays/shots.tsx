@@ -124,23 +124,23 @@ const DONUT = [
   { label: "Petit Verdot, Malbec, Carménère", v: 2, c: "#f2c46d" },
 ];
 const Donut: React.FC<{ t: number; start: number; active: number }> = ({ t, start, active }) => {
-  const R = 120, sw = 46, C = 2 * Math.PI * R;
+  const R = 82, sw = 32, C = 2 * Math.PI * R;
   let acc = 0;
   return (
-    <div style={{ display: "flex", gap: 34, alignItems: "center" }}>
-      <svg width={300} height={300} viewBox="-150 -150 300 300">
+    <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+      <svg width={210} height={210} viewBox="-105 -105 210 210">
         <circle r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={sw} />
         {DONUT.map((s, i) => {
           const grow = interpolate(t, [start + i * 0.25, start + i * 0.25 + 0.8], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
           const len = (s.v / 100) * C * grow;
-          const el = <circle key={s.label} r={R} fill="none" stroke={s.c} strokeWidth={i === active ? sw + 14 : sw} strokeDasharray={`${len} ${C}`} strokeDashoffset={-acc} transform="rotate(-90)" />;
+          const el = <circle key={s.label} r={R} fill="none" stroke={s.c} strokeWidth={i === active ? sw + 10 : sw} strokeDasharray={`${len} ${C}`} strokeDashoffset={-acc} transform="rotate(-90)" />;
           acc += (s.v / 100) * C;
           return el;
         })}
-        <text textAnchor="middle" y={-6} fill="#fff" style={{ fontFamily: MONO, fontSize: 44, fontWeight: 700 }}>
+        <text textAnchor="middle" y={-2} fill="#fff" style={{ fontFamily: MONO, fontSize: 34, fontWeight: 700 }}>
           {Math.round(interpolate(t, [start, start + 1.2], [0, 62], clamp))}%
         </text>
-        <text textAnchor="middle" y={30} fill="rgba(255,255,255,0.75)" style={{ fontFamily: SANS, fontSize: 20, fontWeight: 600, letterSpacing: 3 }}>
+        <text textAnchor="middle" y={24} fill="rgba(255,255,255,0.75)" style={{ fontFamily: SANS, fontSize: 16, fontWeight: 600, letterSpacing: 3 }}>
           MERLOT
         </text>
       </svg>
@@ -148,8 +148,8 @@ const Donut: React.FC<{ t: number; start: number; active: number }> = ({ t, star
         {DONUT.map((s, i) => (
           <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 14, opacity: ramp(t, start + 0.3 + i * 0.25, 0.4) * (i === active || active < 0 ? 1 : 0.7) }}>
             <div style={{ width: 18, height: 18, borderRadius: 4, background: s.c }} />
-            <div style={{ fontFamily: MONO, fontSize: 26, width: 78, fontWeight: 700 }}>≈{s.v}%</div>
-            <div style={{ fontFamily: SANS, fontSize: 24, fontWeight: 600, maxWidth: 300 }}>{s.label}</div>
+            <div style={{ fontFamily: MONO, fontSize: 22, width: 66, fontWeight: 700 }}>≈{s.v}%</div>
+            <div style={{ fontFamily: SANS, fontSize: 20, fontWeight: 600, maxWidth: 220 }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -163,10 +163,10 @@ const Grapes: React.FC<P> = ({ t, d }) => {
   return (
     <AbsoluteFill>
       <Kicker t={t} n="02" label="THE GRAPES" end={end} />
-      <Callout t={t} shot="grapes" at="merlot" start={G.merlot} end={end} dx={-150} dy={250} title="MERLOT" sub="plump · supple · plummy" color="#ff5a8a" size={38} />
-      <Callout t={t} shot="grapes" at="cs" start={G.cs} end={end} dx={-120} dy={300} title="CABERNET SAUVIGNON" sub="small · thick-skinned · tannic" color="#c9a2ff" size={34} />
-      <Callout t={t} shot="grapes" at="cf" start={G.cf} end={end} dx={-120} dy={280} title="CABERNET FRANC" sub="fragrant · fresh" color="#ff9aa8" size={34} />
-      <Card t={t} start={G.merlot + 0.4} end={end} x={1200} y={200} w={620} title="RED VINES IN BORDEAUX">
+      <Pin t={t} shot="grapes" at="merlot" start={G.merlot} end={end} text="MERLOT" size={30} color="#ff6a94" dy={70} />
+      <Pin t={t} shot="grapes" at="cs" start={G.cs} end={end} text="CAB. SAUVIGNON" size={30} color="#c9a2ff" dy={70} />
+      <Pin t={t} shot="grapes" at="cf" start={G.cf} end={end} text="CAB. FRANC" size={30} color="#ff9aa8" dy={70} />
+      <Card t={t} start={G.merlot + 0.4} end={end} x={1240} y={150} w={580} title="RED VINES IN BORDEAUX">
         <Donut t={t} start={G.merlot + 0.6} active={active} />
         <div style={{ fontFamily: SANS, fontSize: 18, opacity: 0.6, marginTop: 16 }}>Share of red plantings, approximate</div>
       </Card>
