@@ -2,7 +2,7 @@
 // FINALE: a Bordeaux bottle at sunset over the vines; it pours, the glass glows ruby, end card.
 import { ShotFactory, cached, basePost } from "./common";
 import { B } from "../beats";
-import { Engine, Draw, Particles, Camera, Mat } from "../engine/renderer";
+import { Engine, Draw, Particles, Camera, Mat, Mesh } from "../engine/renderer";
 import { Geo, box, cylinder, lathe, disk, tube } from "../engine/geometry";
 import { V3, m4, hex, smooth, easeInOut, easeOut, lerp, rng, noise1 } from "../engine/math";
 import { wineGlass, glassWine, bottleGeo, capsuleGeo } from "./assets";
@@ -25,8 +25,8 @@ function cylinderGlass() {
 }
 
 export const blend: ShotFactory = (dur) => {
-  let table: any, cyl: any, liq: any, glass: any, wall: any;
-  const glassWines: any[] = [];
+  let table: Mesh, cyl: Mesh, liq: Mesh, glass: Mesh, wall: Mesh;
+  const glassWines: Mesh[] = [];
   let eng: Engine;
   const BL = B.blend;
   const cam = (t: number): Camera => {
@@ -73,7 +73,7 @@ export const blend: ShotFactory = (dur) => {
       const flow: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
       const r = rng(2);
       const cols = [[0.55, 0.05, 0.25], [0.95, 0.1, 0.25], [1.0, 0.3, 0.35]];
-      [[fl, -0.22, BLENDS.left], [fr, 0.22, BLENDS.right]].forEach(([f, gx, mixv]: any) => {
+      ([[fl, -0.22, BLENDS.left], [fr, 0.22, BLENDS.right]] as [number, number, number[]][]).forEach(([f, gx, mixv]) => {
         const active = smooth(0.0, 0.15, f) * smooth(1.0, 0.85, f);
         if (active <= 0) return;
         VARS.forEach((v, i) => {
@@ -167,7 +167,7 @@ function labelCanvas() {
 }
 
 export const finale: ShotFactory = (dur) => {
-  let bottle: any, capsule: any, glass: any, glassW: any, stream: any, table: any, ground: any, back: () => Draw[], labelTex: any, eng: Engine;
+  let bottle: Mesh, capsule: Mesh, glass: Mesh, glassW: Mesh, stream: Mesh, table: Mesh, ground: Mesh, back: () => Draw[], labelTex: WebGLTexture, eng: Engine;
   const F = B.finale;
   const pourStart = F.recap - 0.6, pourEnd = F.red + 0.8;
   const BOT: V3 = [-0.16, 0.9, 0.0];

@@ -2,7 +2,7 @@
 // 45th parallel is drawn, then the Left Bank and Right Bank glow. Ends with a dive towards the Médoc.
 import { ShotFactory, cached, basePost } from "./common";
 import { B } from "../beats";
-import { Draw, Particles, Camera } from "../engine/renderer";
+import { Draw, Particles, Camera, Mesh } from "../engine/renderer";
 import { Geo, grid, ribbon, box, sphere } from "../engine/geometry";
 import { V3, m4, hex, smooth, easeInOut, lerp, lerp3, rng, spline, len, sub } from "../engine/math";
 
@@ -144,7 +144,7 @@ export const PLACES: Record<string, V3> = {
 };
 
 export const map: ShotFactory = (dur) => {
-  let terrain: any, water: any, sides: any, rivers: any[] = [], lat45: any, dot: any;
+  let terrain: Mesh, water: Mesh, sides: Mesh, rivers: Mesh[] = [], lat45: Mesh, dot: Mesh;
   const camPath: V3[] = [
     [5.5, 9.5, 9.0],
     [3.0, 7.6, 7.2],

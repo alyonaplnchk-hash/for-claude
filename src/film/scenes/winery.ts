@@ -2,7 +2,7 @@
 // where the juice turns from pale to ruby as the anthocyanins bleed out.
 import { ShotFactory, cached, basePost } from "./common";
 import { B } from "../beats";
-import { Engine, Draw, Particles, Camera, Mat, Env } from "../engine/renderer";
+import { Engine, Draw, Particles, Camera, Mat, Env, Mesh, InstBuf } from "../engine/renderer";
 import { Geo, box, cylinder, lathe, sphere, disk, tube } from "../engine/geometry";
 import { V3, M4, m4, hex, smooth, easeInOut, lerp, lerp3, rng, noise1, scale, spline } from "../engine/math";
 import { bunch } from "./assets";
@@ -75,7 +75,7 @@ const interiorEnv = (o: Partial<Env> = {}): Env => ({
 });
 
 export const sorting: ShotFactory = (dur) => {
-  let room: () => Draw[], belt: any, frame: any, drum: any, berry: any, vat: any, bin: any, door: any;
+  let room: () => Draw[], belt: Mesh, frame: Mesh, drum: Mesh, berry: Mesh, vat: Mesh, bin: Mesh, door: Mesh;
   const protos = [bunch(201, 80), bunch(203, 75), bunch(207, 70)];
   const SPEED = 0.32;
   const cam = (t: number): Camera => {
@@ -159,7 +159,7 @@ export const sorting: ShotFactory = (dur) => {
 };
 
 export const vat: ShotFactory = (dur) => {
-  let room: () => Draw[], shell: any, full: any, liquid: any, berry: any, capI: any, pipe: any;
+  let room: () => Draw[], shell: Mesh, full: Mesh, liquid: Mesh, berry: Mesh, capI: InstBuf, pipe: Mesh;
   const V = B.vat;
   const ARC = Math.PI * 1.45;
   const cam = (t: number): Camera => {
@@ -264,7 +264,8 @@ function skinGeo(seed: number) {
 }
 
 export const skins: ShotFactory = (dur) => {
-  let skin: any, seedM: any, skinX: { p: V3; r: V3; s: number; w: V3 }[] = [];
+  let skin: Mesh, seedM: Mesh;
+  const skinX: { p: V3; r: V3; s: number; w: V3 }[] = [];
   const K = B.skins;
   const cam = (t: number): Camera => {
     const k = easeInOut(t / dur);

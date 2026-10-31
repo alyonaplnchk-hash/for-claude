@@ -3,13 +3,13 @@
 // HARVEST: low tracking shot along a row lined with small picking crates, château in the haze.
 import { ShotFactory, cached, basePost } from "./common";
 import { B } from "../beats";
-import { Engine, Draw, Particles, Camera, InstBuf } from "../engine/renderer";
+import { Engine, Draw, Particles, Camera, InstBuf, Mesh } from "../engine/renderer";
 import { sphere, tube, cylinder } from "../engine/geometry";
 import { V3, M4, m4, hex, smooth, easeInOut, lerp, rng, noise1 } from "../engine/math";
 import { bunch, crateGeo, leafGeo } from "./assets";
 import { grapeMat, leafMat, stemMat, groundMat, hedgeGeo, vineBlock, backdrop, groundPlane, VineBlock } from "./vineyard";
 
-type Hero = { inst: InstBuf; stem: any; xf: M4 };
+type Hero = { inst: InstBuf; stem: Mesh; xf: M4 };
 function heroBunch(e: Engine, key: string, seed: number, count: number, size: number, at: V3, rot = 0): Hero {
   const b = bunch(seed, count, size);
   const xf = m4.trs(at, [0, rot, 0], 1);
@@ -60,7 +60,7 @@ const goldenEnv = (sun: V3) => ({
 export const BUNCH_POS: Record<string, V3> = { merlot: [-0.34, 1.02, 0], cs: [0.0, 1.0, 0.04], cf: [0.33, 1.03, -0.02] };
 
 export const grapes: ShotFactory = (dur) => {
-  let heroes: Hero[] = [], leaves: InstBuf, leaf: any, cane: any, hedge: any, hedgeI: InstBuf, ground: any, berry: any;
+  let heroes: Hero[] = [], leaves: InstBuf, leaf: Mesh, cane: Mesh, hedge: Mesh, hedgeI: InstBuf, ground: Mesh, berry: Mesh;
   const G = B.grapes;
   const cam = (t: number): Camera => {
     const k = easeInOut(t / dur);
@@ -109,7 +109,7 @@ export const grapes: ShotFactory = (dur) => {
 };
 
 export const veraison: ShotFactory = (dur) => {
-  let h: Hero, leaves: InstBuf, leaf: any, berry: any, hedge: any, hedgeI: InstBuf, ground: any;
+  let h: Hero, leaves: InstBuf, leaf: Mesh, berry: Mesh, hedge: Mesh, hedgeI: InstBuf, ground: Mesh;
   const V = B.veraison;
   const cam = (t: number): Camera => {
     const a = lerp(-0.5, 0.25, easeInOut(t / dur));
@@ -150,7 +150,7 @@ export const veraison: ShotFactory = (dur) => {
 };
 
 export const harvest: ShotFactory = (dur) => {
-  let near: VineBlock, far: VineBlock, back: () => Draw[], crate: any, crateI: InstBuf, berry: any, crateBerries: InstBuf, ground: any, secateur: any;
+  let near: VineBlock, far: VineBlock, back: () => Draw[], crate: Mesh, crateI: InstBuf, berry: Mesh, crateBerries: InstBuf, ground: Mesh, secateur: Mesh;
   const cam = (t: number): Camera => {
     const z = lerp(4.0, 0.2, easeInOut(t / dur));
     return { pos: [0.85, 0.42 + noise1(t * 0.8) * 0.01, z], target: [0.55, 0.25, z - 3], fov: 46, roll: noise1(t * 0.5 + 3) * 0.01 };

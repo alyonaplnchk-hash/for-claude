@@ -1,12 +1,12 @@
 // TITLE: slow vortex of wine ribbons over a deep magenta-black void; the overlay carries the title.
 import { ShotFactory, basePost } from "./common";
-import { Draw, Particles, Camera } from "../engine/renderer";
+import { Draw, Particles, Camera, Mesh, Engine } from "../engine/renderer";
 import { V3, m4, hex, lerp, rng, easeOut, noise1 } from "../engine/math";
 import { partialTube, wineRibbonMat } from "./hook";
 
 export const title: ShotFactory = (dur) => {
-  let eng: any;
-  const meshes: any[] = [];
+  let eng: Engine;
+  const meshes: Mesh[] = [];
   const paths: V3[][] = [];
   const N = 7;
   for (let k = 0; k < N; k++) {

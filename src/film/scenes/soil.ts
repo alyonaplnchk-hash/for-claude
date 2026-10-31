@@ -2,7 +2,7 @@
 // heat radiates. Across the river, Right Bank: cool clay over limestone. The camera trucks between them.
 import { ShotFactory, cached, basePost, C } from "./common";
 import { B } from "../beats";
-import { Draw, Particles, Camera } from "../engine/renderer";
+import { Draw, Particles, Camera, Mesh } from "../engine/renderer";
 import { Geo, box, tube } from "../engine/geometry";
 import { V3, m4, hex, smooth, easeInOut, lerp, rng, spline } from "../engine/math";
 import { vineBlock, groundMat, VineBlock } from "./vineyard";
@@ -41,7 +41,7 @@ function rootsGeo(seed: number, deep: boolean, cx: number) {
 }
 
 export const soil: ShotFactory = (dur) => {
-  let block: any, top: any, roots: [any, any] = [null, null], vL: VineBlock, vR: VineBlock, water: any;
+  let block: Mesh, top: Mesh, roots: Mesh[] = [], vL: VineBlock, vR: VineBlock, water: Mesh;
   const S = B.soil;
   const cam = (t: number): Camera => {
     const k = easeInOut((t - (S.right - 0.9)) / 1.9);

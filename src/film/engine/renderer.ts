@@ -235,13 +235,15 @@ export class Engine {
   }
 
   private texUnit = 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- uniform values of any GLSL type
   private set(pr: Prog, name: string, v: any) {
     const e = pr.u.get(name);
     if (!e) return;
     const gl = this.gl;
     switch (e.type) {
       case gl.FLOAT:
-        e.size > 1 ? gl.uniform1fv(e.loc, v) : gl.uniform1f(e.loc, v);
+        if (e.size > 1) gl.uniform1fv(e.loc, v);
+        else gl.uniform1f(e.loc, v);
         break;
       case gl.FLOAT_VEC2:
         gl.uniform2fv(e.loc, v);
@@ -365,7 +367,7 @@ export class Engine {
     const t = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, t);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.SRGB8_ALPHA8, gl.RGBA, gl.UNSIGNED_BYTE, src as any);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.SRGB8_ALPHA8, gl.RGBA, gl.UNSIGNED_BYTE, src as TexImageSource);
     gl.generateMipmap(gl.TEXTURE_2D);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);

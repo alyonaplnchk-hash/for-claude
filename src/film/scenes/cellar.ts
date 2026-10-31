@@ -2,7 +2,7 @@
 // CELLAR: the barrel chai — dolly down the aisle, then into a cut-away barrique where oxygen seeps in.
 import { ShotFactory, cached, basePost } from "./common";
 import { B } from "../beats";
-import { Draw, Particles, Camera, Mat, Env } from "../engine/renderer";
+import { Draw, Particles, Camera, Mat, Env, Mesh, InstBuf } from "../engine/renderer";
 import { Geo, box, cylinder, lathe, sphere, disk, tube } from "../engine/geometry";
 import { V3, M4, m4, hex, smooth, easeInOut, lerp, rng, noise1, spline } from "../engine/math";
 import { barrelBody, barrelHoops, barrelHeads } from "./assets";
@@ -28,7 +28,7 @@ const warmEnv = (o: Partial<Env> = {}): Env => ({
 });
 
 export const press: ShotFactory = (dur) => {
-  let room: () => Draw[], tray: any, basket: any, band: any, plate: any, screw: any, frame: any, pomace: any, streams: any, pool: any, spout: any, bucket: any;
+  let room: () => Draw[], tray: Mesh, basket: Mesh, band: Mesh, plate: Mesh, screw: Mesh, frame: Mesh, pomace: Mesh, streams: Mesh, pool: Mesh, spout: Mesh, bucket: Mesh;
   const P = B.press;
   const cam = (t: number): Camera => {
     const a = lerp(-0.7, 0.35, easeInOut(t / dur));
@@ -178,9 +178,9 @@ function barrelWine(arc: number, phi0: number, fill = 0.92) {
 
 export const HERO_BARREL: V3 = [0, 0.62, -9.5];
 
-export const cellar: ShotFactory = (dur) => {
-  let body: any, hoops: any, heads: any, bodyI: any, hoopI: any, headI: any, floor: any, vault: any, wallS: any, rails: any, lamp: any;
-  let heroBody: any, heroWine: any, stand: any, bung: any;
+export const cellar: ShotFactory = () => {
+  let body: Mesh, hoops: Mesh, heads: Mesh, bodyI: InstBuf, hoopI: InstBuf, headI: InstBuf, floor: Mesh, vault: Mesh, wallS: Mesh, rails: Mesh, lamp: Mesh;
+  let heroBody: Mesh, heroWine: Mesh, stand: Mesh, bung: Mesh;
   const CL = B.cellar;
   const ARC = Math.PI * 1.45;
   const PHI0 = Math.PI / 2 + (Math.PI * 2 - ARC) / 2;

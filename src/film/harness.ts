@@ -6,7 +6,7 @@ let d: Director;
 const px = new Uint8Array(4);
 // readPixels forces the GPU process to finish, so timings are real.
 const sync = () => d.engine.gl.readPixels(0, 0, 1, 1, d.engine.gl.RGBA, d.engine.gl.UNSIGNED_BYTE, px);
-(window as any).Film = {
+(window as unknown as { Film: unknown }).Film = {
   timeline() {
     return { shots: SHOTS, total: TOTAL };
   },

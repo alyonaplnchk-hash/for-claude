@@ -1,6 +1,6 @@
 // Vineyard set-dressing shared by several shots: detailed vine rows near the camera, leafy hedges
 // further away, ground with gravel and grass strips, posts and wires, trees and a château.
-import { Engine, Draw, Mat, InstBuf } from "../engine/renderer";
+import { Engine, Draw, Mat, InstBuf, Mesh } from "../engine/renderer";
 import { Geo, box, cylinder, lathe, sphere } from "../engine/geometry";
 import { V3, M4, m4, hex, rng, lerp } from "../engine/math";
 import { cached, C } from "./common";
@@ -90,7 +90,7 @@ export function vineBlock(e: Engine, key: string, o: VineRowOpts & { detailBunch
   const stemMesh = cached(e, "bunch-stem", () => b0.stem);
   const stemI = stems.length ? e.instances(stems) : null;
   // wires
-  let wireMesh: any = null;
+  let wireMesh: Mesh | null = null;
   if (o.wire !== false) {
     wireMesh = cached(e, key + "-wires", () => {
       const g = new Geo();

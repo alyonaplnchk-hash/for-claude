@@ -1,9 +1,9 @@
 // HOOK: a giant grape squeezed between glass plates in a hot-coloured studio void; the juice runs clear.
 // Then ruby ribbons erupt around it: "So where does the red come from?"
 import { ShotFactory, cached, C, basePost } from "./common";
-import { Draw, Particles, Camera } from "../engine/renderer";
+import { Draw, Particles, Camera, Mesh, Engine } from "../engine/renderer";
 import { box, sphere, tube } from "../engine/geometry";
-import { V3, m4, hex, smooth, easeInOut, easeOut, lerp, lerp3, rng, noise1, scale } from "../engine/math";
+import { V3, M4, m4, hex, smooth, easeInOut, easeOut, lerp, lerp3, rng, noise1, scale } from "../engine/math";
 
 export const helix = (k: number, n: number, turns = 1.6, r0 = 0.5, r1 = 1.4, h = 1.8) => {
   const pts: V3[] = [];
@@ -43,7 +43,8 @@ export function partialTube(pts: V3[], s0: number, s1: number, radius: (s: numbe
 }
 
 export const hook: ShotFactory = (dur) => {
-  let grape: any, plate: any, drop: any, stem: any, rib: any[] = [], redDrop: any, eng: any;
+  let grape: Mesh, plate: Mesh, drop: Mesh, stem: Mesh, redDrop: Mesh, eng: Engine;
+  const rib: Mesh[] = [];
   const paths = Array.from({ length: 9 }, (_, k) => helix(k, 9));
   const ribR = (s: number) => 0.055 * Math.sin(Math.min(Math.max(s, 0), 1) * Math.PI) + 0.012;
   const H2 = 3.9; // when the second line lands
@@ -95,7 +96,7 @@ export const hook: ShotFactory = (dur) => {
         glass.push({ mesh: plate, mat: plateMat, xf: m4.trs([s * (halfW + 0.03 + (1 - plateIn) * 0.6), 0.05, 0], [0, 0, 0], 1) });
       }
       // clear juice drops: born at the bottom, fall in slow motion
-      const dm: any[] = [];
+      const dm: M4[] = [];
       for (let i = 0; i < 22; i++) {
         const born = 1.25 + i * 0.12 + r() * 0.25;
         const age = t - born;
@@ -138,7 +139,7 @@ export const hook: ShotFactory = (dur) => {
       });
       // red droplets flung from the ribbons
       if (t > H2) {
-        const rd: any[] = [];
+        const rd: M4[] = [];
         const rr = rng(77);
         for (let i = 0; i < 40; i++) {
           const born = H2 + rr() * 1.6;
