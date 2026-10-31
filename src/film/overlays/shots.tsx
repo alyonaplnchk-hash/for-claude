@@ -78,7 +78,7 @@ const Map: React.FC<P> = ({ t, d }) => {
     <AbsoluteFill>
       <Kicker t={t} n="01" label="TERROIR" end={end} />
       <Pin t={t} shot="map" at="atlantic" start={0.6} end={end} text="Atlantic Ocean" italic size={40} color="rgba(190,225,255,0.95)" />
-      <Callout t={t} shot="map" at="bordeaux" start={M.france + 0.1} end={end} dx={210} dy={110} title="BORDEAUX" sub="south-west France" color="#ffffff" size={40} />
+      <Callout t={t} shot="map" at="bordeaux" start={M.france + 0.1} end={M.lat45 + 2.2} dx={230} dy={-120} title="BORDEAUX" sub="south-west France" color="#ffffff" size={40} />
       <Pin t={t} shot="map" at="lat45" start={M.lat45} end={end} text="45° N" size={34} color="#ffffff" dy={-18} />
       <Pin t={t} shot="map" at="garonne" start={M.garonne} end={end} text="GARONNE" size={28} color={COL.cyan} />
       <Pin t={t} shot="map" at="dordogne" start={M.dordogne} end={end} text="DORDOGNE" size={28} color={COL.cyan} />
@@ -270,7 +270,7 @@ const Sorting: React.FC<P> = ({ t, d }) => {
           })}
         </div>
       )}
-      <Callout t={t} shot="sorting" at="drum" start={S.destem} end={end} dx={-200} dy={-150} title="DESTEMMER" sub="berries fall, stems are removed" color={COL.gold} size={34} />
+      <Callout t={t} shot="sorting" at="drum" start={S.destem} end={end} dx={-280} dy={170} title="DESTEMMER" sub="berries fall, stems are removed" color={COL.gold} size={34} />
     </AbsoluteFill>
   );
 };
@@ -429,7 +429,7 @@ const Cellar: React.FC<P> = ({ t, d }) => {
           </div>
         </div>
       </Card>
-      <Callout t={t} shot="cellar" at="oxygen" start={CL.oxygen} end={end} dx={-260} dy={-150} title="O₂" sub="tiny amounts seep through the wood" color={COL.cyan} size={46} />
+      <Callout t={t} shot="cellar" at="oxygen" start={CL.oxygen} end={end} dx={220} dy={-140} title="O₂" sub="tiny amounts seep through the wood" color={COL.cyan} size={46} />
       <Callout t={t} shot="cellar" at="toast" start={CL.oxygen + 0.9} end={end} dx={300} dy={-60} title="TOASTED OAK" sub="flavour from the barrel" color="#d8a46a" size={34} />
       <Chip t={t} start={CL.tannin} end={end} text="SOFTER TANNINS" color="#f4e2c0" x={1500} y={760} size={30} />
       <Chip t={t} start={CL.vanilla} end={end} text="VANILLA" color="#f6e3a8" x={1340} y={860} size={30} />
