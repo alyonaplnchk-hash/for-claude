@@ -22,7 +22,7 @@ answers the question at the fermentation stage.
 
 ## Watch
 
-- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts, in a quieter editorial style with word-by-word captions.
+- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts: modern studio look (seamless backdrop, clay materials, soft shadows and ambient occlusion), product-style UI graphics and word-by-word captions.
 - [`video/bordeaux-red-wine.mp4`](video/bordeaux-red-wine.mp4): 1920×1080, 30 fps, 1:59, English narration, music and SFX (H.264/AAC, ~49 MB).
 
 ## How it is built

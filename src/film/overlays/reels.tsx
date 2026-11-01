@@ -205,7 +205,7 @@ const Soil: React.FC<P> = ({ t, d }) => {
   return (
     <AbsoluteFill>
       <Chapter t={t} n="01" title="Terroir" end={end} />
-      <Headline t={t} start={0.4} end={mid} top={350} size={78}>
+      <Headline t={t} start={0.4} end={mid} top={340} size={72} card>
         Left Bank
         <br />
         <span style={{ color: C.sand }}>gravel</span>
@@ -213,7 +213,7 @@ const Soil: React.FC<P> = ({ t, d }) => {
       <Note t={t} shot="soil" at="gravel" start={S.gravel} end={mid} title="Drains fast" sub="rain runs straight through" dy={-40} accent={C.blue} />
       <Note t={t} shot="soil" at="heat" start={S.heat} end={mid} title="Stores heat" sub="warm stones ripen the grapes" dy={-60} accent={C.sand} />
       <Note t={t} shot="soil" at="roots" start={S.gravel + 1.2} end={mid} title="Deep roots" dy={60} accent={C.ink} />
-      <Headline t={t} start={S.right} end={end} top={350} size={78}>
+      <Headline t={t} start={S.right} end={end} top={340} size={72} card>
         Right Bank
         <br />
         <span style={{ color: C.wine }}>clay & limestone</span>
@@ -313,12 +313,12 @@ const Harvest: React.FC<P> = ({ t, d }) => {
   return (
     <AbsoluteFill>
       <Chapter t={t} n="04" title="Harvest" end={end} />
-      <Headline t={t} start={Hh.sept - 0.2} end={end} top={350} size={88}>
+      <Headline t={t} start={Hh.sept - 0.2} end={end} top={340} size={80} card>
         September
         <br />
         <span style={{ color: C.sub }}>→ October</span>
       </Headline>
-      <div style={{ position: "absolute", left: SAFE.left, top: 560, ...pop(vis(t, Hh.hand, end)) }}>
+      <div style={{ position: "absolute", left: SAFE.left, top: 600, ...pop(vis(t, Hh.hand, end)) }}>
         <Chip accent={C.wine}>Picked by hand</Chip>
       </div>
       <Note t={t} shot="harvest" at="crate" start={Hh.crates} end={end} title="Small crates" sub="berries arrive unbroken" dy={-120} />
@@ -562,9 +562,9 @@ const Finale: React.FC<P> = ({ t, d }) => {
           </div>
         </div>
       </Card>
-      <div style={{ position: "absolute", left: SAFE.left, top: 340, display: "flex", flexDirection: "column", gap: 0, opacity: vis(t, F.recap - 0.1, F.endcard + 0.2, 0.3, 0.4) }}>
+      <div style={{ position: "absolute", left: SAFE.left, top: 330, display: "flex", flexDirection: "column", gap: 0, ...glass(), padding: "30px 40px 36px", opacity: vis(t, F.recap - 0.1, F.endcard + 0.2, 0.3, 0.4) }}>
         {words.map((w, i) => (
-          <div key={w} style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: 112, lineHeight: 0.95, letterSpacing: "-0.05em", color: i === 2 ? C.wine : C.ink, ...pop(vis(t, at[i], 1e9, 0.4)) }}>
+          <div key={w} style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: 96, lineHeight: 0.95, letterSpacing: "-0.05em", color: i === 2 ? C.wine : C.ink, ...pop(vis(t, at[i], 1e9, 0.4)) }}>
             {w}
           </div>
         ))}
