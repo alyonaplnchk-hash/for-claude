@@ -169,6 +169,7 @@ const Phrase: React.FC<{ p: KP; tg: number; exit: number; top: number; dark: boo
 
 const Kinetic: React.FC<{ tg: number }> = ({ tg }) => {
   const endcard = shotById("finale").start + B.finale.red;
+  const recapAt = shotById("finale").start + B.finale.recap;
   return (
     <>
       {PHRASES.map((p, i) => {
@@ -179,7 +180,9 @@ const Kinetic: React.FC<{ tg: number }> = ({ tg }) => {
         const exit = last ? TOTAL + 5 : sameShot ? next.words[0].s - 0.04 : Math.min(p.end + 1.0, shot.end - 0.2);
         if (tg < p.words[0].s - 0.2 || tg > exit + 0.1) return null;
         const finaleEnd = p.shot === "finale" && p.start >= endcard - 0.2;
-        return <Phrase key={i} p={p} tg={tg} exit={exit} top={finaleEnd ? 700 : ZONE[p.shot] ?? 260} dark={DARK.has(p.shot)} center={finaleEnd} />;
+        // the recap sits low, clear of the bottle pouring at the top of the frame
+        const recap = p.shot === "finale" && !finaleEnd && p.start >= recapAt - 0.2;
+        return <Phrase key={i} p={p} tg={tg} exit={exit} top={finaleEnd ? 700 : recap ? 1400 : ZONE[p.shot] ?? 260} dark={DARK.has(p.shot)} center={finaleEnd} />;
       })}
     </>
   );
@@ -609,7 +612,6 @@ const FinaleG: React.FC<G> = ({ t, d }) => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: "#E9E9EA", opacity: 0.93 * ramp(t, F.red - 0.45, 1.0, Easing.inOut(Easing.cubic)) }} />
-      <Mark t={t} shot="finale" at="label" start={F.bottled + 0.6} end={F.recap - 0.3} label="Cellaring" note="the finest wines evolve for decades" dx={150} dy={-160} />
       <DotGrid t={t} start={F.red - 0.4} end={d + 1} x={540} y={800} cols={9} rows={5} />
       <Arc t={t} start={F.recap - 0.2} end={d + 1} cx={540} cy={860} r={380} a0={190} a1={350} />
       <Arc t={t} start={F.recap + 0.2} end={d + 1} cx={540} cy={860} r={450} a0={15} a1={165} />
