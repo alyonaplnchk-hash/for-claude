@@ -213,7 +213,7 @@ const Mark: React.FC<{ t: number; shot: string; at: string; start: number; end: 
         <line x1={a.x} y1={a.y} x2={ex} y2={ey} stroke={ink} strokeWidth={1.2} strokeDasharray={len} strokeDashoffset={len * (1 - draw)} />
         <line x1={ex} y1={ey} x2={ex + (right ? 26 : -26) * draw} y2={ey} stroke={ink} strokeWidth={1.2} />
       </svg>
-      <div style={{ position: "absolute", top: ey - 15, left: right ? ex + 36 : undefined, right: right ? undefined : RW - ex + 36, textAlign: right ? "left" : "right", whiteSpace: "nowrap", ...reveal(ramp(t, start + 0.25, 0.6), 8) }}>
+      <div style={{ position: "absolute", top: ey - 15, left: right ? ex + 36 : undefined, right: right ? undefined : RW - ex + 36, textAlign: right ? "left" : "right", whiteSpace: "nowrap", textShadow: dark ? undefined : "0 0 14px rgba(236,236,237,0.95), 0 0 4px rgba(236,236,237,0.9)", ...reveal(ramp(t, start + 0.25, 0.6), 8) }}>
         <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 20, letterSpacing: "0.2em", textTransform: "uppercase", color: dark ? C.white : C.ink }}>{label}</div>
         {note ? <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 26, color: dark ? "rgba(247,242,238,0.75)" : C.mute, marginTop: 4 }}>{note}</div> : null}
       </div>
