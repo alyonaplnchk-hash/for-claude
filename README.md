@@ -22,7 +22,7 @@ answers the question at the fermentation stage.
 
 ## Watch
 
-- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts: modern studio look (seamless backdrop, clay materials, soft shadows and ambient occlusion), product-style UI graphics and word-by-word captions.
+- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts, in a minimal luxury style. The 3D objects float on a pale, clouded backdrop with only a soft shadow under them. The narration is set word by word as it is spoken, in a high-contrast serif: italic lead-in words and wine-red capitals for the key words. Hairline labels, arcs, dot grids and dashed rings carry the facts, and blurred leaves, berries and drops fly past the lens at scene changes. The score has a soft beat under the narration.
 - [`video/bordeaux-red-wine.mp4`](video/bordeaux-red-wine.mp4): 1920×1080, 30 fps, 1:59, English narration, music and SFX (H.264/AAC, ~49 MB).
 
 ## How it is built
@@ -33,7 +33,9 @@ src/film/
                screen-space refraction for glass, particles, MSAA HDR, bloom, depth of field,
                ACES tone mapping + grading, shot-to-shot transitions (whip, zoom, ink, flash)
   scenes/      one procedural scene per shot (geometry, camera path, lights, grade)
-  overlays/    Remotion infographics: callouts pinned to projected 3D points, charts, counters
+  overlays/    Remotion infographics: callouts pinned to projected 3D points, charts, counters;
+               luxe.tsx is the kinetic typography and hairline graphics of the vertical cut
+  modern.ts    studio look for the vertical cut: pale seamless backdrop, shadow-catcher floor
   timeline.ts  shot lengths derived from the narration clips
   beats.ts     story beats aligned to pauses in the voice track
 tools/
@@ -65,7 +67,7 @@ node tools/render3d/render.mjs --workers=3 --scale=0.75
 npx remotion render Bordeaux out/bordeaux.mp4
 ```
 
-For the vertical Reels cut, build the word-by-word captions first (`python3 tools/captions/word_times.py` needs `pip install faster-whisper`; then `python3 tools/captions/make_word_captions.py`), then:
+For the vertical Reels cut, build the kinetic-type data and the backdrop texture first (`python3 tools/captions/word_times.py` needs `pip install faster-whisper`; then `python3 tools/captions/make_kinetic.py` and `python3 tools/style/make_clouds.py`), then:
 
 ```bash
 node tools/render3d/render.mjs --format=reels --workers=3 --scale=0.75

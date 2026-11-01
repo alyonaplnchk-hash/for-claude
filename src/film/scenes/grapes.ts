@@ -202,13 +202,11 @@ export const harvest: ShotFactory = (dur) => {
     frame(t) {
       const draws: Draw[] = [
         ...near.draws(t),
-        ...far.draws(t),
-        ...back(),
         { mesh: crate, mat: { base: hex("#d8d8d2"), rough: 0.55, spec: 0.8 }, inst: crateI },
         { mesh: berry, mat: grapeMat(1), inst: crateBerries },
-        { mesh: ground, mat: groundMat({ p1: [9, 1.6, 0.55, 0.75] }) },
       ];
-      void secateur;
+      // studio cut: the far rows, backdrop and ground are kept for the landscape variant only
+      void [secateur, far, back, ground, groundMat];
       const c = cam(t);
       return {
         camera: c,

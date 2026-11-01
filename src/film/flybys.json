@@ -1,0 +1,10 @@
+[
+  { "shot": "hook", "dt": 0.05, "kind": "leaf", "n": 4, "dir": 1, "seed": 1 },
+  { "shot": "title", "dt": 0.0, "kind": "berry", "n": 3, "dir": -1, "big": true, "seed": 2 },
+  { "shot": "map", "dt": 0.0, "kind": "leaf", "n": 5, "dir": 1, "seed": 3 },
+  { "shot": "grapes", "dt": 0.0, "kind": "leaf", "n": 4, "dir": -1, "seed": 4 },
+  { "shot": "sorting", "dt": 0.0, "kind": "berry", "n": 6, "dir": 1, "seed": 5 },
+  { "shot": "skins", "dt": 0.0, "kind": "berry", "n": 2, "dir": -1, "big": true, "seed": 6 },
+  { "shot": "cellar", "dt": 0.0, "kind": "drop", "n": 4, "dir": 1, "seed": 7 },
+  { "shot": "finale", "dt": 0.0, "kind": "leaf", "n": 5, "dir": -1, "seed": 8 }
+]

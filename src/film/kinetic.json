@@ -1,0 +1,1772 @@
+[
+{
+"shot": "hook",
+"line": "hook1",
+"start": 0.3,
+"end": 1.7,
+"words": [
+{
+"t": "Squeeze",
+"s": 0.35,
+"k": false
+},
+{
+"t": "a",
+"s": 0.81,
+"k": false
+},
+{
+"t": "red",
+"s": 0.87,
+"k": true
+},
+{
+"t": "grape…",
+"s": 1.03,
+"k": false
+}
+]
+},
+{
+"shot": "hook",
+"line": "hook1",
+"start": 1.7,
+"end": 3.39,
+"words": [
+{
+"t": "and",
+"s": 1.75,
+"k": false
+},
+{
+"t": "the",
+"s": 1.91,
+"k": false
+},
+{
+"t": "juice",
+"s": 2.03,
+"k": false
+},
+{
+"t": "runs",
+"s": 2.23,
+"k": false
+},
+{
+"t": "clear.",
+"s": 2.55,
+"k": true
+}
+]
+},
+{
+"shot": "hook",
+"line": "hook2",
+"start": 3.934,
+"end": 4.934,
+"words": [
+{
+"t": "So",
+"s": 3.984,
+"k": false
+},
+{
+"t": "where",
+"s": 4.184,
+"k": false
+},
+{
+"t": "does",
+"s": 4.304,
+"k": false
+},
+{
+"t": "Bordeaux",
+"s": 4.464,
+"k": true
+},
+{
+"t": "get",
+"s": 4.864,
+"k": false
+}
+]
+},
+{
+"shot": "hook",
+"line": "hook2",
+"start": 4.934,
+"end": 6.784,
+"words": [
+{
+"t": "its",
+"s": 4.984,
+"k": false
+},
+{
+"t": "deep",
+"s": 5.164,
+"k": false
+},
+{
+"t": "ruby",
+"s": 5.724,
+"k": true
+},
+{
+"t": "red?",
+"s": 5.944,
+"k": true
+}
+]
+},
+{
+"shot": "map",
+"line": "map1",
+"start": 11.245,
+"end": 13.765,
+"words": [
+{
+"t": "Bordeaux",
+"s": 11.295,
+"k": true
+},
+{
+"t": "in",
+"s": 11.895,
+"k": false
+},
+{
+"t": "south-west",
+"s": 12.115,
+"k": false
+},
+{
+"t": "France.",
+"s": 12.555,
+"k": false
+}
+]
+},
+{
+"shot": "map",
+"line": "map1",
+"start": 13.765,
+"end": 15.825,
+"words": [
+{
+"t": "Right",
+"s": 13.815,
+"k": false
+},
+{
+"t": "on",
+"s": 14.075,
+"k": false
+},
+{
+"t": "the",
+"s": 14.255,
+"k": false
+},
+{
+"t": "45th",
+"s": 14.375,
+"k": true
+},
+{
+"t": "parallel",
+"s": 15.015,
+"k": false
+}
+]
+},
+{
+"shot": "map",
+"line": "map1",
+"start": 15.825,
+"end": 17.545,
+"words": [
+{
+"t": "the",
+"s": 15.875,
+"k": false
+},
+{
+"t": "Garonne",
+"s": 15.935,
+"k": true
+},
+{
+"t": "and",
+"s": 16.375,
+"k": false
+},
+{
+"t": "Dordogne",
+"s": 16.535,
+"k": true
+},
+{
+"t": "rivers",
+"s": 17.075,
+"k": false
+},
+{
+"t": "meet",
+"s": 17.275,
+"k": false
+}
+]
+},
+{
+"shot": "map",
+"line": "map1",
+"start": 17.545,
+"end": 20.052,
+"words": [
+{
+"t": "to",
+"s": 17.595,
+"k": false
+},
+{
+"t": "form",
+"s": 18.055,
+"k": false
+},
+{
+"t": "the",
+"s": 18.315,
+"k": false
+},
+{
+"t": "Gironde",
+"s": 18.475,
+"k": true
+},
+{
+"t": "estuary.",
+"s": 18.875,
+"k": false
+}
+]
+},
+{
+"shot": "map",
+"line": "map2",
+"start": 20.052,
+"end": 21.792,
+"words": [
+{
+"t": "It",
+"s": 20.102,
+"k": false
+},
+{
+"t": "splits",
+"s": 20.242,
+"k": false
+},
+{
+"t": "the",
+"s": 20.522,
+"k": false
+},
+{
+"t": "vineyards",
+"s": 20.742,
+"k": false
+},
+{
+"t": "in",
+"s": 21.082,
+"k": false
+},
+{
+"t": "two",
+"s": 21.282,
+"k": false
+}
+]
+},
+{
+"shot": "map",
+"line": "map2",
+"start": 21.792,
+"end": 22.332,
+"words": [
+{
+"t": "the",
+"s": 21.842,
+"k": false
+},
+{
+"t": "Left",
+"s": 21.882,
+"k": true
+},
+{
+"t": "Bank…",
+"s": 22.122,
+"k": true
+}
+]
+},
+{
+"shot": "map",
+"line": "map2",
+"start": 22.332,
+"end": 24.022,
+"words": [
+{
+"t": "and",
+"s": 22.382,
+"k": false
+},
+{
+"t": "the",
+"s": 22.882,
+"k": false
+},
+{
+"t": "Right",
+"s": 23.002,
+"k": true
+},
+{
+"t": "Bank.",
+"s": 23.182,
+"k": true
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil1",
+"start": 24.824,
+"end": 26.064,
+"words": [
+{
+"t": "On",
+"s": 24.874,
+"k": false
+},
+{
+"t": "the",
+"s": 25.054,
+"k": false
+},
+{
+"t": "Left",
+"s": 25.174,
+"k": true
+},
+{
+"t": "Bank",
+"s": 25.354,
+"k": true
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil1",
+"start": 26.064,
+"end": 27.384,
+"words": [
+{
+"t": "deep",
+"s": 26.114,
+"k": false
+},
+{
+"t": "gravel",
+"s": 26.254,
+"k": true
+},
+{
+"t": "drains",
+"s": 26.634,
+"k": false
+},
+{
+"t": "the",
+"s": 26.974,
+"k": false
+},
+{
+"t": "rain",
+"s": 27.174,
+"k": false
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil1",
+"start": 27.384,
+"end": 29.364,
+"words": [
+{
+"t": "and",
+"s": 27.434,
+"k": false
+},
+{
+"t": "stores",
+"s": 27.674,
+"k": false
+},
+{
+"t": "the",
+"s": 27.934,
+"k": false
+},
+{
+"t": "sun's",
+"s": 28.194,
+"k": false
+},
+{
+"t": "heat.",
+"s": 28.554,
+"k": true
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil1",
+"start": 29.364,
+"end": 31.829,
+"words": [
+{
+"t": "Perfect",
+"s": 29.414,
+"k": false
+},
+{
+"t": "for",
+"s": 29.674,
+"k": false
+},
+{
+"t": "Cabernet",
+"s": 30.014,
+"k": true
+},
+{
+"t": "Sauvignon.",
+"s": 30.514,
+"k": true
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil2",
+"start": 31.829,
+"end": 33.069,
+"words": [
+{
+"t": "On",
+"s": 31.879,
+"k": false
+},
+{
+"t": "the",
+"s": 32.039,
+"k": false
+},
+{
+"t": "Right",
+"s": 32.139,
+"k": true
+},
+{
+"t": "Bank",
+"s": 32.299,
+"k": true
+}
+]
+},
+{
+"shot": "soil",
+"line": "soil2",
+"start": 33.069,
+"end": 35.419,
+"words": [
+{
+"t": "cooler",
+"s": 33.119,
+"k": false
+},
+{
+"t": "clay",
+"s": 33.239,
+"k": true
+},
+{
+"t": "and",
+"s": 33.539,
+"k": false
+},
+{
+"t": "limestone",
+"s": 33.739,
+"k": true
+},
+{
+"t": "favour",
+"s": 34.179,
+"k": false
+},
+{
+"t": "Merlot.",
+"s": 34.559,
+"k": true
+}
+]
+},
+{
+"shot": "grapes",
+"line": "grapes1",
+"start": 36.247,
+"end": 38.227,
+"words": [
+{
+"t": "Merlot",
+"s": 36.297,
+"k": true
+},
+{
+"t": "is",
+"s": 36.697,
+"k": false
+},
+{
+"t": "the",
+"s": 36.957,
+"k": false
+},
+{
+"t": "region's",
+"s": 37.117,
+"k": false
+},
+{
+"t": "most",
+"s": 37.617,
+"k": false
+},
+{
+"t": "planted",
+"s": 37.777,
+"k": false
+}
+]
+},
+{
+"shot": "grapes",
+"line": "grapes1",
+"start": 38.227,
+"end": 40.587,
+"words": [
+{
+"t": "red",
+"s": 38.277,
+"k": true
+},
+{
+"t": "grape",
+"s": 38.517,
+"k": false
+},
+{
+"t": "with",
+"s": 39.277,
+"k": false
+},
+{
+"t": "Cabernet",
+"s": 39.497,
+"k": true
+},
+{
+"t": "Sauvignon",
+"s": 40.037,
+"k": true
+}
+]
+},
+{
+"shot": "grapes",
+"line": "grapes1",
+"start": 40.587,
+"end": 43.197,
+"words": [
+{
+"t": "and",
+"s": 40.637,
+"k": false
+},
+{
+"t": "Cabernet",
+"s": 41.077,
+"k": true
+},
+{
+"t": "Franc",
+"s": 41.657,
+"k": true
+},
+{
+"t": "close",
+"s": 41.897,
+"k": false
+},
+{
+"t": "behind.",
+"s": 42.257,
+"k": false
+}
+]
+},
+{
+"shot": "veraison",
+"line": "harvest1",
+"start": 43.891,
+"end": 44.711,
+"words": [
+{
+"t": "Through",
+"s": 43.941,
+"k": false
+},
+{
+"t": "the",
+"s": 44.101,
+"k": false
+},
+{
+"t": "summer",
+"s": 44.261,
+"k": false
+}
+]
+},
+{
+"shot": "veraison",
+"line": "harvest1",
+"start": 44.711,
+"end": 45.971,
+"words": [
+{
+"t": "the",
+"s": 44.761,
+"k": false
+},
+{
+"t": "berries",
+"s": 44.881,
+"k": false
+},
+{
+"t": "turn",
+"s": 45.141,
+"k": false
+},
+{
+"t": "from",
+"s": 45.441,
+"k": false
+},
+{
+"t": "green",
+"s": 45.681,
+"k": false
+}
+]
+},
+{
+"shot": "veraison",
+"line": "harvest1",
+"start": 45.971,
+"end": 47.251,
+"words": [
+{
+"t": "to",
+"s": 46.021,
+"k": false
+},
+{
+"t": "purple.",
+"s": 46.261,
+"k": true
+}
+]
+},
+{
+"shot": "veraison",
+"line": "harvest1",
+"start": 47.251,
+"end": 49.527,
+"words": [
+{
+"t": "Sugar",
+"s": 47.301,
+"k": true
+},
+{
+"t": "climbs",
+"s": 47.381,
+"k": false
+},
+{
+"t": "acidity",
+"s": 48.161,
+"k": true
+},
+{
+"t": "falls…",
+"s": 48.521,
+"k": false
+}
+]
+},
+{
+"shot": "harvest",
+"line": "harvest2",
+"start": 49.527,
+"end": 50.467,
+"words": [
+{
+"t": "and",
+"s": 49.577,
+"k": false
+},
+{
+"t": "in",
+"s": 49.717,
+"k": false
+},
+{
+"t": "September",
+"s": 49.857,
+"k": true
+}
+]
+},
+{
+"shot": "harvest",
+"line": "harvest2",
+"start": 50.467,
+"end": 52.007,
+"words": [
+{
+"t": "the",
+"s": 50.517,
+"k": false
+},
+{
+"t": "harvest",
+"s": 50.637,
+"k": false
+},
+{
+"t": "begins.",
+"s": 50.937,
+"k": false
+}
+]
+},
+{
+"shot": "harvest",
+"line": "harvest2",
+"start": 52.007,
+"end": 52.967,
+"words": [
+{
+"t": "Often",
+"s": 52.057,
+"k": false
+},
+{
+"t": "by",
+"s": 52.297,
+"k": false
+},
+{
+"t": "hand",
+"s": 52.577,
+"k": true
+}
+]
+},
+{
+"shot": "harvest",
+"line": "harvest2",
+"start": 52.967,
+"end": 54.457,
+"words": [
+{
+"t": "into",
+"s": 53.017,
+"k": false
+},
+{
+"t": "small",
+"s": 53.277,
+"k": false
+},
+{
+"t": "crates.",
+"s": 53.637,
+"k": false
+}
+]
+},
+{
+"shot": "sorting",
+"line": "sort1",
+"start": 55.201,
+"end": 56.181,
+"words": [
+{
+"t": "At",
+"s": 55.251,
+"k": false
+},
+{
+"t": "the",
+"s": 55.391,
+"k": false
+},
+{
+"t": "winery",
+"s": 55.511,
+"k": false
+}
+]
+},
+{
+"shot": "sorting",
+"line": "sort1",
+"start": 56.181,
+"end": 57.161,
+"words": [
+{
+"t": "the",
+"s": 56.231,
+"k": false
+},
+{
+"t": "grapes",
+"s": 56.271,
+"k": false
+},
+{
+"t": "are",
+"s": 56.491,
+"k": false
+},
+{
+"t": "sorted",
+"s": 56.651,
+"k": true
+}
+]
+},
+{
+"shot": "sorting",
+"line": "sort1",
+"start": 57.161,
+"end": 59.231,
+"words": [
+{
+"t": "destemmed",
+"s": 57.211,
+"k": true
+},
+{
+"t": "and",
+"s": 58.031,
+"k": false
+},
+{
+"t": "gently",
+"s": 58.071,
+"k": false
+},
+{
+"t": "crushed.",
+"s": 58.391,
+"k": true
+}
+]
+},
+{
+"shot": "vat",
+"line": "ferm1",
+"start": 59.886,
+"end": 61.166,
+"words": [
+{
+"t": "Inside",
+"s": 59.936,
+"k": false
+},
+{
+"t": "the",
+"s": 60.296,
+"k": false
+},
+{
+"t": "vat",
+"s": 60.476,
+"k": false
+}
+]
+},
+{
+"shot": "vat",
+"line": "ferm1",
+"start": 61.166,
+"end": 62.686,
+"words": [
+{
+"t": "yeasts",
+"s": 61.216,
+"k": true
+},
+{
+"t": "turn",
+"s": 61.336,
+"k": false
+},
+{
+"t": "sugar",
+"s": 61.656,
+"k": true
+},
+{
+"t": "into",
+"s": 61.956,
+"k": false
+},
+{
+"t": "alcohol",
+"s": 62.236,
+"k": true
+}
+]
+},
+{
+"shot": "vat",
+"line": "ferm1",
+"start": 62.686,
+"end": 64.676,
+"words": [
+{
+"t": "and",
+"s": 62.736,
+"k": false
+},
+{
+"t": "carbon",
+"s": 63.256,
+"k": true
+},
+{
+"t": "dioxide.",
+"s": 63.596,
+"k": true
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm2",
+"start": 65.269,
+"end": 66.669,
+"words": [
+{
+"t": "And",
+"s": 65.319,
+"k": false
+},
+{
+"t": "here's",
+"s": 65.479,
+"k": false
+},
+{
+"t": "the",
+"s": 65.799,
+"k": false
+},
+{
+"t": "answer.",
+"s": 65.899,
+"k": true
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm2",
+"start": 66.669,
+"end": 68.701,
+"words": [
+{
+"t": "The",
+"s": 66.719,
+"k": false
+},
+{
+"t": "colour",
+"s": 66.799,
+"k": false
+},
+{
+"t": "lives",
+"s": 67.039,
+"k": false
+},
+{
+"t": "in",
+"s": 67.379,
+"k": false
+},
+{
+"t": "the",
+"s": 67.579,
+"k": false
+},
+{
+"t": "skins.",
+"s": 67.659,
+"k": true
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm3",
+"start": 68.701,
+"end": 69.641,
+"words": [
+{
+"t": "For",
+"s": 68.751,
+"k": false
+},
+{
+"t": "up",
+"s": 68.911,
+"k": false
+},
+{
+"t": "to",
+"s": 69.031,
+"k": false
+},
+{
+"t": "a",
+"s": 69.151,
+"k": false
+},
+{
+"t": "month",
+"s": 69.251,
+"k": true
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm3",
+"start": 69.641,
+"end": 71.121,
+"words": [
+{
+"t": "the",
+"s": 69.691,
+"k": false
+},
+{
+"t": "juice",
+"s": 69.811,
+"k": false
+},
+{
+"t": "soaks",
+"s": 70.051,
+"k": false
+},
+{
+"t": "with",
+"s": 70.451,
+"k": false
+},
+{
+"t": "them",
+"s": 70.611,
+"k": false
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm3",
+"start": 71.121,
+"end": 73.481,
+"words": [
+{
+"t": "drawing",
+"s": 71.171,
+"k": false
+},
+{
+"t": "out",
+"s": 71.551,
+"k": false
+},
+{
+"t": "pigments",
+"s": 71.771,
+"k": false
+},
+{
+"t": "called",
+"s": 72.271,
+"k": false
+},
+{
+"t": "anthocyanins",
+"s": 72.551,
+"k": true
+}
+]
+},
+{
+"shot": "skins",
+"line": "ferm3",
+"start": 73.481,
+"end": 75.091,
+"words": [
+{
+"t": "along",
+"s": 73.531,
+"k": false
+},
+{
+"t": "with",
+"s": 74.031,
+"k": false
+},
+{
+"t": "tannins.",
+"s": 74.191,
+"k": true
+}
+]
+},
+{
+"shot": "press",
+"line": "press1",
+"start": 75.88,
+"end": 76.96,
+"words": [
+{
+"t": "The",
+"s": 75.93,
+"k": false
+},
+{
+"t": "new",
+"s": 76.05,
+"k": false
+},
+{
+"t": "wine",
+"s": 76.23,
+"k": false
+},
+{
+"t": "is",
+"s": 76.53,
+"k": false
+},
+{
+"t": "pressed",
+"s": 76.77,
+"k": true
+}
+]
+},
+{
+"shot": "press",
+"line": "press1",
+"start": 76.96,
+"end": 78.18,
+"words": [
+{
+"t": "off",
+"s": 77.01,
+"k": false
+},
+{
+"t": "the",
+"s": 77.23,
+"k": false
+},
+{
+"t": "skins",
+"s": 77.41,
+"k": true
+}
+]
+},
+{
+"shot": "press",
+"line": "press1",
+"start": 78.18,
+"end": 80.02,
+"words": [
+{
+"t": "and",
+"s": 78.23,
+"k": false
+},
+{
+"t": "a",
+"s": 78.37,
+"k": false
+},
+{
+"t": "second",
+"s": 78.49,
+"k": false
+},
+{
+"t": "fermentation",
+"s": 78.75,
+"k": false
+},
+{
+"t": "softens",
+"s": 79.25,
+"k": false
+}
+]
+},
+{
+"shot": "press",
+"line": "press1",
+"start": 80.02,
+"end": 81.89,
+"words": [
+{
+"t": "its",
+"s": 80.07,
+"k": false
+},
+{
+"t": "sharp",
+"s": 80.23,
+"k": false
+},
+{
+"t": "malic",
+"s": 80.61,
+"k": true
+},
+{
+"t": "acid.",
+"s": 81.01,
+"k": false
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel1",
+"start": 82.709,
+"end": 84.249,
+"words": [
+{
+"t": "Then",
+"s": 82.759,
+"k": false
+},
+{
+"t": "it",
+"s": 82.979,
+"k": false
+},
+{
+"t": "rests",
+"s": 83.139,
+"k": false
+},
+{
+"t": "in",
+"s": 83.439,
+"k": false
+},
+{
+"t": "French",
+"s": 83.719,
+"k": false
+},
+{
+"t": "oak",
+"s": 83.999,
+"k": true
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel1",
+"start": 84.249,
+"end": 87.409,
+"words": [
+{
+"t": "barriques",
+"s": 84.299,
+"k": true
+},
+{
+"t": "225",
+"s": 85.259,
+"k": true
+},
+{
+"t": "litres",
+"s": 86.039,
+"k": false
+},
+{
+"t": "each",
+"s": 86.799,
+"k": false
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel1",
+"start": 87.409,
+"end": 89.594,
+"words": [
+{
+"t": "for",
+"s": 87.459,
+"k": false
+},
+{
+"t": "12–24",
+"s": 87.659,
+"k": true
+},
+{
+"t": "months.",
+"s": 88.579,
+"k": false
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel2",
+"start": 89.594,
+"end": 91.054,
+"words": [
+{
+"t": "Oak",
+"s": 89.644,
+"k": true
+},
+{
+"t": "lets",
+"s": 89.904,
+"k": false
+},
+{
+"t": "in",
+"s": 90.184,
+"k": false
+},
+{
+"t": "tiny",
+"s": 90.404,
+"k": false
+},
+{
+"t": "amounts",
+"s": 90.764,
+"k": false
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel2",
+"start": 91.054,
+"end": 93.134,
+"words": [
+{
+"t": "of",
+"s": 91.104,
+"k": false
+},
+{
+"t": "oxygen",
+"s": 91.324,
+"k": true
+},
+{
+"t": "rounding",
+"s": 92.164,
+"k": false
+},
+{
+"t": "the",
+"s": 92.504,
+"k": false
+},
+{
+"t": "tannins",
+"s": 92.684,
+"k": true
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel2",
+"start": 93.134,
+"end": 95.154,
+"words": [
+{
+"t": "and",
+"s": 93.184,
+"k": false
+},
+{
+"t": "adding",
+"s": 93.744,
+"k": false
+},
+{
+"t": "notes",
+"s": 94.044,
+"k": false
+},
+{
+"t": "of",
+"s": 94.324,
+"k": false
+},
+{
+"t": "vanilla",
+"s": 94.524,
+"k": true
+}
+]
+},
+{
+"shot": "cellar",
+"line": "barrel2",
+"start": 95.154,
+"end": 96.544,
+"words": [
+{
+"t": "toast",
+"s": 95.204,
+"k": true
+},
+{
+"t": "and",
+"s": 95.484,
+"k": false
+},
+{
+"t": "spice.",
+"s": 95.764,
+"k": true
+}
+]
+},
+{
+"shot": "blend",
+"line": "blend1",
+"start": 97.406,
+"end": 99.626,
+"words": [
+{
+"t": "Then",
+"s": 97.456,
+"k": false
+},
+{
+"t": "comes",
+"s": 97.636,
+"k": false
+},
+{
+"t": "Bordeaux's",
+"s": 98.016,
+"k": false
+},
+{
+"t": "signature",
+"s": 98.596,
+"k": false
+},
+{
+"t": "art",
+"s": 98.856,
+"k": false
+}
+]
+},
+{
+"shot": "blend",
+"line": "blend1",
+"start": 99.626,
+"end": 100.686,
+"words": [
+{
+"t": "the",
+"s": 99.676,
+"k": false
+},
+{
+"t": "blend.",
+"s": 99.776,
+"k": true
+}
+]
+},
+{
+"shot": "blend",
+"line": "blend1",
+"start": 100.686,
+"end": 103.826,
+"words": [
+{
+"t": "Left",
+"s": 100.736,
+"k": true
+},
+{
+"t": "Bank",
+"s": 100.896,
+"k": true
+},
+{
+"t": "wines",
+"s": 101.136,
+"k": false
+},
+{
+"t": "lean",
+"s": 101.536,
+"k": false
+},
+{
+"t": "on",
+"s": 101.856,
+"k": false
+},
+{
+"t": "Cabernet",
+"s": 102.136,
+"k": true
+},
+{
+"t": "Sauvignon.",
+"s": 102.676,
+"k": true
+}
+]
+},
+{
+"shot": "blend",
+"line": "blend1",
+"start": 103.826,
+"end": 104.706,
+"words": [
+{
+"t": "Right",
+"s": 103.876,
+"k": true
+},
+{
+"t": "Bank",
+"s": 103.996,
+"k": true
+},
+{
+"t": "wines",
+"s": 104.276,
+"k": false
+}
+]
+},
+{
+"shot": "blend",
+"line": "blend1",
+"start": 104.706,
+"end": 105.816,
+"words": [
+{
+"t": "on",
+"s": 104.756,
+"k": false
+},
+{
+"t": "Merlot.",
+"s": 104.976,
+"k": true
+}
+]
+},
+{
+"shot": "finale",
+"line": "bottle1",
+"start": 106.563,
+"end": 108.763,
+"words": [
+{
+"t": "Once",
+"s": 106.613,
+"k": false
+},
+{
+"t": "bottled",
+"s": 106.933,
+"k": false
+},
+{
+"t": "the",
+"s": 107.793,
+"k": false
+},
+{
+"t": "finest",
+"s": 107.853,
+"k": false
+},
+{
+"t": "vintages",
+"s": 108.253,
+"k": false
+}
+]
+},
+{
+"shot": "finale",
+"line": "bottle1",
+"start": 108.763,
+"end": 110.813,
+"words": [
+{
+"t": "can",
+"s": 108.813,
+"k": false
+},
+{
+"t": "keep",
+"s": 109.093,
+"k": false
+},
+{
+"t": "evolving",
+"s": 109.293,
+"k": false
+},
+{
+"t": "for",
+"s": 109.693,
+"k": false
+},
+{
+"t": "decades.",
+"s": 109.973,
+"k": true
+}
+]
+},
+{
+"shot": "finale",
+"line": "end1",
+"start": 111.455,
+"end": 113.555,
+"words": [
+{
+"t": "Sun",
+"s": 111.505,
+"k": true
+},
+{
+"t": "soil",
+"s": 112.085,
+"k": true
+},
+{
+"t": "skins",
+"s": 112.385,
+"k": true
+},
+{
+"t": "and",
+"s": 112.805,
+"k": false
+},
+{
+"t": "oak.",
+"s": 112.865,
+"k": true
+}
+]
+},
+{
+"shot": "finale",
+"line": "end1",
+"start": 113.555,
+"end": 115.145,
+"words": [
+{
+"t": "That's",
+"s": 113.605,
+"k": false
+},
+{
+"t": "the",
+"s": 113.805,
+"k": false
+},
+{
+"t": "red",
+"s": 113.905,
+"k": true
+},
+{
+"t": "of",
+"s": 114.065,
+"k": false
+},
+{
+"t": "Bordeaux.",
+"s": 114.205,
+"k": true
+}
+]
+}
+]

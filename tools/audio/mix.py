@@ -179,6 +179,19 @@ def shaker(vel=1.0):
     return x * 0.05 * vel
 
 
+def snap(vel=1.0):
+    # soft finger-snap / rim: short band-passed noise with a little tonal body
+    n = int(0.25 * SR)
+    t = np.arange(n) / SR
+    x = bp(rng.standard_normal(n), 1400, 5200) * np.exp(-t * 38) * np.minimum(1, t / 0.0015)
+    x += np.sin(2 * np.pi * 185 * t) * np.exp(-t * 55) * 0.35
+    return x * 0.22 * vel
+
+
+def soft_kick(vel=1.0):
+    return lp(kick(vel), 900) * 1.1
+
+
 def impact(size=1.0):
     n = int(3.5 * SR)
     t = np.arange(n) / SR
@@ -289,15 +302,15 @@ def sec(a, b):
 
 
 SECTIONS = [
-    dict(r=(0, SHOT["hook"]["end"]), prog=["Dm9", "Dm9", "Bbmaj7"], bar=2.5, arp=0.625, arpReg=74, pad=0.55, bright=0.45, bell=False, bass=True),
+    dict(r=(0, SHOT["hook"]["end"]), prog=["Dm9", "Dm9", "Bbmaj7"], bar=2.5, arp=0.625, arpReg=74, pad=0.55, bright=0.45, bell=False, bass=True, groove="full"),
     dict(r=sec("title", "title"), prog=["Dm9"], bar=3.4, arp=0, pad=0.9, bright=0.5, bell=True, bass=True),
-    dict(r=sec("map", "soil"), prog=["Dm9", "Bbmaj7", "Fmaj7", "C/E"], bar=2.5, arp=0.625, arpReg=72, pad=0.75, bright=0.4, bell=False, bass=True),
-    dict(r=sec("grapes", "harvest"), prog=["Bbmaj7", "Fmaj7", "C/E", "Dm9"], bar=2.5, arp=0.3125, arpReg=74, pad=0.8, bright=0.5, bell=True, bass=True),
-    dict(r=sec("sorting", "vat"), prog=["Gm7", "Dm9", "Bbmaj7", "A7sus"], bar=2.5, arp=0.625, arpReg=70, pad=0.7, bright=0.4, bell=False, bass=True, cello=True),
-    dict(r=sec("skins", "skins"), prog=["Fmaj7", "C/E", "Dm9", "Bbmaj7"], bar=2.6, arp=0.325, arpReg=76, pad=0.95, bright=0.55, bell=True, bass=True),
-    dict(r=sec("press", "cellar"), prog=["Dm9", "Bbmaj7", "Gm7", "A7sus"], bar=3.2, arp=0.8, arpReg=70, pad=0.85, bright=0.3, bell=False, bass=True, cello=True),
-    dict(r=sec("blend", "blend"), prog=["Bbmaj7", "C/E", "Dm9", "Fmaj7"], bar=2.3, arp=0.2875, arpReg=74, pad=0.85, bright=0.5, bell=True, bass=True),
-    dict(r=(SHOT["finale"]["start"], TOTAL), prog=["Bbmaj7", "C", "Am7", "Dm9", "Bbmaj7", "C", "Fadd9"], bar=2.0, arp=0.5, arpReg=74, pad=0.95, bright=0.55, bell=True, bass=True, cello=True, finale=True),
+    dict(r=sec("map", "soil"), prog=["Dm9", "Bbmaj7", "Fmaj7", "C/E"], bar=2.5, arp=0.625, arpReg=72, pad=0.75, bright=0.4, bell=False, bass=True, groove="full"),
+    dict(r=sec("grapes", "harvest"), prog=["Bbmaj7", "Fmaj7", "C/E", "Dm9"], bar=2.5, arp=0.3125, arpReg=74, pad=0.8, bright=0.5, bell=True, bass=True, groove="full"),
+    dict(r=sec("sorting", "vat"), prog=["Gm7", "Dm9", "Bbmaj7", "A7sus"], bar=2.5, arp=0.625, arpReg=70, pad=0.7, bright=0.4, bell=False, bass=True, cello=True, groove="full"),
+    dict(r=sec("skins", "skins"), prog=["Fmaj7", "C/E", "Dm9", "Bbmaj7"], bar=2.6, arp=0.325, arpReg=76, pad=0.95, bright=0.55, bell=True, bass=True, groove="half"),
+    dict(r=sec("press", "cellar"), prog=["Dm9", "Bbmaj7", "Gm7", "A7sus"], bar=3.2, arp=0.8, arpReg=70, pad=0.85, bright=0.3, bell=False, bass=True, cello=True, groove="full"),
+    dict(r=sec("blend", "blend"), prog=["Bbmaj7", "C/E", "Dm9", "Fmaj7"], bar=2.3, arp=0.2875, arpReg=74, pad=0.85, bright=0.5, bell=True, bass=True, groove="full"),
+    dict(r=(SHOT["finale"]["start"], TOTAL), prog=["Bbmaj7", "C", "Am7", "Dm9", "Bbmaj7", "C", "Fadd9"], bar=2.0, arp=0.5, arpReg=74, pad=0.95, bright=0.55, bell=True, bass=True, cello=True, finale=True, groove="full", grooveEnd=BEAT["finale.endcard"]),
 ]
 
 music = buf()
@@ -345,6 +358,19 @@ for S in SECTIONS:
                 tq = t + q * beat
                 if tq < t + bl:
                     add(drums, shaker(1.0 if q % 2 else 0.5), tq, 1.0, pan=0.3)
+        if S.get("groove"):
+            beat = S["bar"] / 4
+            half = S["groove"] == "half"
+            for q8 in range(8):
+                tq = t + q8 * beat / 2
+                if tq >= t + bl - 0.02 or tq >= S.get("grooveEnd", 1e9):
+                    continue
+                if q8 == 0 or (q8 == 3 and not half):
+                    add(drums, soft_kick(1.0 if q8 == 0 else 0.6), tq, 0.55)
+                if (q8 in (2, 6) and not half) or (half and q8 == 4):
+                    add(drums, snap(1.0 if q8 == 6 else 0.85), tq, 1.0, pan=0.12)
+                if not half:
+                    add(drums, shaker(0.9 if q8 % 2 else 0.45), tq, 0.75, pan=0.35)
         if S.get("bell"):
             for q, deg in enumerate([4, 2]):
                 tq = t + q * S["bar"] / 2 + 0.05
@@ -364,12 +390,20 @@ add(sfx, noise_bed(1.8, 80, 400, 0.1) * np.hanning(int(1.8 * SR)) * 0.6, 0.45, 0
 for tp in [1.45, 1.7, 1.95, 2.2, 2.45, 2.7, 3.0, 3.3]:
     add(sfx, plip(700 + rng.random() * 600), tp, 0.9, pan=rng.random() - 0.5)
 # transitions
+FLY = json.load(open(os.path.join(ROOT, "src/film/flybys.json")))
+FLY_AT = {f["shot"] for f in FLY}
+for f in FLY:
+    T = SHOT[f["shot"]]["start"] + f.get("dt", 0)
+    d = 0.9 if f.get("big") else 1.3
+    add(sfx, whoosh(d, up=True), T - d / 2, 0.5 if f.get("big") else 0.38, pan=0.3 * f.get("dir", 1))
+    if f.get("big"):
+        add(sfx, lp(impact(0.35), 400), T - 0.05, 0.5)
 for s in TL["shots"]:
     tr = s.get("tr")
-    if not tr:
+    if not tr or s["id"] in FLY_AT:
         continue
     d = tr["dur"] + 0.6
-    add(sfx, whoosh(d + 0.4), s["start"] - (d + 0.4) / 2, 0.22, pan=0.2)
+    add(sfx, whoosh(d + 0.4), s["start"] - (d + 0.4) / 2, 0.16, pan=0.2)
     if tr["type"] == 6:
         add(bells, bell(81, 4.0), s["start"] - 0.1, 0.3)
 add(sfx, impact(0.6), SHOT["title"]["start"] + 0.2, 0.55)
@@ -425,7 +459,8 @@ def reverb(x, secs=2.6, damp=3500):
 
 
 music_mix = music + arpbus * 1.0 + bells
-music_mix = music_mix + reverb(music_mix * 0.5 + bells * 0.5) * 0.55 + drums
+music_mix = music_mix + reverb(music_mix * 0.5 + bells * 0.5) * 0.55
+drums = drums + reverb(drums * 0.25, 1.2) * 0.3
 sfx_mix = sfx + reverb(sfx * 0.3, 1.8) * 0.4 + amb
 
 # ---------------------------------------------------------------- narration + ducking
@@ -448,9 +483,10 @@ duck = 1 - 0.72 * env_vo
 duck = signal.lfilter([0.0005], [1, -0.9995], duck) / 1.0  # smooth release
 duck = np.clip(duck, 0.28, 1)
 
-final = music_mix * duck * 0.5 + sfx_mix * 0.42
+# the groove ducks less than the harmony, so the pulse stays under the voice
+final = music_mix * duck * 0.5 + drums * (0.5 + 0.5 * duck) * 1.4 + sfx_mix * 0.42
 if os.environ.get("STEMS"):
-    for name, x in (("music", music_mix * duck * 0.5), ("sfx", sfx_mix * 0.42), ("vo", np.vstack([vo, vo]) * 1.25)):
+    for name, x in (("music", music_mix * duck * 0.5), ("drums", drums * (0.5 + 0.5 * duck) * 1.4), ("sfx", sfx_mix * 0.42), ("vo", np.vstack([vo, vo]) * 1.25)):
         with wave.open(f"/tmp/claude-0/stem_{name}.wav", "wb") as w:
             w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
             w.writeframes((np.clip(x.T, -1, 1) * 32767).astype(np.int16).tobytes())

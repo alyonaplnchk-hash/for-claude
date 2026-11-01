@@ -354,7 +354,13 @@ void main() {
   col += emit;
 #if PATTERN == 15
   // melt the floor into the backdrop with distance from the subject (p1.x..p1.y, local units)
-  col = mix(col, skyColor(normalize(v_wpos - u_camPos)), smoothstep(u_p1.x, u_p1.y, length(v_opos.xz)));
+  float fadeF = smoothstep(u_p1.x, u_p1.y, length(v_opos.xz));
+  if (u_p1.z > 0.5) {
+    // shadow catcher: the floor is the backdrop itself, darkened only by the soft shadow
+    col = skyColor(normalize(v_wpos - u_camPos)) * mix(1.0 - u_p1.w, 1.0, mix(sh, 1.0, fadeF));
+  } else {
+    col = mix(col, skyColor(normalize(v_wpos - u_camPos)), fadeF);
+  }
 #endif
   float fogAmt = (1.0 - exp(-u_fog.x * dist)) * exp(-max(v_wpos.y - u_fog.z, 0.0) * u_fog.y);
   fogAmt = min(fogAmt, u_fog.w);
@@ -632,7 +638,7 @@ void main() {
     c = mix(texture(u_a, ua).rgb, texture(u_b, ub).rgb, e);
   } else if (u_type == 6) {
     // dip through warm dark
-    vec3 dark = vec3(0.035, 0.028, 0.022);
+    vec3 dark = u_col;
     c = p < 0.5 ? mix(texture(u_a, uv).rgb, dark, smoothstep(0.0, 0.5, p)) : mix(dark, texture(u_b, uv).rgb, smoothstep(0.5, 1.0, p));
   } else {
     c = mix(texture(u_a, uv).rgb, texture(u_b, uv).rgb, smoothstep(0.0, 1.0, p));
@@ -652,13 +658,16 @@ void main() {
   if (d > 30000.0) { o = vec4(1.0); return; }
   float occ = 0.0;
   float rot = hh(gl_FragCoord.xy) * 6.2831;
-  for (int i = 0; i < 16; i++) {
+  // symmetric pairs: a flat surface seen at a grazing angle averages out and does not darken
+  for (int i = 0; i < 8; i++) {
     float fi = float(i) + 0.5;
-    float r = sqrt(fi / 16.0) * u_radius;
+    float r = sqrt(fi / 8.0) * u_radius;
     float th = fi * 2.39996 + rot;
-    float ds = texture(u_src, v_uv + vec2(cos(th), sin(th)) * r * u_texel).a;
-    float diff = (d - ds) / d;
-    occ += smoothstep(0.002, 0.02, diff) * (1.0 - smoothstep(0.06, 0.16, diff));
+    vec2 off = vec2(cos(th), sin(th)) * r * u_texel;
+    float d1 = texture(u_src, v_uv + off).a, d2 = texture(u_src, v_uv - off).a;
+    if (max(d1, d2) > d * 1.2) continue; // silhouette or horizon: nothing to occlude
+    float diff = (d - 0.5 * (d1 + d2)) / d;
+    occ += smoothstep(0.002, 0.02, diff) * (1.0 - smoothstep(0.08, 0.2, diff));
   }
-  o = vec4(1.0 - u_strength * occ / 16.0);
+  o = vec4(1.0 - u_strength * occ / 8.0);
 }`;
