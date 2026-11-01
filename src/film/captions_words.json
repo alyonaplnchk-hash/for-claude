@@ -1,0 +1,1863 @@
+[
+{
+"shot": "map",
+"start": 11.255,
+"end": 11.855,
+"words": [
+{
+"t": "Bordeaux",
+"a": true
+}
+]
+},
+{
+"shot": "map",
+"start": 11.855,
+"end": 12.515,
+"words": [
+{
+"t": "in",
+"a": false
+},
+{
+"t": "south-west",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 12.515,
+"end": 13.775,
+"words": [
+{
+"t": "France",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 13.775,
+"end": 14.035,
+"words": [
+{
+"t": "Right",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 14.035,
+"end": 14.335,
+"words": [
+{
+"t": "on",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 14.335,
+"end": 15.835,
+"words": [
+{
+"t": "45th",
+"a": true
+},
+{
+"t": "parallel",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 15.835,
+"end": 16.335,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "Garonne",
+"a": true
+}
+]
+},
+{
+"shot": "map",
+"start": 16.335,
+"end": 17.035,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "Dordogne",
+"a": true
+}
+]
+},
+{
+"shot": "map",
+"start": 17.035,
+"end": 17.555,
+"words": [
+{
+"t": "rivers",
+"a": false
+},
+{
+"t": "meet",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 17.555,
+"end": 18.275,
+"words": [
+{
+"t": "to",
+"a": false
+},
+{
+"t": "form",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 18.275,
+"end": 18.535,
+"words": [
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 18.535,
+"end": 19.685,
+"words": [
+{
+"t": "Gironde",
+"a": true
+},
+{
+"t": "estuary",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 20.062,
+"end": 20.482,
+"words": [
+{
+"t": "It",
+"a": false
+},
+{
+"t": "splits",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 20.482,
+"end": 21.042,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "vineyards",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 21.042,
+"end": 21.802,
+"words": [
+{
+"t": "in",
+"a": false
+},
+{
+"t": "two",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 21.802,
+"end": 22.062,
+"words": [
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 22.062,
+"end": 22.342,
+"words": [
+{
+"t": "Left",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 22.342,
+"end": 22.962,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "map",
+"start": 22.962,
+"end": 23.852,
+"words": [
+{
+"t": "Right",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 24.834,
+"end": 25.134,
+"words": [
+{
+"t": "On",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 25.134,
+"end": 26.074,
+"words": [
+{
+"t": "Left",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 26.074,
+"end": 26.594,
+"words": [
+{
+"t": "deep",
+"a": false
+},
+{
+"t": "gravel",
+"a": true
+}
+]
+},
+{
+"shot": "soil",
+"start": 26.594,
+"end": 26.934,
+"words": [
+{
+"t": "drains",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 26.934,
+"end": 27.394,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "rain",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 27.394,
+"end": 27.894,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "stores",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 27.894,
+"end": 28.514,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "sun's",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 28.514,
+"end": 29.374,
+"words": [
+{
+"t": "heat",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 29.374,
+"end": 29.634,
+"words": [
+{
+"t": "Perfect",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 29.634,
+"end": 29.974,
+"words": [
+{
+"t": "for",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 29.974,
+"end": 31.384,
+"words": [
+{
+"t": "Cabernet",
+"a": true
+},
+{
+"t": "Sauvignon",
+"a": true
+}
+]
+},
+{
+"shot": "soil",
+"start": 31.839,
+"end": 32.099,
+"words": [
+{
+"t": "On",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 32.099,
+"end": 33.079,
+"words": [
+{
+"t": "Right",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "soil",
+"start": 33.079,
+"end": 33.499,
+"words": [
+{
+"t": "cooler",
+"a": false
+},
+{
+"t": "clay",
+"a": true
+}
+]
+},
+{
+"shot": "soil",
+"start": 33.499,
+"end": 34.139,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "limestone",
+"a": true
+}
+]
+},
+{
+"shot": "soil",
+"start": 34.139,
+"end": 35.249,
+"words": [
+{
+"t": "favour",
+"a": false
+},
+{
+"t": "Merlot",
+"a": true
+}
+]
+},
+{
+"shot": "grapes",
+"start": 36.257,
+"end": 36.657,
+"words": [
+{
+"t": "Merlot",
+"a": true
+}
+]
+},
+{
+"shot": "grapes",
+"start": 36.657,
+"end": 37.077,
+"words": [
+{
+"t": "is",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 37.077,
+"end": 37.577,
+"words": [
+{
+"t": "region's",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 37.577,
+"end": 38.237,
+"words": [
+{
+"t": "most",
+"a": false
+},
+{
+"t": "planted",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 38.237,
+"end": 39.237,
+"words": [
+{
+"t": "red",
+"a": false
+},
+{
+"t": "grape",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 39.237,
+"end": 39.497,
+"words": [
+{
+"t": "with",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 39.497,
+"end": 40.597,
+"words": [
+{
+"t": "Cabernet",
+"a": true
+},
+{
+"t": "Sauvignon",
+"a": true
+}
+]
+},
+{
+"shot": "grapes",
+"start": 40.597,
+"end": 41.037,
+"words": [
+{
+"t": "and",
+"a": false
+}
+]
+},
+{
+"shot": "grapes",
+"start": 41.037,
+"end": 41.857,
+"words": [
+{
+"t": "Cabernet",
+"a": true
+},
+{
+"t": "Franc",
+"a": true
+}
+]
+},
+{
+"shot": "grapes",
+"start": 41.857,
+"end": 43.027,
+"words": [
+{
+"t": "close",
+"a": false
+},
+{
+"t": "behind",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 43.901,
+"end": 44.161,
+"words": [
+{
+"t": "Through",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 44.161,
+"end": 44.721,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "summer",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 44.721,
+"end": 45.101,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "berries",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 45.101,
+"end": 45.401,
+"words": [
+{
+"t": "turn",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 45.401,
+"end": 45.981,
+"words": [
+{
+"t": "from",
+"a": false
+},
+{
+"t": "green",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 45.981,
+"end": 47.261,
+"words": [
+{
+"t": "to",
+"a": false
+},
+{
+"t": "purple",
+"a": true
+}
+]
+},
+{
+"shot": "veraison",
+"start": 47.261,
+"end": 48.121,
+"words": [
+{
+"t": "Sugar",
+"a": false
+},
+{
+"t": "climbs",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 48.121,
+"end": 48.481,
+"words": [
+{
+"t": "acidity",
+"a": false
+}
+]
+},
+{
+"shot": "veraison",
+"start": 48.481,
+"end": 49.091,
+"words": [
+{
+"t": "falls",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 49.537,
+"end": 49.817,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "in",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 49.817,
+"end": 50.477,
+"words": [
+{
+"t": "September",
+"a": true
+}
+]
+},
+{
+"shot": "harvest",
+"start": 50.477,
+"end": 50.897,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "harvest",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 50.897,
+"end": 52.017,
+"words": [
+{
+"t": "begins",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 52.017,
+"end": 52.277,
+"words": [
+{
+"t": "Often",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 52.277,
+"end": 52.977,
+"words": [
+{
+"t": "by",
+"a": false
+},
+{
+"t": "hand",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 52.977,
+"end": 53.597,
+"words": [
+{
+"t": "into",
+"a": false
+},
+{
+"t": "small",
+"a": false
+}
+]
+},
+{
+"shot": "harvest",
+"start": 53.597,
+"end": 54.287,
+"words": [
+{
+"t": "crates",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 55.211,
+"end": 55.471,
+"words": [
+{
+"t": "At",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 55.471,
+"end": 56.191,
+"words": [
+{
+"t": "winery",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 56.191,
+"end": 56.451,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "grapes",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 56.451,
+"end": 57.171,
+"words": [
+{
+"t": "are",
+"a": false
+},
+{
+"t": "sorted",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 57.171,
+"end": 57.991,
+"words": [
+{
+"t": "destemmed",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 57.991,
+"end": 58.351,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "gently",
+"a": false
+}
+]
+},
+{
+"shot": "sorting",
+"start": 58.351,
+"end": 59.061,
+"words": [
+{
+"t": "crushed",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 59.896,
+"end": 60.256,
+"words": [
+{
+"t": "Inside",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 60.256,
+"end": 61.176,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "vat",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 61.176,
+"end": 61.616,
+"words": [
+{
+"t": "yeasts",
+"a": false
+},
+{
+"t": "turn",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 61.616,
+"end": 61.916,
+"words": [
+{
+"t": "sugar",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 61.916,
+"end": 62.696,
+"words": [
+{
+"t": "into",
+"a": false
+},
+{
+"t": "alcohol",
+"a": true
+}
+]
+},
+{
+"shot": "vat",
+"start": 62.696,
+"end": 63.216,
+"words": [
+{
+"t": "and",
+"a": false
+}
+]
+},
+{
+"shot": "vat",
+"start": 63.216,
+"end": 64.506,
+"words": [
+{
+"t": "carbon",
+"a": false
+},
+{
+"t": "dioxide",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 68.711,
+"end": 68.991,
+"words": [
+{
+"t": "For",
+"a": false
+},
+{
+"t": "up",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 68.991,
+"end": 69.251,
+"words": [
+{
+"t": "to",
+"a": false
+},
+{
+"t": "a",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 69.251,
+"end": 69.651,
+"words": [
+{
+"t": "month",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 69.651,
+"end": 70.011,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "juice",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 70.011,
+"end": 70.411,
+"words": [
+{
+"t": "soaks",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 70.411,
+"end": 71.131,
+"words": [
+{
+"t": "with",
+"a": false
+},
+{
+"t": "them",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 71.131,
+"end": 71.511,
+"words": [
+{
+"t": "drawing",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 71.511,
+"end": 72.231,
+"words": [
+{
+"t": "out",
+"a": false
+},
+{
+"t": "pigments",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 72.231,
+"end": 72.511,
+"words": [
+{
+"t": "called",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 72.511,
+"end": 73.491,
+"words": [
+{
+"t": "anthocyanins",
+"a": true
+}
+]
+},
+{
+"shot": "skins",
+"start": 73.491,
+"end": 73.991,
+"words": [
+{
+"t": "along",
+"a": false
+}
+]
+},
+{
+"shot": "skins",
+"start": 73.991,
+"end": 74.921,
+"words": [
+{
+"t": "with",
+"a": false
+},
+{
+"t": "tannins",
+"a": true
+}
+]
+},
+{
+"shot": "press",
+"start": 75.89,
+"end": 76.19,
+"words": [
+{
+"t": "The",
+"a": false
+},
+{
+"t": "new",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 76.19,
+"end": 76.49,
+"words": [
+{
+"t": "wine",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 76.49,
+"end": 76.97,
+"words": [
+{
+"t": "is",
+"a": false
+},
+{
+"t": "pressed",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 76.97,
+"end": 77.37,
+"words": [
+{
+"t": "off",
+"a": false
+},
+{
+"t": "the",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 77.37,
+"end": 78.19,
+"words": [
+{
+"t": "skins",
+"a": true
+}
+]
+},
+{
+"shot": "press",
+"start": 78.19,
+"end": 78.45,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "a",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 78.45,
+"end": 79.21,
+"words": [
+{
+"t": "second",
+"a": false
+},
+{
+"t": "fermentation",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 79.21,
+"end": 80.03,
+"words": [
+{
+"t": "softens",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 80.03,
+"end": 80.57,
+"words": [
+{
+"t": "its",
+"a": false
+},
+{
+"t": "sharp",
+"a": false
+}
+]
+},
+{
+"shot": "press",
+"start": 80.57,
+"end": 81.72,
+"words": [
+{
+"t": "malic",
+"a": true
+},
+{
+"t": "acid",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 82.719,
+"end": 83.099,
+"words": [
+{
+"t": "Then",
+"a": false
+},
+{
+"t": "it",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 83.099,
+"end": 83.399,
+"words": [
+{
+"t": "rests",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 83.399,
+"end": 83.679,
+"words": [
+{
+"t": "in",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 83.679,
+"end": 84.259,
+"words": [
+{
+"t": "French",
+"a": false
+},
+{
+"t": "oak",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 84.259,
+"end": 85.219,
+"words": [
+{
+"t": "barriques",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 85.219,
+"end": 85.999,
+"words": [
+{
+"t": "225",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 85.999,
+"end": 86.759,
+"words": [
+{
+"t": "litres",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 86.759,
+"end": 87.419,
+"words": [
+{
+"t": "each",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 87.419,
+"end": 87.919,
+"words": [
+{
+"t": "for",
+"a": false
+},
+{
+"t": "12",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 87.919,
+"end": 88.539,
+"words": [
+{
+"t": "to",
+"a": false
+},
+{
+"t": "24",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 88.539,
+"end": 89.149,
+"words": [
+{
+"t": "months",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 89.604,
+"end": 89.864,
+"words": [
+{
+"t": "Oak",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 89.864,
+"end": 90.144,
+"words": [
+{
+"t": "lets",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 90.144,
+"end": 90.724,
+"words": [
+{
+"t": "in",
+"a": false
+},
+{
+"t": "tiny",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 90.724,
+"end": 91.064,
+"words": [
+{
+"t": "amounts",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 91.064,
+"end": 92.124,
+"words": [
+{
+"t": "of",
+"a": false
+},
+{
+"t": "oxygen",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 92.124,
+"end": 92.464,
+"words": [
+{
+"t": "rounding",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 92.464,
+"end": 93.144,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "tannins",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 93.144,
+"end": 94.004,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "adding",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 94.004,
+"end": 94.284,
+"words": [
+{
+"t": "notes",
+"a": false
+}
+]
+},
+{
+"shot": "cellar",
+"start": 94.284,
+"end": 95.164,
+"words": [
+{
+"t": "of",
+"a": false
+},
+{
+"t": "vanilla",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 95.164,
+"end": 95.444,
+"words": [
+{
+"t": "toast",
+"a": true
+}
+]
+},
+{
+"shot": "cellar",
+"start": 95.444,
+"end": 96.374,
+"words": [
+{
+"t": "and",
+"a": false
+},
+{
+"t": "spice",
+"a": true
+}
+]
+},
+{
+"shot": "blend",
+"start": 97.416,
+"end": 97.976,
+"words": [
+{
+"t": "Then",
+"a": false
+},
+{
+"t": "comes",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 97.976,
+"end": 98.556,
+"words": [
+{
+"t": "Bordeaux's",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 98.556,
+"end": 99.636,
+"words": [
+{
+"t": "signature",
+"a": false
+},
+{
+"t": "art",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 99.636,
+"end": 100.696,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "blend",
+"a": true
+}
+]
+},
+{
+"shot": "blend",
+"start": 100.696,
+"end": 101.096,
+"words": [
+{
+"t": "Left",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 101.096,
+"end": 101.496,
+"words": [
+{
+"t": "wines",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 101.496,
+"end": 101.816,
+"words": [
+{
+"t": "lean",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 101.816,
+"end": 102.096,
+"words": [
+{
+"t": "on",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 102.096,
+"end": 103.836,
+"words": [
+{
+"t": "Cabernet",
+"a": true
+},
+{
+"t": "Sauvignon",
+"a": true
+}
+]
+},
+{
+"shot": "blend",
+"start": 103.836,
+"end": 104.236,
+"words": [
+{
+"t": "Right",
+"a": false
+},
+{
+"t": "Bank",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 104.236,
+"end": 104.716,
+"words": [
+{
+"t": "wines",
+"a": false
+}
+]
+},
+{
+"shot": "blend",
+"start": 104.716,
+"end": 105.646,
+"words": [
+{
+"t": "on",
+"a": false
+},
+{
+"t": "Merlot",
+"a": true
+}
+]
+},
+{
+"shot": "finale",
+"start": 106.573,
+"end": 107.753,
+"words": [
+{
+"t": "Once",
+"a": false
+},
+{
+"t": "bottled",
+"a": false
+}
+]
+},
+{
+"shot": "finale",
+"start": 107.753,
+"end": 108.213,
+"words": [
+{
+"t": "the",
+"a": false
+},
+{
+"t": "finest",
+"a": false
+}
+]
+},
+{
+"shot": "finale",
+"start": 108.213,
+"end": 108.773,
+"words": [
+{
+"t": "vintages",
+"a": false
+}
+]
+},
+{
+"shot": "finale",
+"start": 108.773,
+"end": 109.253,
+"words": [
+{
+"t": "can",
+"a": false
+},
+{
+"t": "keep",
+"a": false
+}
+]
+},
+{
+"shot": "finale",
+"start": 109.253,
+"end": 109.653,
+"words": [
+{
+"t": "evolving",
+"a": false
+}
+]
+},
+{
+"shot": "finale",
+"start": 109.653,
+"end": 110.643,
+"words": [
+{
+"t": "for",
+"a": false
+},
+{
+"t": "decades",
+"a": true
+}
+]
+}
+]

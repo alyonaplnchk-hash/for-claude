@@ -9,7 +9,7 @@ import { buildShots } from "../scenes";
 import { B } from "../beats";
 import { FPS, SHOTS } from "../timeline";
 import { BLENDS } from "../scenes/finale";
-import captions from "../captions.json";
+import captions from "../captions_words.json";
 
 loadFont({ family: "Albert Sans", url: staticFile("fonts/AlbertSans-normal.woff2"), weight: "200 900", style: "normal" });
 loadFont({ family: "Newsreader", url: staticFile("fonts/Newsreader-normal.woff2"), weight: "200 800", style: "normal" });
@@ -561,22 +561,43 @@ const ShotLayer: React.FC<{ id: string; d: number }> = ({ id, d }) => {
   return Comp ? <Comp t={f / FPS} d={d} /> : null;
 };
 
-// Narration captions (the hook and the end card carry their own words)
-type Cap = { shot: string; start: number; end: number; text: string };
+// Narration captions, one or two words at a time (the hook and the end card carry their own words).
+// Each word group focuses in from a soft blur and settles; key terms are set in gold italic.
+type Cap = { shot: string; start: number; end: number; words: { t: string; a: boolean }[] };
 const Captions: React.FC = () => {
   const tg = useCurrentFrame() / FPS;
-  const cur = (captions as Cap[]).filter((c) => tg >= c.start && tg < c.end);
+  const c = (captions as Cap[]).find((x) => tg >= x.start && tg < x.end);
+  if (!c) return null;
+  const fin = interpolate(tg, [c.start, c.start + 0.16], [0, 1], { ...clamp, easing: EASE });
+  const fout = interpolate(tg, [c.end - 0.1, c.end], [1, 0], clamp);
+  const v = Math.min(fin, fout);
   return (
-    <>
-      {cur.map((c) => {
-        const v = Math.min(interpolate(tg, [c.start, c.start + 0.14], [0, 1], clamp), interpolate(tg, [c.end - 0.14, c.end], [1, 0], clamp));
-        return (
-          <div key={c.start} style={{ position: "absolute", left: 90, right: 90, top: SAFE.captionTop, textAlign: "center", fontFamily: SERIF, fontSize: 52, lineHeight: 1.22, color: C.ivory, whiteSpace: "pre-line", opacity: v, textShadow: "0 1px 2px rgba(0,0,0,0.6), 0 2px 18px rgba(0,0,0,0.55)" }}>
-            {c.text}
-          </div>
-        );
-      })}
-    </>
+    <div
+      style={{
+        position: "absolute",
+        left: 60,
+        right: 60,
+        top: SAFE.captionTop + 10,
+        textAlign: "center",
+        opacity: v,
+        translate: `0px ${(1 - fin) * 10}px`,
+        filter: `blur(${(1 - fin) * 5}px)`,
+        fontFamily: SERIF,
+        fontSize: 74,
+        lineHeight: 1.1,
+        letterSpacing: "0.005em",
+        color: C.ivory,
+        textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 24px rgba(0,0,0,0.5)",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {c.words.map((w, i) => (
+        <span key={i} style={w.a ? { fontStyle: "italic", color: C.goldLight } : undefined}>
+          {i ? " " : ""}
+          {w.t}
+        </span>
+      ))}
+    </div>
   );
 };
 

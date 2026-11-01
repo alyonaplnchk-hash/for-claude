@@ -22,7 +22,7 @@ answers the question at the fermentation stage.
 
 ## Watch
 
-- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts, in a quieter editorial style with on-screen captions.
+- [`video/bordeaux-red-wine-reels.mp4`](video/bordeaux-red-wine-reels.mp4): 1080×1920 vertical cut for Reels, TikTok and Shorts, in a quieter editorial style with word-by-word captions.
 - [`video/bordeaux-red-wine.mp4`](video/bordeaux-red-wine.mp4): 1920×1080, 30 fps, 1:59, English narration, music and SFX (H.264/AAC, ~49 MB).
 
 ## How it is built
@@ -65,7 +65,7 @@ node tools/render3d/render.mjs --workers=3 --scale=0.75
 npx remotion render Bordeaux out/bordeaux.mp4
 ```
 
-For the vertical Reels cut, add `python3 tools/captions/make_captions.py` before rendering, then:
+For the vertical Reels cut, build the word-by-word captions first (`python3 tools/captions/word_times.py` needs `pip install faster-whisper`; then `python3 tools/captions/make_word_captions.py`), then:
 
 ```bash
 node tools/render3d/render.mjs --format=reels --workers=3 --scale=0.75
