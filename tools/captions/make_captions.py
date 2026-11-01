@@ -27,7 +27,16 @@ def silences(path):
     return list(zip(st, en))
 
 
-NUMERALS = [("forty-fifth", "45th"), ("two hundred and twenty-five liters", "225 liters"), ("twelve to twenty-four months", "12 to 24 months")]
+NUMERALS = [
+    ("forty-fifth", "45th"),
+    ("two hundred and twenty-five liters", "225 litres"),
+    ("twelve to twenty-four months", "12 to 24 months"),
+    ("color", "colour"),
+    ("favor", "favour"),
+    ("liters", "litres"),
+]
+# lines whose words are already set as large type on screen
+SKIP = {"hook1", "hook2", "ferm2", "end1"}
 
 
 def phrases(text):
@@ -60,6 +69,8 @@ def wrap(p):
 
 caps = []
 for line in narr["lines"]:
+    if line["id"] in SKIP:
+        continue
     g0, dur, shot = start_of[line["id"]]
     sil = silences(os.path.join(ROOT, "public/vo", line["id"] + ".wav"))
     ph = phrases(line["text"])
@@ -76,8 +87,12 @@ for line in narr["lines"]:
         bounds.append(near if abs(near - guess) < 0.6 and near > bounds[-1] + 0.4 else guess)
     bounds.append(dur)
     for i, p in enumerate(ph):
-        caps.append({"shot": shot, "start": round(g0 + bounds[i], 3), "end": round(g0 + bounds[i + 1] + 0.12, 3), "text": wrap(p)})
+        caps.append({"shot": shot, "start": round(g0 + bounds[i], 3), "end": round(g0 + bounds[i + 1], 3), "text": wrap(p)})
 
+# never let two captions share the screen
+caps.sort(key=lambda c: c["start"])
+for a, b in zip(caps, caps[1:]):
+    a["end"] = round(min(a["end"] + 0.25, b["start"] - 0.05), 3)
 json.dump(caps, open(os.path.join(ROOT, "src/film/captions.json"), "w"), indent=1, ensure_ascii=False)
 print(len(caps), "captions")
 for c in caps[:8]:

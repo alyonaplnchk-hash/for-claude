@@ -1,320 +1,278 @@
 [
  {
-  "shot": "hook",
-  "start": 0.35,
-  "end": 1.765,
-  "text": "Squeeze a red grape..."
- },
- {
-  "shot": "hook",
-  "start": 1.645,
-  "end": 3.254,
-  "text": "and the juice runs clear."
- },
- {
-  "shot": "hook",
-  "start": 3.984,
-  "end": 6.665,
-  "text": "So where does Bordeaux\nget its deep, ruby red?"
- },
- {
   "shot": "map",
   "start": 11.295,
-  "end": 13.664,
+  "end": 13.494,
   "text": "Bordeaux, in south-west France."
  },
  {
   "shot": "map",
   "start": 13.544,
-  "end": 15.872,
+  "end": 15.702,
   "text": "Right on the 45th parallel,"
  },
  {
   "shot": "map",
   "start": 15.752,
-  "end": 17.947,
+  "end": 17.777,
   "text": "the Garonne and\nDordogne rivers meet,"
  },
  {
   "shot": "map",
   "start": 17.827,
-  "end": 19.772,
+  "end": 19.902,
   "text": "to form the Gironde estuary."
  },
  {
   "shot": "map",
   "start": 20.102,
-  "end": 21.835,
+  "end": 21.665,
   "text": "It splits the vineyards in two:"
  },
  {
   "shot": "map",
   "start": 21.715,
-  "end": 22.76,
+  "end": 22.59,
   "text": "the Left Bank..."
  },
  {
   "shot": "map",
   "start": 22.64,
-  "end": 23.844,
+  "end": 23.974,
   "text": "and the Right Bank."
  },
  {
   "shot": "soil",
   "start": 24.874,
-  "end": 26.038,
+  "end": 25.868,
   "text": "On the Left Bank,"
  },
  {
   "shot": "soil",
   "start": 25.918,
-  "end": 29.218,
+  "end": 29.048,
   "text": "deep gravel drains the rain\nand stores the sun's heat."
  },
  {
   "shot": "soil",
   "start": 29.098,
-  "end": 31.449,
+  "end": 31.579,
   "text": "Perfect for Cabernet Sauvignon."
  },
  {
   "shot": "soil",
   "start": 31.879,
-  "end": 32.976,
+  "end": 32.806,
   "text": "On the Right Bank,"
  },
  {
   "shot": "soil",
   "start": 32.856,
-  "end": 35.267,
-  "text": "cooler clay and\nlimestone favor Merlot."
+  "end": 35.397,
+  "text": "cooler clay and\nlimestone favour Merlot."
  },
  {
   "shot": "grapes",
   "start": 36.297,
-  "end": 39.275,
+  "end": 39.105,
   "text": "Merlot is the region's\nmost planted red grape,"
  },
  {
   "shot": "grapes",
   "start": 39.155,
-  "end": 43.111,
+  "end": 43.241,
   "text": "with Cabernet Sauvignon and\nCabernet Franc close behind."
  },
  {
   "shot": "veraison",
   "start": 43.941,
-  "end": 44.842,
+  "end": 44.672,
   "text": "Through the summer,"
  },
  {
   "shot": "veraison",
   "start": 44.722,
-  "end": 47.042,
+  "end": 46.872,
   "text": "the berries turn\nfrom green to purple."
  },
  {
   "shot": "veraison",
   "start": 46.922,
-  "end": 48.282,
+  "end": 48.112,
   "text": "Sugar climbs,"
  },
  {
   "shot": "veraison",
   "start": 48.162,
-  "end": 49.247,
+  "end": 49.377,
   "text": "acidity falls..."
  },
  {
   "shot": "harvest",
   "start": 49.577,
-  "end": 50.878,
+  "end": 50.708,
   "text": "and in September,"
  },
  {
   "shot": "harvest",
   "start": 50.758,
-  "end": 51.944,
+  "end": 51.774,
   "text": "the harvest begins."
  },
  {
   "shot": "harvest",
   "start": 51.824,
-  "end": 53.171,
+  "end": 53.001,
   "text": "Often by hand,"
  },
  {
   "shot": "harvest",
   "start": 53.051,
-  "end": 54.421,
+  "end": 54.551,
   "text": "into small crates."
  },
  {
   "shot": "sorting",
   "start": 55.251,
-  "end": 56.239,
+  "end": 56.069,
   "text": "At the winery,"
  },
  {
   "shot": "sorting",
   "start": 56.119,
-  "end": 57.958,
+  "end": 57.788,
   "text": "the grapes are sorted, destemmed,"
  },
  {
   "shot": "sorting",
   "start": 57.838,
-  "end": 59.156,
+  "end": 59.286,
   "text": "and gently crushed."
  },
  {
   "shot": "vat",
   "start": 59.936,
-  "end": 61.037,
+  "end": 60.867,
   "text": "Inside the vat,"
  },
  {
   "shot": "vat",
   "start": 60.917,
-  "end": 63.129,
+  "end": 62.959,
   "text": "yeasts turn sugar into alcohol,"
  },
  {
   "shot": "vat",
   "start": 63.009,
-  "end": 64.689,
+  "end": 64.819,
   "text": "and carbon dioxide."
  },
  {
   "shot": "skins",
-  "start": 65.319,
-  "end": 66.659,
-  "text": "And here's the answer."
- },
- {
-  "shot": "skins",
-  "start": 66.539,
-  "end": 68.421,
-  "text": "The color lives in the skins."
- },
- {
-  "shot": "skins",
   "start": 68.751,
-  "end": 69.75,
+  "end": 69.58,
   "text": "For up to a month,"
  },
  {
   "shot": "skins",
   "start": 69.63,
-  "end": 71.171,
+  "end": 71.001,
   "text": "the juice soaks with them,"
  },
  {
   "shot": "skins",
   "start": 71.051,
-  "end": 73.796,
+  "end": 73.626,
   "text": "drawing out pigments\ncalled anthocyanins,"
  },
  {
   "shot": "skins",
   "start": 73.676,
-  "end": 75.0,
+  "end": 75.13,
   "text": "along with tannins."
  },
  {
   "shot": "press",
   "start": 75.93,
-  "end": 78.197,
+  "end": 78.027,
   "text": "The new wine is\npressed off the skins,"
  },
  {
   "shot": "press",
   "start": 78.077,
-  "end": 81.729,
+  "end": 81.859,
   "text": "and a second fermentation\nsoftens its sharp malic acid."
  },
  {
   "shot": "cellar",
   "start": 82.759,
-  "end": 86.158,
+  "end": 85.988,
   "text": "Then it rests in\nFrench oak barriques,"
  },
  {
   "shot": "cellar",
   "start": 86.038,
-  "end": 87.486,
-  "text": "225 liters each,"
+  "end": 87.316,
+  "text": "225 litres each,"
  },
  {
   "shot": "cellar",
   "start": 87.366,
-  "end": 89.264,
+  "end": 89.394,
   "text": "for 12 to 24 months."
  },
  {
   "shot": "cellar",
   "start": 89.644,
-  "end": 92.157,
+  "end": 91.987,
   "text": "Oak lets in tiny\namounts of oxygen,"
  },
  {
   "shot": "cellar",
   "start": 92.037,
-  "end": 93.572,
+  "end": 93.402,
   "text": "rounding the tannins,"
  },
  {
   "shot": "cellar",
   "start": 93.452,
-  "end": 95.251,
+  "end": 95.081,
   "text": "and adding notes of vanilla,"
  },
  {
   "shot": "cellar",
   "start": 95.131,
-  "end": 96.526,
+  "end": 96.656,
   "text": "toast and spice."
  },
  {
   "shot": "blend",
   "start": 97.456,
-  "end": 100.532,
+  "end": 100.362,
   "text": "Then comes Bordeaux's\nsignature art: the blend."
  },
  {
   "shot": "blend",
   "start": 100.412,
-  "end": 103.795,
+  "end": 103.625,
   "text": "Left Bank wines lean\non Cabernet Sauvignon."
  },
  {
   "shot": "blend",
   "start": 103.675,
-  "end": 105.683,
+  "end": 105.813,
   "text": "Right Bank wines, on Merlot."
  },
  {
   "shot": "finale",
   "start": 106.613,
-  "end": 107.725,
+  "end": 107.555,
   "text": "Once bottled,"
  },
  {
   "shot": "finale",
   "start": 107.605,
-  "end": 110.825,
+  "end": 110.705,
   "text": "the finest vintages can\nkeep evolving for decades."
- },
- {
-  "shot": "finale",
-  "start": 111.505,
-  "end": 113.511,
-  "text": "Sun, soil, skins and oak."
- },
- {
-  "shot": "finale",
-  "start": 113.391,
-  "end": 114.899,
-  "text": "That's the red of Bordeaux."
  }
 ]

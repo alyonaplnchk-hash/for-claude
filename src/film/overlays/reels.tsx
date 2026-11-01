@@ -257,7 +257,7 @@ const Grapes: React.FC<P> = ({ t, d }) => {
 const Ripening: React.FC<P> = ({ t, d }) => {
   const V = B.veraison;
   const end = d - 0.3;
-  const w = 840, h = 230;
+  const w = 840, h = 140;
   const sugar = (x: number) => h - (0.1 + 0.8 / (1 + Math.exp(-(x - 0.45) * 9))) * h;
   const acid = (x: number) => h - (0.9 - 0.75 / (1 + Math.exp(-(x - 0.4) * 8))) * h;
   const path = (f: (x: number) => number, k: number) => Array.from({ length: Math.max(2, Math.round(60 * k)) + 1 }, (_, i) => `${i ? "L" : "M"} ${(i / 60) * w} ${f(i / 60)}`).join(" ");
@@ -266,12 +266,12 @@ const Ripening: React.FC<P> = ({ t, d }) => {
   return (
     <AbsoluteFill>
       <Chapter t={t} n="03" title="Ripening" end={end} />
-      <Panel t={t} start={V.summer + 0.2} end={end} top={SAFE.top + 70} title="As the grapes ripen">
+      <Panel t={t} start={V.summer + 0.2} end={end} top={SAFE.top + 60} title="As the grapes ripen">
         <svg width={w} height={h + 40} style={{ overflow: "visible" }}>
           {["Jul", "Aug", "Sep", "Oct"].map((m, i) => (
             <g key={m}>
               <line x1={(i / 3) * w} x2={(i / 3) * w} y1={0} y2={h} stroke="rgba(244,236,224,0.12)" />
-              <text x={(i / 3) * w + (i === 3 ? -20 : i === 0 ? 20 : 0)} y={h + 32} fill="rgba(244,236,224,0.7)" textAnchor="middle" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 24 }}>
+              <text x={(i / 3) * w + (i === 3 ? -24 : i === 0 ? 24 : 0)} y={h + 32} fill="rgba(244,236,224,0.75)" textAnchor="middle" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 28 }}>
                 {m}
               </text>
             </g>
@@ -565,11 +565,11 @@ const ShotLayer: React.FC<{ id: string; d: number }> = ({ id, d }) => {
 type Cap = { shot: string; start: number; end: number; text: string };
 const Captions: React.FC = () => {
   const tg = useCurrentFrame() / FPS;
-  const cur = (captions as Cap[]).filter((c) => c.shot !== "hook" && tg >= c.start - 0.1 && tg < c.end + 0.15);
+  const cur = (captions as Cap[]).filter((c) => tg >= c.start && tg < c.end);
   return (
     <>
       {cur.map((c) => {
-        const v = Math.min(interpolate(tg, [c.start - 0.1, c.start + 0.15], [0, 1], clamp), interpolate(tg, [c.end - 0.05, c.end + 0.15], [1, 0], clamp));
+        const v = Math.min(interpolate(tg, [c.start, c.start + 0.14], [0, 1], clamp), interpolate(tg, [c.end - 0.14, c.end], [1, 0], clamp));
         return (
           <div key={c.start} style={{ position: "absolute", left: 90, right: 90, top: SAFE.captionTop, textAlign: "center", fontFamily: SERIF, fontSize: 52, lineHeight: 1.22, color: C.ivory, whiteSpace: "pre-line", opacity: v, textShadow: "0 1px 2px rgba(0,0,0,0.6), 0 2px 18px rgba(0,0,0,0.55)" }}>
             {c.text}
