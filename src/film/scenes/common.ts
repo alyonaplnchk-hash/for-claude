@@ -6,6 +6,8 @@ export type Shot = {
   init(e: Engine): void;
   frame(t: number): ShotFrame;
   camera(t: number): Camera;
+  // Optional hand-made framing for the 9:16 Reels cut (otherwise derived from camera()).
+  cameraPortrait?(t: number): Camera;
   anchors?(t: number): Record<string, V3>;
 };
 

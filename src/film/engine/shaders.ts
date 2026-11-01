@@ -582,6 +582,16 @@ void main() {
   } else if (u_type == 4) {
     c = mix(texture(u_a, uv).rgb, texture(u_b, uv).rgb, smoothstep(0.4, 0.6, p));
     c = mix(c, u_col, pow(sin(p * 3.14159), 3.0) * 0.85);
+  } else if (u_type == 5) {
+    // drift: slow push-in cross-dissolve
+    float e = smoothstep(0.0, 1.0, p);
+    vec2 ua = 0.5 + (uv - 0.5) / (1.0 + 0.05 * e);
+    vec2 ub = 0.5 + (uv - 0.5) / (1.05 - 0.05 * e);
+    c = mix(texture(u_a, ua).rgb, texture(u_b, ub).rgb, e);
+  } else if (u_type == 6) {
+    // dip through warm dark
+    vec3 dark = vec3(0.035, 0.028, 0.022);
+    c = p < 0.5 ? mix(texture(u_a, uv).rgb, dark, smoothstep(0.0, 0.5, p)) : mix(dark, texture(u_b, uv).rgb, smoothstep(0.5, 1.0, p));
   } else {
     c = mix(texture(u_a, uv).rgb, texture(u_b, uv).rgb, smoothstep(0.0, 1.0, p));
   }

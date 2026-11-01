@@ -9,12 +9,12 @@ import { wineGlass, glassWine, bottleGeo, capsuleGeo } from "./assets";
 import { backdrop, groundPlane, groundMat, hedgeGeo } from "./vineyard";
 
 const glassMat: Mat = { glass: { tint: [0.97, 0.98, 1.0], refr: 0.045, absorb: 0.35, refl: 1.0 } };
-export const wine = (col: string, glow = "#d0183c"): Mat => ({ base: hex(col), rough: 0.08, spec: 1.4, sss: 0.6, pattern: 9, p1: [0.7, 0, 0, 0], c1: hex(glow), noShadow: true });
+export const wine = (col: string, glow = "#8a1a30"): Mat => ({ base: hex(col), rough: 0.08, spec: 1.4, sss: 0.6, pattern: 9, p1: [0.7, 0, 0, 0], c1: hex(glow), noShadow: true });
 
 const VARS = [
-  { id: "cs", col: "#26061a", glow: "#a0103a", x: -0.3 },
-  { id: "merlot", col: "#4a0818", glow: "#d0183c", x: 0.0 },
-  { id: "cf", col: "#6a0e22", glow: "#ff2a4a", x: 0.3 },
+  { id: "cs", col: "#1e0612", glow: "#5a1028", x: -0.3 },
+  { id: "merlot", col: "#360710", glow: "#7a1428", x: 0.0 },
+  { id: "cf", col: "#4a0a16", glow: "#962034", x: 0.3 },
 ];
 // Left Bank and Right Bank example blends (Cab Sauv / Merlot / Cab Franc)
 export const BLENDS = { left: [0.7, 0.15, 0.15], right: [0.15, 0.7, 0.15] };
@@ -44,6 +44,10 @@ export const blend: ShotFactory = (dur) => {
       for (let i = 0; i < 2; i++) glassWines.push(e.mesh(glassWine(0.05)));
     },
     camera: cam,
+    cameraPortrait: (t: number): Camera => {
+      const k = easeInOut(t / dur);
+      return { pos: [lerp(-0.12, 0.12, k), 1.36, lerp(1.5, 1.25, k)], target: [0, 0.99, -0.05], fov: 54 };
+    },
     anchors: () => ({ cs: [-0.3, 0.9, -0.2], merlot: [0, 0.9, -0.2], cf: [0.3, 0.9, -0.2], left: [-0.22, 1.18, 0.15], right: [0.22, 1.18, 0.15] }),
     frame(t) {
       const fl = smooth(BL.left - 0.6, BL.left + 1.6, t);
@@ -72,12 +76,12 @@ export const blend: ShotFactory = (dur) => {
       // particle streams from each cylinder into each glass, thickness ~ share of the blend
       const flow: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
       const r = rng(2);
-      const cols = [[0.55, 0.05, 0.25], [0.95, 0.1, 0.25], [1.0, 0.3, 0.35]];
+      const cols = [[0.3, 0.08, 0.14], [0.42, 0.1, 0.12], [0.5, 0.16, 0.16]];
       ([[fl, -0.22, BLENDS.left], [fr, 0.22, BLENDS.right]] as [number, number, number[]][]).forEach(([f, gx, mixv]) => {
         const active = smooth(0.0, 0.15, f) * smooth(1.0, 0.85, f);
         if (active <= 0) return;
         VARS.forEach((v, i) => {
-          const n = Math.round(60 * mixv[i]);
+          const n = Math.round(36 * mixv[i]);
           for (let k = 0; k < n; k++) {
             const u = (t * 0.6 + r()) % 1;
             const p0: V3 = [v.x, 1.27, -0.25], p1: V3 = [gx, 1.08, 0.15];
@@ -112,7 +116,7 @@ export const blend: ShotFactory = (dur) => {
           ],
           shadow: { center: [0, 1, 0], radius: 1.2, bias: 0.004, soft: 3 },
         },
-        post: basePost({ exposure: 1.1, bloom: 0.6, sat: 1.12, vignette: 0.55, dof: { focus: Math.hypot(c.pos[0], c.pos[1] - 1, c.pos[2]), aperture: 1.6, maxCoc: 14 } }),
+        post: basePost({ exposure: 1.05, bloom: 0.3, sat: 0.95, vignette: 0.55, dof: { focus: 1.4, aperture: 1.0, maxCoc: 12 } }),
         draws,
         glass: glassD,
         particles: [flow, bok],
@@ -217,12 +221,12 @@ export const finale: ShotFactory = (dur) => {
       const level = 0.02 + 0.43 * smooth(pourStart + 0.5, pourEnd + 0.3, t);
       eng.updateMesh(glassW, glassWine(level));
       const draws: Draw[] = [
-        { mesh: table, mat: { base: hex("#9a8a74"), rough: 0.55, pattern: 2, p1: [0.6, 0.6, 0.006, 0] }, xf: m4.trs([0, 0.86, 0]) },
+        { mesh: table, mat: { base: hex("#7a6c5a"), rough: 0.55, pattern: 2, p1: [0.6, 0.6, 0.006, 0] }, xf: m4.trs([0, 0.86, 0]) },
         { mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.5] }), xf: m4.trs([0, 0, 0]) },
         ...back(),
         { mesh: bottle, mat: { base: hex("#0d1a10"), rough: 0.06, spec: 1.6, pattern: 10, p1: [0.07, 0.11, 0.0, 2.6], tex: labelTex }, xf: bx },
         { mesh: capsule, mat: { base: hex("#5a0a1c"), rough: 0.3, metal: 0.6 }, xf: bx },
-        { mesh: glassW, mat: wine("#5a0a1e", "#ff2a4a"), xf: m4.trs(GL) },
+        { mesh: glassW, mat: wine("#3e0712", "#9a1a30"), xf: m4.trs(GL) },
       ];
       const k = tilt(t);
       if (k > 0.75 && t < pourEnd + 0.3) {
@@ -234,7 +238,7 @@ export const finale: ShotFactory = (dur) => {
           pts.push([lerp(mouth[0], target[0], u), lerp(mouth[1], target[1], u) + Math.sin(u * Math.PI) * 0.015 - u * u * 0.01, lerp(mouth[2], target[2], u)]);
         }
         eng.updateMesh(stream, tube(pts, (u) => lerp(0.006, 0.0045, u), 8));
-        draws.push({ mesh: stream, mat: wine("#6a0a20", "#ff3050") });
+        draws.push({ mesh: stream, mat: wine("#46081a", "#a01c34") });
       }
       const sunDir: V3 = [0.15, 0.12, -1];
       const r = rng(4);
@@ -242,21 +246,21 @@ export const finale: ShotFactory = (dur) => {
       for (let i = 0; i < 50; i++) {
         motes.pos.push((r() - 0.5) * 3 + Math.sin(t * 0.3 + i) * 0.05, 0.9 + r() * 1.0, -0.5 - r() * 2);
         motes.size.push(0.004 + r() * 0.008);
-        motes.col.push([1, 0.75, 0.4, 0.6]);
+        motes.col.push([0.9, 0.75, 0.5, 0.3]);
       }
       const end = smooth(dur - 1.2, dur, t);
       const c = cam(t);
       return {
         camera: c,
         env: {
-          skyTop: hex("#2a2a6a"),
-          skyHor: hex("#d8582e"),
+          skyTop: hex("#2a2a36"),
+          skyHor: hex("#a8704a"),
           skyBot: hex("#3a2418"),
           glowDir: sunDir,
-          glowCol: [0.8, 0.3, 0.1],
+          glowCol: [0.5, 0.3, 0.14],
           glowPow: 8,
           glow2Dir: [-0.6, 0.35, -0.6],
-          glow2Col: [0.7, 0.15, 0.45],
+          glow2Col: [0.14, 0.1, 0.1],
           glow2Pow: 3,
           sunDir,
           sunCol: [2.2, 1.4, 0.8],
@@ -265,11 +269,11 @@ export const finale: ShotFactory = (dur) => {
           ambGnd: [0.18, 0.12, 0.08],
           envAmt: 0.7,
           fog: [0.009, 0.0, 0, 0.6],
-          fogCol: hex("#d8784a"),
+          fogCol: hex("#a07a5c"),
           lights: [{ pos: [0.6, 1.4, 0.9], col: [1, 0.85, 0.75], intensity: 1.8, radius: 4 }],
           shadow: { center: [0, 0.95, 0], radius: 0.8, bias: 0.003, soft: 2.5 },
         },
-        post: basePost({ exposure: 0.88, bloom: 0.5, bloomThreshold: 1.2, sat: 1.2, contrast: 1.1, fade: end, dof: { focus: Math.hypot(c.pos[0] - c.target[0], c.pos[1] - c.target[1], c.pos[2] - c.target[2]), aperture: 2.2, maxCoc: 16 } }),
+        post: basePost({ exposure: 0.95, bloom: 0.3, bloomThreshold: 1.3, sat: 0.95, contrast: 1.05, fade: end, dof: { focus: Math.hypot(c.pos[0] - c.target[0], c.pos[1] - c.target[1], c.pos[2] - c.target[2]), aperture: 2.2, maxCoc: 16 } }),
         draws,
         glass: [{ mesh: glass, mat: glassMat, xf: m4.trs(GL) }],
         particles: [motes],

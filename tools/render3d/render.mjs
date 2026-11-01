@@ -1,6 +1,6 @@
 // Renders the 3D layer of the film to JPEG frames with the custom WebGL2 engine running in
 // headless Chromium (software GPU). Frames land in public/frames3d/NNNNN.jpg for Remotion.
-// Usage: node tools/render3d/render.mjs [--from=0] [--to=N] [--step=1] [--workers=2] [--scale=0.75]
+// Usage: node tools/render3d/render.mjs [--format=reels] [--from=0] [--to=N] [--step=1] [--workers=2] [--scale=0.75]
 //        [--out=public/frames3d] [--shots=hook,map] [--force]
 import { build } from "esbuild";
 import { createRequire } from "node:module";
@@ -20,7 +20,9 @@ try {
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "../..");
 const opts = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith("--")).map((a) => { const [k, v] = a.slice(2).split("="); return [k, v ?? "1"]; }));
-const out = path.resolve(root, opts.out ?? "public/frames3d");
+const reels = opts.format === "reels";
+const [CW, CH] = reels ? [1080, 1920] : [1920, 1080];
+const out = path.resolve(root, opts.out ?? (reels ? "public/frames3d_reels" : "public/frames3d"));
 fs.mkdirSync(out, { recursive: true });
 const res = await build({ entryPoints: [path.join(root, "src/film/harness.ts")], bundle: true, write: false, format: "iife", target: "es2020", loader: { ".json": "json" } });
 const js = res.outputFiles[0].text;
@@ -52,9 +54,9 @@ await Promise.all(
   chunks.map(async (list, w) => {
     if (!list.length) return;
     const browser = await chromium.launch({ args: ["--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
-    const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+    const page = await browser.newPage({ viewport: { width: CW, height: CH } });
     page.on("pageerror", (e) => console.log(`[w${w}] pageerror`, e.message));
-    await page.setContent(`<html><body style="margin:0;background:#000"><canvas id="c" width="1920" height="1080"></canvas></body></html>`);
+    await page.setContent(`<html><body style="margin:0;background:#000"><canvas id="c" width="${CW}" height="${CH}"></canvas></body></html>`);
     await page.addScriptTag({ content: js });
     await page.evaluate(([s]) => window.Film.setup(document.getElementById("c"), s, 4), [Number(opts.scale ?? 0.75)]);
     for (const f of list) {

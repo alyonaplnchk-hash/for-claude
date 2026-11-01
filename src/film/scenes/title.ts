@@ -41,33 +41,33 @@ export const title: ShotFactory = (dur) => {
       });
       const p: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
       const r = rng(5);
-      for (let i = 0; i < 160; i++) {
+      for (let i = 0; i < 70; i++) {
         const a = r() * Math.PI * 2 + t * (0.1 + r() * 0.2);
         const R = 0.8 + r() * 3;
         p.pos.push(Math.cos(a) * R, (r() - 0.3) * 6 + t * 0.15, Math.sin(a) * R);
         p.size.push(0.01 + r() * 0.03);
-        p.col.push([1.0, 0.55 + r() * 0.3, 0.3, 0.6 + r() * 0.4]);
+        p.col.push([0.85, 0.68, 0.42, 0.25 + r() * 0.25]);
       }
       return {
         camera: cam(t),
         env: {
-          skyTop: hex("#2a0012"),
-          skyHor: hex("#4a0628"),
-          skyBot: hex("#12000a"),
+          skyTop: hex("#1c1212"),
+          skyHor: hex("#2a1618"),
+          skyBot: hex("#0c0808"),
           glowDir: [0, 1, 0],
-          glowCol: [0.9, 0.05, 0.35],
+          glowCol: [0.09, 0.035, 0.04],
           glowPow: 3,
           glow2Dir: [0.3, 0.9, 0.3],
-          glow2Col: [1.2, 0.4, 0.1],
+          glow2Col: [0.14, 0.1, 0.06],
           glow2Pow: 12,
           sunDir: [0.3, 0.8, 0.5],
           sunCol: [2.4, 1.9, 1.6],
           ambSky: [0.12, 0.03, 0.08],
           ambGnd: [0.06, 0.01, 0.03],
           envAmt: 1,
-          lights: [{ pos: [0, 4, 0], col: [1, 0.3, 0.6], intensity: 30, radius: 10 }],
+          lights: [{ pos: [0, 4, 0], col: [1, 0.78, 0.55], intensity: 16, radius: 10 }],
         },
-        post: basePost({ exposure: 1.0, bloom: 0.7, bloomThreshold: 0.9, sat: 1.2, contrast: 1.12, vignette: 0.6 }),
+        post: basePost({ exposure: 1.0, bloom: 0.3, bloomThreshold: 1.2, sat: 0.95, contrast: 1.05, vignette: 0.6 }),
         draws,
         particles: [p],
       };

@@ -142,6 +142,28 @@ def cello(midi, dur):
     return x * adsr(n, 0.5, 1.0, 0.8, 0.9) * 0.05
 
 
+@lru_cache(maxsize=None)
+def piano(midi, dur=1.6):
+    """Soft felt piano: slightly inharmonic partials, two detuned strings, felt hammer."""
+    tail = 2.4
+    n = int((dur + tail) * SR)
+    t = np.arange(n) / SR
+    f = mtof(midi)
+    x = np.zeros(n)
+    for k in range(1, 11):
+        fk = f * k * np.sqrt(1 + 0.00035 * k * k)
+        if fk > 9000:
+            break
+        amp = (1 / k ** 1.25) * (0.75 if k == 1 else 1)
+        dec = np.exp(-t * (0.55 + 0.42 * k))
+        for det in (-0.0005, 0.0005):
+            x += np.sin(2 * np.pi * fk * (1 + det) * t) * amp * dec * 0.5
+    x = lp(x, 2600)
+    hammer = lp(rng.standard_normal(n), 900) * np.exp(-t * 90) * 0.15
+    damper = np.where(t > dur, np.exp(-(t - dur) * 3.5), 1.0)
+    return (x + hammer) * np.minimum(1, t / 0.004) * damper * 0.11
+
+
 def kick(vel=1.0):
     n = int(0.5 * SR)
     t = np.arange(n) / SR
@@ -267,15 +289,15 @@ def sec(a, b):
 
 
 SECTIONS = [
-    dict(r=(0, SHOT["hook"]["end"]), prog=["Dm9", "Dm9", "Bbmaj7"], bar=2.5, arp=0.16, arpReg=74, kick=True, shaker=False, pad=0.6, bright=0.8, bell=False, bass=True),
-    dict(r=sec("title", "title"), prog=["Dm9"], bar=3.4, arp=0, pad=1.0, bright=0.9, bell=True, bass=True, kick=False, shaker=False),
-    dict(r=sec("map", "soil"), prog=["Dm9", "Bbmaj7", "Fmaj7", "C/E"], bar=2.5, arp=0.3125, arpReg=72, kick=True, shaker=True, pad=0.8, bright=0.55, bell=False, bass=True),
-    dict(r=sec("grapes", "harvest"), prog=["Bbmaj7", "Fmaj7", "C/E", "Dm9"], bar=2.5, arp=0.3125, arpReg=76, kick=True, shaker=True, pad=0.9, bright=0.75, bell=True, bass=True),
-    dict(r=sec("sorting", "vat"), prog=["Gm7", "Dm9", "Bbmaj7", "A7sus"], bar=2.5, arp=0.15625, arpReg=69, kick=True, shaker=True, pad=0.7, bright=0.6, bell=False, bass=True),
-    dict(r=sec("skins", "skins"), prog=["Fmaj7", "C/E", "Dm9", "Bbmaj7"], bar=2.6, arp=0.21, arpReg=77, kick=True, shaker=False, pad=1.0, bright=0.95, bell=True, bass=True),
-    dict(r=sec("press", "cellar"), prog=["Dm9", "Bbmaj7", "Gm7", "A7sus"], bar=3.2, arp=0, pad=0.9, bright=0.35, bell=True, bass=True, kick=False, shaker=False, cello=True),
-    dict(r=sec("blend", "blend"), prog=["Bbmaj7", "C/E", "Dm9", "Fmaj7"], bar=2.3, arp=0.2875, arpReg=74, kick=True, shaker=True, pad=0.9, bright=0.7, bell=True, bass=True),
-    dict(r=(SHOT["finale"]["start"], TOTAL), prog=["Bbmaj7", "C", "Am7", "Dm9", "Bbmaj7", "C", "Fadd9"], bar=2.0, arp=0.25, arpReg=76, kick=False, shaker=False, pad=1.0, bright=0.85, bell=True, bass=True, finale=True),
+    dict(r=(0, SHOT["hook"]["end"]), prog=["Dm9", "Dm9", "Bbmaj7"], bar=2.5, arp=0.625, arpReg=74, pad=0.55, bright=0.45, bell=False, bass=True),
+    dict(r=sec("title", "title"), prog=["Dm9"], bar=3.4, arp=0, pad=0.9, bright=0.5, bell=True, bass=True),
+    dict(r=sec("map", "soil"), prog=["Dm9", "Bbmaj7", "Fmaj7", "C/E"], bar=2.5, arp=0.625, arpReg=72, pad=0.75, bright=0.4, bell=False, bass=True),
+    dict(r=sec("grapes", "harvest"), prog=["Bbmaj7", "Fmaj7", "C/E", "Dm9"], bar=2.5, arp=0.3125, arpReg=74, pad=0.8, bright=0.5, bell=True, bass=True),
+    dict(r=sec("sorting", "vat"), prog=["Gm7", "Dm9", "Bbmaj7", "A7sus"], bar=2.5, arp=0.625, arpReg=70, pad=0.7, bright=0.4, bell=False, bass=True, cello=True),
+    dict(r=sec("skins", "skins"), prog=["Fmaj7", "C/E", "Dm9", "Bbmaj7"], bar=2.6, arp=0.325, arpReg=76, pad=0.95, bright=0.55, bell=True, bass=True),
+    dict(r=sec("press", "cellar"), prog=["Dm9", "Bbmaj7", "Gm7", "A7sus"], bar=3.2, arp=0.8, arpReg=70, pad=0.85, bright=0.3, bell=False, bass=True, cello=True),
+    dict(r=sec("blend", "blend"), prog=["Bbmaj7", "C/E", "Dm9", "Fmaj7"], bar=2.3, arp=0.2875, arpReg=74, pad=0.85, bright=0.5, bell=True, bass=True),
+    dict(r=(SHOT["finale"]["start"], TOTAL), prog=["Bbmaj7", "C", "Am7", "Dm9", "Bbmaj7", "C", "Fadd9"], bar=2.0, arp=0.5, arpReg=74, pad=0.95, bright=0.55, bell=True, bass=True, cello=True, finale=True),
 ]
 
 music = buf()
@@ -307,8 +329,8 @@ for S in SECTIONS:
             tt = t
             while tt < t + bl - 0.05:
                 m = notes[pattern[k % 8] % len(notes)] + 12 + (S["arpReg"] - 72)
-                vel = 1.0 if k % 4 == 0 else 0.7
-                add(arpbus, pluck(m, 1.0, 1.0), tt, 0.55 * vel, pan=np.sin(k * 0.9) * 0.5)
+                vel = 1.0 if k % 4 == 0 else 0.75
+                add(arpbus, piano(m, min(step * 2.2, 1.8)), tt, 0.9 * vel, pan=np.sin(k * 0.9) * 0.35)
                 k += 1
                 tt += step
         if S.get("kick"):
@@ -327,7 +349,7 @@ for S in SECTIONS:
             for q, deg in enumerate([4, 2]):
                 tq = t + q * S["bar"] / 2 + 0.05
                 if tq < t + bl:
-                    add(bells, bell(notes[deg] + 24), tq, 0.8, pan=(-0.4 if q else 0.4))
+                    add(bells, bell(notes[deg] + 24), tq, 0.35, pan=(-0.4 if q else 0.4))
         t += bl
         bar_i += 1
 
@@ -335,10 +357,9 @@ for S in SECTIONS:
 sfx = buf()
 amb = buf()
 hookQ = BEAT["hook.question"]
-add(sfx, riser(hookQ - 1.6), 1.6, 0.9)
-add(sfx, impact(0.9), hookQ - 0.05, 1.0)
-add(sfx, whoosh(1.4), hookQ - 0.3, 0.8, pan=-0.3)
-add(sfx, impact(0.7), BEAT["hook.ruby"], 0.7)
+add(sfx, riser(hookQ - 1.6), 1.6, 0.35)
+add(sfx, impact(0.5), hookQ - 0.05, 0.6)
+add(sfx, whoosh(1.8), hookQ - 0.4, 0.35, pan=-0.3)
 add(sfx, noise_bed(1.8, 80, 400, 0.1) * np.hanning(int(1.8 * SR)) * 0.6, 0.45, 0.6)  # squeeze strain
 for tp in [1.45, 1.7, 1.95, 2.2, 2.45, 2.7, 3.0, 3.3]:
     add(sfx, plip(700 + rng.random() * 600), tp, 0.9, pan=rng.random() - 0.5)
@@ -348,20 +369,15 @@ for s in TL["shots"]:
     if not tr:
         continue
     d = tr["dur"] + 0.6
-    add(sfx, whoosh(d), s["start"] - d / 2, 0.75, pan=0.2)
-    if tr["type"] in (2, 3):
-        add(sfx, impact(0.6), s["start"] - 0.05, 0.75)
-    if tr["type"] == 4:
-        add(bells, bell(84, 4.0), s["start"] - 0.2, 0.9)
-add(sfx, impact(1.2), SHOT["title"]["start"] + 0.2, 1.0)
-add(sfx, riser(1.6), SHOT["skins"]["start"] - 1.5, 0.7)
-add(sfx, impact(0.8), BEAT["skins.skins"], 0.9)
-add(sfx, impact(1.0), BEAT["finale.endcard"], 0.9)
+    add(sfx, whoosh(d + 0.4), s["start"] - (d + 0.4) / 2, 0.22, pan=0.2)
+    if tr["type"] == 6:
+        add(bells, bell(81, 4.0), s["start"] - 0.1, 0.3)
+add(sfx, impact(0.6), SHOT["title"]["start"] + 0.2, 0.55)
+add(sfx, riser(1.6), SHOT["skins"]["start"] - 1.5, 0.25)
+add(sfx, impact(0.5), BEAT["skins.skins"], 0.45)
+add(sfx, impact(0.6), BEAT["finale.endcard"], 0.5)
 # UI blips on infographic beats
-for k, v in BEAT.items():
-    if k.startswith("hook") or k in ("finale.endcard",):
-        continue
-    add(sfx, blip(1700 + 400 * rng.random()), v + 0.05, 0.6, pan=rng.random() * 0.8 - 0.4)
+# (no UI blips in the quiet cut)
 # ambience
 def span(a, b):
     return SHOT[a]["start"] - 0.3, SHOT[b]["end"] + 0.3
@@ -377,7 +393,7 @@ while t < b:
 a, b = span("sorting", "sorting")
 add(amb, noise_bed(b - a, 60, 300, 0.2) * 0.08, a)
 for i in range(int((b - a) / 0.32)):
-    add(amb, blip(400, 0.05) * 0.6, a + i * 0.32, 0.5)
+    add(amb, blip(400, 0.05) * 0.6, a + i * 0.32, 0.15)
 a, b = span("vat", "skins")
 t = a
 while t < b:
@@ -408,7 +424,7 @@ def reverb(x, secs=2.6, damp=3500):
     return out
 
 
-music_mix = music + arpbus * 0.9 + bells
+music_mix = music + arpbus * 1.0 + bells
 music_mix = music_mix + reverb(music_mix * 0.5 + bells * 0.5) * 0.55 + drums
 sfx_mix = sfx + reverb(sfx * 0.3, 1.8) * 0.4 + amb
 

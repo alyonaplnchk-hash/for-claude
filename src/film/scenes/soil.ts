@@ -83,7 +83,7 @@ export const soil: ShotFactory = (dur) => {
       draws.push({ mesh: top, mat: groundMat({ p1: [7, 1.2, 0.35, 0.08], c4: hex("#5e4a3a") }), xf: m4.trs([RX, 0, 0]) });
       const rootGrow = [smooth(S.gravel - 0.5, S.heat + 1.5, t), smooth(S.right - 0.5, S.clay + 1.2, t)];
       roots.forEach((m, i) => {
-        if (rootGrow[i] > 0.01) draws.push({ mesh: m, mat: { base: [1, 1, 1], rough: 0.7, emit: [0.25, 0.18, 0.1], p3: [rootGrow[i], -1, 0, 1], noShadow: true } });
+        if (rootGrow[i] > 0.01) draws.push({ mesh: m, mat: { base: [1, 1, 1], rough: 0.7, emit: [0.1, 0.08, 0.05], p3: [rootGrow[i], -1, 0, 1], noShadow: true } });
       });
       draws.push(...vL.draws(t), ...vR.draws(t));
       draws.push({ mesh: water, mat: { base: hex("#14405a"), rough: 0.08, spec: 1.3, noShadow: true, emit: [0.01, 0.03, 0.05] }, xf: m4.trs([0, -1.95, 0]) });
@@ -98,7 +98,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = (t * 0.55 + ph) % 1;
         rain.pos.push(LX + x, -0.05 - lt * (H - 0.2), D / 2 + 0.03);
         rain.size.push(0.022);
-        rain.col.push([0.25, 0.6, 1.0, 0.9 * smooth(S.gravel, S.gravel + 0.6, t) * smooth(1, 0.85, lt)]);
+        rain.col.push([0.62, 0.72, 0.82, 0.75 * smooth(S.gravel, S.gravel + 0.6, t) * smooth(1, 0.85, lt)]);
       }
       for (let i = 0; i < 70; i++) {
         const x = (r() - 0.5) * (W - 0.4);
@@ -106,7 +106,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = Math.min(((t - S.clay) * 0.12 + ph * 0.6) % 0.7, 0.55);
         rain.pos.push(RX + x, -0.05 - lt * 1.4, D / 2 + 0.03);
         rain.size.push(0.022);
-        rain.col.push([0.25, 0.6, 1.0, 0.9 * smooth(S.clay - 0.3, S.clay + 0.4, t)]);
+        rain.col.push([0.62, 0.72, 0.82, 0.75 * smooth(S.clay - 0.3, S.clay + 0.4, t)]);
       }
       parts.push(rain);
       // heat shimmer rising off the stones
@@ -116,7 +116,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = (t * 0.35 + ph) % 1;
         heat.pos.push(LX + (r() - 0.5) * W, 0.05 + lt * 1.6, (r() - 0.5) * D);
         heat.size.push(0.05 + r() * 0.06);
-        heat.col.push([1.0, 0.45, 0.1, 0.55 * smooth(S.heat - 0.4, S.heat + 0.5, t) * Math.sin(lt * Math.PI)]);
+        heat.col.push([0.95, 0.7, 0.42, 0.3 * smooth(S.heat - 0.4, S.heat + 0.5, t) * Math.sin(lt * Math.PI)]);
       }
       parts.push(heat);
       // drifting dust
@@ -124,7 +124,7 @@ export const soil: ShotFactory = (dur) => {
       for (let i = 0; i < 50; i++) {
         dust.pos.push((r() - 0.5) * 16, (r() - 0.3) * 5 + Math.sin(t * 0.3 + i) * 0.1, (r() - 0.5) * 8);
         dust.size.push(0.015 + r() * 0.02);
-        dust.col.push([1, 0.85, 0.6, 0.35]);
+        dust.col.push([0.9, 0.8, 0.62, 0.18]);
       }
       parts.push(dust);
       const c = cam(t);
@@ -132,11 +132,11 @@ export const soil: ShotFactory = (dur) => {
       return {
         camera: c,
         env: {
-          skyTop: hex("#5d86b8"),
-          skyHor: hex("#f0b27a"),
-          skyBot: hex("#7a5a48"),
+          skyTop: hex("#5e5448"),
+          skyHor: hex("#8a7a66"),
+          skyBot: hex("#3a322a"),
           glowDir: [-0.6, 0.2, -0.7],
-          glowCol: [1.2, 0.6, 0.25],
+          glowCol: [0.3, 0.22, 0.13],
           glowPow: 5,
           sunDir: [-0.65, 0.62, 0.42],
           sunCol: [2.5, 2.0, 1.45],
@@ -145,10 +145,10 @@ export const soil: ShotFactory = (dur) => {
           ambGnd: [0.22, 0.17, 0.12],
           envAmt: 0.6,
           fog: [0.006, 0.0, 0, 0.5],
-          fogCol: hex("#e8b98a"),
+          fogCol: hex("#7a6c5c"),
           shadow: { center: [0, -0.5, 0], radius: 7.5, bias: 0.015, soft: 2 },
         },
-        post: basePost({ exposure: 1.0, bloom: 0.45, sat: 1.1, dof: { focus: Math.max(focus, 2), aperture: 0.25, maxCoc: 10 } }),
+        post: basePost({ exposure: 1.05, bloom: 0.25, sat: 0.92, dof: { focus: Math.max(focus, 2), aperture: 0.25, maxCoc: 10 } }),
         draws,
         particles: parts,
       };

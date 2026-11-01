@@ -42,10 +42,10 @@ const bokeh = (t: number, seed: number, n: number, center: V3, spread: V3, col: 
 
 const goldenEnv = (sun: V3) => ({
   skyTop: hex("#6d8fbf"),
-  skyHor: hex("#f6b46a"),
+  skyHor: hex("#d8a46a"),
   skyBot: hex("#4b3a2a"),
   glowDir: sun,
-  glowCol: [0.9, 0.5, 0.2] as V3,
+  glowCol: [0.45, 0.3, 0.15] as V3,
   glowPow: 9,
   sunDir: sun,
   sunCol: [2.6, 2.0, 1.35] as V3,
@@ -82,6 +82,12 @@ export const grapes: ShotFactory = (dur) => {
       ground = cached(e, "ground-80", () => groundPlane(80));
     },
     camera: cam,
+    // 9:16: a slow dolly from Merlot to Cabernet Franc, in step with the narration
+    cameraPortrait: (t: number): Camera => {
+      const k = easeInOut((t - 0.3) / (dur - 0.8));
+      const x = lerp(-0.36, 0.33, k);
+      return { pos: [x, 1.0 + noise1(t * 0.6) * 0.005, 0.74], target: [x, 0.95, 0], fov: 50 };
+    },
     anchors: () => ({ merlot: [BUNCH_POS.merlot[0], 0.84, 0], cs: [BUNCH_POS.cs[0], 0.83, 0.04], cf: [BUNCH_POS.cf[0], 0.85, -0.02] }),
     frame(t) {
       const draws: Draw[] = [];
@@ -92,15 +98,15 @@ export const grapes: ShotFactory = (dur) => {
       });
       draws.push({ mesh: leaf, mat: leafMat(0.008), inst: leaves });
       draws.push({ mesh: cane, mat: { base: [1, 1, 1], rough: 0.8 } });
-      draws.push({ mesh: hedge, mat: { base: hex("#4a7a26"), rough: 0.8, sss: 0.3 }, inst: hedgeI });
-      draws.push({ mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.6] }) });
+      draws.push({ mesh: hedge, mat: { base: hex("#42602a"), rough: 0.8, sss: 0.2 }, inst: hedgeI });
+      draws.push({ mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.3] }) });
       const c = cam(t);
       const focus = Math.hypot(c.pos[0] - c.target[0], c.pos[2] - c.target[2]);
       void G;
       return {
         camera: c,
         env: { ...goldenEnv([0.25, 0.32, -0.92]), shadow: { center: [0, 1, 0], radius: 1.4, bias: 0.004, soft: 2.5 }, lights: [{ pos: [0.2, 1.2, 1.2], col: [1, 0.85, 0.7], intensity: 1.2, radius: 4 }] },
-        post: basePost({ exposure: 0.92, bloom: 0.5, bloomThreshold: 1.0, sat: 1.15, contrast: 1.1, dof: { focus, aperture: 2.6, maxCoc: 18 } }),
+        post: basePost({ exposure: 0.84, bloom: 0.25, bloomThreshold: 1.3, sat: 0.95, contrast: 1.05, dof: { focus, aperture: 2.6, maxCoc: 18 } }),
         draws,
         particles: [bokeh(t, 3, 40, [0, 1.2, -1.2], [3, 1.2, 1.5], [1, 0.75, 0.4, 0.6])],
       };
@@ -127,6 +133,11 @@ export const veraison: ShotFactory = (dur) => {
       ground = cached(e, "ground-80", () => groundPlane(80));
     },
     camera: cam,
+    cameraPortrait: (t: number): Camera => {
+      const a = lerp(-0.5, 0.25, easeInOut(t / dur));
+      const d = lerp(0.66, 0.55, easeInOut(t / dur));
+      return { pos: [Math.sin(a) * d, 0.98, Math.cos(a) * d], target: [0, 0.93, 0], fov: 50 };
+    },
     anchors: () => ({ bunch: [0, 0.95, 0] }),
     frame(t) {
       const prog = lerp(0.02, 1.08, smooth(V.turn - 0.3, V.turn + 2.4, t));
@@ -134,14 +145,14 @@ export const veraison: ShotFactory = (dur) => {
         { mesh: berry, mat: grapeMat(prog), inst: h.inst },
         { mesh: h.stem, mat: stemMat, xf: h.xf },
         { mesh: leaf, mat: leafMat(0.008), inst: leaves },
-        { mesh: hedge, mat: { base: hex("#4a7a26"), rough: 0.8, sss: 0.3 }, inst: hedgeI },
-        { mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.6] }) },
+        { mesh: hedge, mat: { base: hex("#42602a"), rough: 0.8, sss: 0.2 }, inst: hedgeI },
+        { mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.3] }) },
       ];
       const c = cam(t);
       return {
         camera: c,
         env: { ...goldenEnv([-0.4, 0.45, -0.8]), shadow: { center: [0, 1, 0], radius: 1.2, bias: 0.004, soft: 2.5 }, lights: [{ pos: [0.6, 1.3, 1.0], col: [1, 0.9, 0.8], intensity: 1.0, radius: 4 }] },
-        post: basePost({ exposure: 1.0, bloom: 0.55, sat: 1.12, dof: { focus: Math.hypot(c.pos[0] - 0.12, c.pos[2]), aperture: 3.0, maxCoc: 18 } }),
+        post: basePost({ exposure: 0.86, bloom: 0.25, sat: 0.95, dof: { focus: Math.hypot(c.pos[0] - 0.12, c.pos[2]), aperture: 3.0, maxCoc: 18 } }),
         draws,
         particles: [bokeh(t, 8, 30, [0, 1.2, -1.0], [2.5, 1, 1.2], [1, 0.8, 0.45, 0.6])],
       };
@@ -205,7 +216,7 @@ export const harvest: ShotFactory = (dur) => {
           fogCol: hex("#f1c08e"),
           shadow: { center: [1, 0, c.pos[2] - 5], radius: 9, bias: 0.02, soft: 2 },
         },
-        post: basePost({ exposure: 1.0, bloom: 0.5, sat: 1.1, dof: { focus: 3.0, aperture: 0.35, maxCoc: 10 } }),
+        post: basePost({ exposure: 0.95, bloom: 0.25, sat: 0.92, dof: { focus: 3.0, aperture: 0.35, maxCoc: 10 } }),
         draws,
         particles: [bokeh(t, 12, 60, [0.8, 1.2, c.pos[2] - 4], [4, 1.6, 6], [1, 0.85, 0.55, 0.35])],
       };

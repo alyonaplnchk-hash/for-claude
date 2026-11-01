@@ -1,5 +1,5 @@
 // Ties the timeline to the engine: given a global time, renders the right shot(s) and transition.
-import { Engine } from "./engine/renderer";
+import { Engine, ShotFrame } from "./engine/renderer";
 import { SHOTS, shotsAt } from "./timeline";
 import { buildShots } from "./scenes";
 import { Shot } from "./scenes/common";
@@ -10,7 +10,7 @@ export class Director {
   private ready = new Set<string>();
   constructor(canvas: HTMLCanvasElement, renderScale = 1, samples = 4) {
     this.engine = new Engine(canvas, renderScale, samples);
-    this.shots = buildShots();
+    this.shots = buildShots(canvas.height > canvas.width);
   }
   private shot(id: string) {
     const s = this.shots[id];
@@ -25,10 +25,10 @@ export class Director {
     const { a, b, p, tr } = shotsAt(t);
     this.engine.time = t;
     const sa = this.shot(a.id);
-    const fa = sa ? sa.frame(t - a.start) : null;
+    const fa = sa ? grade(sa.frame(t - a.start)) : null;
     if (b && tr && p !== undefined) {
       const sb = this.shot(b.id);
-      const fb = sb ? sb.frame(t - b.start) : null;
+      const fb = sb ? grade(sb.frame(t - b.start)) : null;
       if (fa && fb) return this.engine.render(fa, fb, { type: tr.type, p, col: tr.col, dir: tr.dir });
       if (fb && !fa) return this.engine.render(fb);
     }
@@ -40,6 +40,21 @@ export class Director {
     if (!s) return;
     const st = SHOTS.find((x) => x.id === id)!;
     this.engine.time = st.start + local;
-    this.engine.render(s.frame(local));
+    this.engine.render(grade(s.frame(local)));
   }
+}
+
+// House grade on top of every shot: quieter saturation and bloom, gentle contrast,
+// warm highlights and lifted blacks, fine grain.
+function grade(f: ShotFrame): ShotFrame {
+  const p = { ...(f.post ?? {}) };
+  p.sat = (p.sat ?? 1.05) * 0.94;
+  p.bloom = (p.bloom ?? 0.6) * 0.85;
+  p.contrast = 1 + ((p.contrast ?? 1.05) - 1) * 0.7;
+  p.vignette = Math.max(p.vignette ?? 0.45, 0.5);
+  p.grain = 0.022;
+  p.ca = 0.004;
+  p.lift = p.lift ?? [0.012, 0.009, 0.006];
+  p.tintHigh = p.tintHigh ?? [0.05, 0.028, -0.01];
+  return { ...f, post: p };
 }

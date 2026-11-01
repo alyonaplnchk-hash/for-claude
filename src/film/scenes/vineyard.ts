@@ -6,7 +6,7 @@ import { V3, M4, m4, hex, rng, lerp } from "../engine/math";
 import { cached, C } from "./common";
 import { bunch, berryGeo, leafGeo, trunkGeo, vineyardInstances, VineRowOpts, treeGeo, chateauGeo } from "./assets";
 
-export const leafMat = (wind = 0.012): Mat => ({ base: hex("#3f6a1f"), rough: 0.55, spec: 0.6, sss: 0.5, double: true, wind });
+export const leafMat = (wind = 0.012): Mat => ({ base: hex("#3a5822"), rough: 0.55, spec: 0.6, sss: 0.35, double: true, wind });
 export const trunkMat: Mat = { base: [1, 1, 1], rough: 0.9 };
 export const grapeMat = (prog = 1.25, purple: V3 = hex("#22103a")): Mat => ({ base: [1, 1, 1], rough: 0.3, spec: 1.1, sss: 0.3, sheen: 0.5, pattern: 8, p1: [prog, 0, 0, 0], c1: hex("#9dbb45"), c2: purple });
 export const stemMat: Mat = { base: [1, 1, 1], rough: 0.7 };
@@ -137,7 +137,7 @@ export function backdrop(e: Engine, key: string, o: { rows: number; x0: number; 
   const tI = o.trees?.length ? e.instances(o.trees.map((p, i) => m4.trs(p, [0, i, 0], 0.8 + (i % 3) * 0.25))) : null;
   const chateau = o.chateau ? cached(e, "chateau", chateauGeo) : null;
   return (): Draw[] => {
-    const d: Draw[] = [{ mesh: hedge, mat: { base: hex("#5a8a2c"), rough: 0.8, sss: 0.3, pattern: 14, p1: [3, 0, 0, 0], c1: [0.7, 0.85, 0.6], c2: [1.1, 1.05, 0.8] }, inst: hI }];
+    const d: Draw[] = [{ mesh: hedge, mat: { base: hex("#45602c"), rough: 0.8, sss: 0.3, pattern: 14, p1: [3, 0, 0, 0], c1: [0.7, 0.85, 0.6], c2: [1.1, 1.05, 0.8] }, inst: hI }];
     if (tI) {
       d.push({ mesh: tree, mat: { base: [1, 1, 1], rough: 0.85, sss: 0.3 }, inst: tI });
       void tree2;

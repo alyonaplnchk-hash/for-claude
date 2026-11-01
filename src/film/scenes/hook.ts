@@ -19,13 +19,13 @@ export const helix = (k: number, n: number, turns = 1.6, r0 = 0.5, r1 = 1.4, h =
 };
 
 export const wineRibbonMat = () => ({
-  base: hex("#6e0618"),
-  rough: 0.05,
-  spec: 1.6,
-  sss: 0.25,
+  base: hex("#3c0612"),
+  rough: 0.14,
+  spec: 1.0,
+  sss: 0.18,
   pattern: 9,
-  p1: [0.35, 0, 0, 0],
-  c1: hex("#ff2040"),
+  p1: [0.16, 0, 0, 0],
+  c1: hex("#9a1a2e"),
 });
 
 // Tube along part [s0, s1] of a path, keeping the full-path taper (re-uploaded each frame).
@@ -46,7 +46,7 @@ export const hook: ShotFactory = (dur) => {
   let grape: Mesh, plate: Mesh, drop: Mesh, stem: Mesh, redDrop: Mesh, eng: Engine;
   const rib: Mesh[] = [];
   const paths = Array.from({ length: 9 }, (_, k) => helix(k, 9));
-  const ribR = (s: number) => 0.055 * Math.sin(Math.min(Math.max(s, 0), 1) * Math.PI) + 0.012;
+  const ribR = (s: number) => 0.034 * Math.sin(Math.min(Math.max(s, 0), 1) * Math.PI) + 0.012;
   const H2 = 3.9; // when the second line lands
   const cam = (t: number): Camera => {
     const push = easeInOut(t / 3.6);
@@ -141,7 +141,7 @@ export const hook: ShotFactory = (dur) => {
       if (t > H2) {
         const rd: M4[] = [];
         const rr = rng(77);
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 12; i++) {
           const born = H2 + rr() * 1.6;
           const age = t - born;
           if (age < 0) continue;
@@ -157,42 +157,41 @@ export const hook: ShotFactory = (dur) => {
       // floating bokeh specks
       const parts: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
       const pr = rng(11);
-      for (let i = 0; i < 70; i++) {
-        const p: V3 = [(pr() - 0.5) * 7, (pr() - 0.5) * 4 + Math.sin(t * 0.5 + i) * 0.1, -1.5 - pr() * 4];
-        parts.pos.push(p[0] + t * 0.05 * (pr() - 0.5), p[1], p[2]);
-        parts.size.push(0.02 + pr() * 0.07);
-        const c = pr() < 0.5 ? [1.0, 0.5, 0.2] : [1.0, 0.25, 0.7];
-        parts.col.push([c[0], c[1], c[2], 0.5 + pr() * 0.5]);
+      for (let i = 0; i < 36; i++) {
+        const p: V3 = [(pr() - 0.5) * 7, (pr() - 0.5) * 4 + Math.sin(t * 0.3 + i) * 0.06, -1.5 - pr() * 4];
+        parts.pos.push(p[0] + t * 0.03 * (pr() - 0.5), p[1], p[2]);
+        parts.size.push(0.012 + pr() * 0.03);
+        parts.col.push([0.85, 0.7, 0.45, 0.18 + pr() * 0.22]);
       }
       const camNow = cam(t);
       const focus = Math.hypot(camNow.pos[0], camNow.pos[1], camNow.pos[2]) - 0.55;
-      const bgA = { top: hex("#ff2f8e"), hor: hex("#ff8a1e"), bot: hex("#5a10a0") };
-      const bgB = { top: hex("#ff1d5e"), hor: hex("#ff4d2e"), bot: hex("#3a0650") };
+      const bgA = { top: hex("#241c17"), hor: hex("#3e3024"), bot: hex("#100c0a") };
+      const bgB = { top: hex("#24141a"), hor: hex("#3a1c1f"), bot: hex("#0e0809") };
       return {
         camera: camNow,
         env: {
-          skyTop: scale(lerp3(bgA.top, bgB.top, pull), 0.8),
-          skyHor: scale(lerp3(bgA.hor, bgB.hor, pull), 0.8),
+          skyTop: scale(lerp3(bgA.top, bgB.top, pull), 1.0),
+          skyHor: scale(lerp3(bgA.hor, bgB.hor, pull), 1.0),
           skyBot: lerp3(bgA.bot, bgB.bot, pull),
           glowDir: [0, 0.05, -1],
-          glowCol: lerp3([0.9, 0.45, 0.05], [0.8, 0.1, 0.05], pull),
-          glowPow: 9,
+          glowCol: lerp3([0.13, 0.095, 0.055], [0.12, 0.05, 0.045], pull),
+          glowPow: 4,
           glow2Dir: [-0.8, 0.8, -0.3],
-          glow2Col: [0.6, 0.0, 0.5],
+          glow2Col: [0.06, 0.05, 0.04],
           glow2Pow: 4,
           sunDir: [0.45, 0.75, 0.55],
-          sunCol: [3.4, 3.1, 2.9],
+          sunCol: [2.5, 2.25, 1.95],
           sunDisk: 0,
-          ambSky: [0.3, 0.1, 0.28],
-          ambGnd: [0.35, 0.16, 0.05],
+          ambSky: [0.12, 0.1, 0.09],
+          ambGnd: [0.07, 0.055, 0.045],
           envAmt: 1,
           lights: [
-            { pos: [-1.4, 0.9, -1.4], col: [1.0, 0.15, 0.7], intensity: 14, radius: 6 },
-            { pos: [1.5, -0.6, -1.2], col: [1.0, 0.5, 0.08], intensity: 14, radius: 6 },
+            { pos: [-1.4, 0.9, -1.4], col: [1.0, 0.78, 0.5], intensity: 11, radius: 6 },
+            { pos: [1.5, -0.6, -1.2], col: [0.6, 0.68, 0.85], intensity: 5, radius: 6 },
           ],
-          skyNoise: 0.3,
+          skyNoise: 0.1,
         },
-        post: basePost({ exposure: 0.95, bloom: 0.55, bloomThreshold: 1.0, sat: 1.25, contrast: 1.1, vignette: 0.4, dof: { focus, aperture: 0.5, maxCoc: 12 } }),
+        post: basePost({ exposure: 1.0, bloom: 0.3, bloomThreshold: 1.2, sat: 0.98, contrast: 1.05, vignette: 0.55, dof: { focus, aperture: 0.5, maxCoc: 12 } }),
         draws,
         glass,
         particles: [parts],

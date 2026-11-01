@@ -198,39 +198,39 @@ export const map: ShotFactory = (dur) => {
       const draws: Draw[] = [];
       const M = B.map;
       const left = smooth(M.left - 0.2, M.left + 0.5, t), right = smooth(M.right - 0.2, M.right + 0.5, t);
-      draws.push({ mesh: terrain, mat: { base: [1, 1, 1], rough: 0.85, pattern: 6, p1: [9, 0, 0, 0], p2: [left * 1.4, right * 1.4, 0, 0], c1: hex("#ffb23a"), c2: hex("#ff3d8b") }, model: m4.trs([MAP_CX, 0, MAP_CZ]) });
+      draws.push({ mesh: terrain, mat: { base: [1, 1, 1], rough: 0.85, pattern: 6, p1: [9, 0, 0, 0], p2: [left * 0.75, right * 0.75, 0, 0], c1: hex("#d9c293"), c2: hex("#a0505e") }, model: m4.trs([MAP_CX, 0, MAP_CZ]) });
       draws.push({ mesh: sides, mat: { base: [1, 1, 1], rough: 0.9, noShadow: true } });
       draws.push({ mesh: water, mat: { base: hex("#0b2236"), rough: 0.12, spec: 1.2, noShadow: true, emit: [0.004, 0.012, 0.02] } });
       // rivers trace downstream; the estuary forms after they meet
       const rv = [smooth(M.garonne - 0.5, M.garonne + 1.6, t), smooth(M.dordogne - 0.5, M.dordogne + 1.4, t), smooth(M.gironde - 0.2, M.gironde + 1.8, t)];
       rivers.forEach((m, i) => {
         if (rv[i] <= 0.001) return;
-        draws.push({ mesh: m, mat: { base: [0, 0, 0], rough: 1, emit: [0.2, 1.6, 2.6], pattern: 7, p1: [rv[i], 14, 0.6, 0.5], noShadow: true } });
+        draws.push({ mesh: m, mat: { base: [0, 0, 0], rough: 1, emit: [0.55, 0.68, 0.8], pattern: 7, p1: [rv[i], 14, 0.4, 0.25], noShadow: true } });
       });
       const l45 = smooth(M.lat45 - 0.3, M.lat45 + 1.4, t);
-      if (l45 > 0) draws.push({ mesh: lat45, mat: { base: [0, 0, 0], emit: [2.4, 2.2, 2.0], pattern: 7, p1: [l45, 30, 0.0, 1.0], noShadow: true } });
+      if (l45 > 0) draws.push({ mesh: lat45, mat: { base: [0, 0, 0], emit: [0.95, 0.88, 0.74], pattern: 7, p1: [l45, 40, 0.0, 1.0], noShadow: true } });
       // Bordeaux city dot
       const pulse = 0.5 + 0.5 * Math.sin(t * 4);
-      draws.push({ mesh: dot, mat: { base: [1, 1, 1], emit: [3, 2.6, 2.2], noShadow: true }, xf: m4.trs(PLACES.bordeaux, [0, 0, 0], 0.07 * smooth(1.0, 1.6, t)) });
+      draws.push({ mesh: dot, mat: { base: [1, 1, 1], emit: [1.5, 1.3, 0.9], noShadow: true }, xf: m4.trs(PLACES.bordeaux, [0, 0, 0], 0.07 * smooth(1.0, 1.6, t)) });
       // appellation markers once regions light up
       const marks: [V3, number, V3][] = [
-        [PLACES.pauillac, left, [2.6, 1.6, 0.4]],
-        [PLACES.margaux, left, [2.6, 1.6, 0.4]],
-        [PLACES.graves, left, [2.6, 1.6, 0.4]],
-        [PLACES.stemilion, right, [2.6, 0.5, 1.4]],
-        [PLACES.pomerol, right, [2.6, 0.5, 1.4]],
+        [PLACES.pauillac, left, [1.3, 1.1, 0.7]],
+        [PLACES.margaux, left, [1.3, 1.1, 0.7]],
+        [PLACES.graves, left, [1.3, 1.1, 0.7]],
+        [PLACES.stemilion, right, [1.1, 0.55, 0.6]],
+        [PLACES.pomerol, right, [1.1, 0.55, 0.6]],
       ];
       for (const [p, a, c] of marks) if (a > 0) draws.push({ mesh: dot, mat: { base: [1, 1, 1], emit: c, noShadow: true }, xf: m4.trs(p, [0, 0, 0], 0.05 * a) });
       const parts: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
       parts.pos.push(...PLACES.bordeaux);
       parts.size.push(0.25 + pulse * 0.15);
-      parts.col.push([1.0, 0.85, 0.6, 0.5 * smooth(1.0, 1.6, t)]);
+      parts.col.push([0.9, 0.78, 0.55, 0.25 * smooth(1.0, 1.6, t)]);
       // drifting haze motes for depth
       const r = rng(3);
       for (let i = 0; i < 60; i++) {
         parts.pos.push(MAP_CX + (r() - 0.5) * MAP_W, 0.5 + r() * 3, MAP_CZ + (r() - 0.5) * MAP_D + t * 0.05);
         parts.size.push(0.02 + r() * 0.03);
-        parts.col.push([0.6, 0.8, 1.0, 0.25]);
+        parts.col.push([0.8, 0.78, 0.7, 0.12]);
       }
       const camNow = cam(t);
       const dive = smooth(B.map.right + 0.7, dur + 0.4, t);
@@ -253,7 +253,7 @@ export const map: ShotFactory = (dur) => {
           fogCol: hex("#1a2433"),
           shadow: { center: [MAP_CX, 0, MAP_CZ], radius: 11, bias: 0.01, soft: 2 },
         },
-        post: basePost({ exposure: 1.05, bloom: 0.6, bloomThreshold: 0.8, sat: 1.1, contrast: 1.08, vignette: 0.55, dof: dive > 0 ? { focus: 4, aperture: dive * 0.6, maxCoc: 14 } : undefined }),
+        post: basePost({ exposure: 1.05, bloom: 0.3, bloomThreshold: 1.0, sat: 0.92, contrast: 1.04, vignette: 0.6, dof: dive > 0 ? { focus: 4, aperture: dive * 0.6, maxCoc: 14 } : undefined }),
         draws,
         particles: [parts],
       };

@@ -11,3 +11,4 @@ public/frames3d
 public/audio/*.wav
 tools/audio/timeline.json
 tools/*/node_modules
+public/frames3d_reels

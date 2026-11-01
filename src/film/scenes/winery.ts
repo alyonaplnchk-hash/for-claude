@@ -103,6 +103,11 @@ export const sorting: ShotFactory = (dur) => {
       door = cached(e, "door", () => box(3.2, 4, 0.05));
     },
     camera: cam,
+    cameraPortrait: (t: number): Camera => {
+      const k = easeInOut(t / dur);
+      const x = lerp(-0.8, 2.75, k);
+      return { pos: [x - 0.55, 1.95, 1.9], target: [x, 0.95, 0], fov: 60, roll: noise1(t * 0.5) * 0.008 };
+    },
     anchors: () => ({ belt: [-0.6, 1.0, 0.3], drum: [3.0, 1.35, 0.3], bin: [3.0, 0.5, 0.0] }),
     frame(t) {
       const off = t * SPEED;
@@ -151,7 +156,7 @@ export const sorting: ShotFactory = (dur) => {
             { pos: [2.5, 3.5, 1.2], col: [1, 0.78, 0.55], intensity: 12, radius: 9 },
           ],
         }),
-        post: basePost({ exposure: 1.05, bloom: 0.5, sat: 1.08, dof: { focus: 1.9, aperture: 0.6, maxCoc: 12 } }),
+        post: basePost({ exposure: 1.0, bloom: 0.25, sat: 0.92, dof: { focus: 1.9, aperture: 0.6, maxCoc: 12 } }),
         draws,
       };
     },
@@ -199,9 +204,9 @@ export const vat: ShotFactory = (dur) => {
         ...room(),
         { mesh: shell, mat: steel({ double: true }) },
         { mesh: full, mat: steel(), xf: [m4.trs([-3.6, 0, -2.6]), m4.trs([3.6, 0, -2.6]), m4.trs([-6.8, 0, -1.2]), m4.trs([6.8, 0, -1.2])] },
-        { mesh: liquid, mat: { base: hex("#5a0f2c"), rough: 0.15, spec: 1.2, emit: hex("#3a0618"), pattern: 9, p1: [0.6, 0, 0, 0], c1: hex("#c2184a"), noShadow: true } },
+        { mesh: liquid, mat: { base: hex("#36070f"), rough: 0.15, spec: 1.2, emit: hex("#140207"), pattern: 9, p1: [0.3, 0, 0, 0], c1: hex("#7a1426"), noShadow: true } },
         { mesh: berry, mat: grapeMat(1, hex("#1c0a26")), inst: capI },
-        { mesh: pipe, mat: { base: hex("#d63a3a"), rough: 0.45 } },
+        { mesh: pipe, mat: { base: hex("#5a3a2c"), rough: 0.5 } },
       ];
       const parts: Particles[] = [];
       const phi0 = Math.PI / 2 + (Math.PI * 2 - ARC) / 2;
@@ -217,7 +222,7 @@ export const vat: ShotFactory = (dur) => {
 
         bub.pos.push(Math.cos(a) * rr * 0.5, y, Math.sin(a) * rr + 0.25);
         bub.size.push(0.012 + r() * 0.02);
-        bub.col.push([1, 0.85, 0.9, 0.7 * smooth(V.co2 - 0.6, V.co2 + 0.3, t) + 0.25]);
+        bub.col.push([0.9, 0.85, 0.8, 0.45 * smooth(V.co2 - 0.6, V.co2 + 0.3, t) + 0.15]);
       }
       parts.push(bub);
       // yeast cells: glowing specks
@@ -225,7 +230,7 @@ export const vat: ShotFactory = (dur) => {
       for (let i = 0; i < 120; i++) {
         y.pos.push((r() - 0.5) * 1.6 + Math.sin(t + i) * 0.02, 0.8 + r() * 1.85, 0.2 + r() * 0.9);
         y.size.push(0.015 + r() * 0.015);
-        y.col.push([1.0, 0.9, 0.4, 0.9 * smooth(V.yeast - 0.4, V.yeast + 0.4, t)]);
+        y.col.push([0.95, 0.85, 0.55, 0.5 * smooth(V.yeast - 0.4, V.yeast + 0.4, t)]);
       }
       parts.push(y);
       return {
@@ -235,12 +240,12 @@ export const vat: ShotFactory = (dur) => {
           sunCol: [1.4, 1.3, 1.2],
           shadow: { center: [0, 2, 0], radius: 6, bias: 0.02, soft: 2 },
           lights: [
-            { pos: [0.4, 2.2, 0.6], col: [1.0, 0.25, 0.45], intensity: 6, radius: 3 },
+            { pos: [0.4, 2.2, 0.6], col: [1.0, 0.75, 0.55], intensity: 3, radius: 3 },
             { pos: [3, 5.5, 3], col: [1, 0.8, 0.6], intensity: 26, radius: 14 },
             { pos: [-3, 5.5, 3], col: [1, 0.8, 0.6], intensity: 20, radius: 14 },
           ],
         }),
-        post: basePost({ exposure: 1.05, bloom: 0.6, sat: 1.12, dof: { focus: 4.6, aperture: 0.4, maxCoc: 10 } }),
+        post: basePost({ exposure: 1.0, bloom: 0.25, sat: 0.92, dof: { focus: 4.6, aperture: 0.4, maxCoc: 10 } }),
         draws,
         particles: parts,
       };
@@ -288,7 +293,7 @@ export const skins: ShotFactory = (dur) => {
     frame(t) {
       const draws: Draw[] = [];
       const xs = skinX.map((s) => m4.trs([s.p[0], s.p[1] + Math.sin(t * 0.4 + s.p[0]) * 0.05, s.p[2]], [s.r[0] + s.w[0] * t, s.r[1] + s.w[1] * t, s.r[2] + s.w[2] * t], s.s));
-      draws.push({ mesh: skin, mat: { base: [1, 1, 1], rough: 0.35, spec: 1.2, sss: 0.9, sheen: 0.4, pattern: 8, p1: [1, 0, 0, 0], c1: hex("#8fae3c"), c2: hex("#3a0d3e"), double: true }, xf: xs });
+      draws.push({ mesh: skin, mat: { base: [1, 1, 1], rough: 0.35, spec: 1.2, sss: 0.9, sheen: 0.4, pattern: 8, p1: [1, 0, 0, 0], c1: hex("#8fae3c"), c2: hex("#2a0a1e"), double: true }, xf: xs });
       const r = rng(5);
       const pips: M4[] = [];
       for (let i = 0; i < 5; i++) pips.push(m4.trs([(r() - 0.5) * 2.6 - 0.4, (r() - 0.5) * 1.4 - 0.3, (r() - 0.5) * 1.2], [r() * 6 + t * 0.2, r() * 6, 0], [0.07, 0.11, 0.07]));
@@ -296,7 +301,7 @@ export const skins: ShotFactory = (dur) => {
       // pigment bleeding out of the skins: grows through the shot
       const extract = smooth(K.skins - 0.5, K.antho + 2.5, t);
       const pig: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
-      const n = Math.floor(80 + 520 * extract);
+      const n = Math.floor(50 + 230 * extract);
       for (let i = 0; i < n; i++) {
         const src = skinX[i % skinX.length];
         const ph = r();
@@ -305,7 +310,7 @@ export const skins: ShotFactory = (dur) => {
         const d = 0.15 + lt * 1.4;
         pig.pos.push(src.p[0] + dir[0] * d, src.p[1] + dir[1] * d + Math.sin(t + i) * 0.03, src.p[2] + dir[2] * d);
         pig.size.push(0.02 + r() * 0.05 + lt * 0.05);
-        pig.col.push([1.0, 0.06 + r() * 0.1, 0.22 + r() * 0.15, (0.5 + 0.5 * extract) * Math.sin(lt * Math.PI)]);
+        pig.col.push([0.62, 0.07 + r() * 0.04, 0.12 + r() * 0.05, (0.35 + 0.35 * extract) * Math.sin(lt * Math.PI)]);
       }
       // tannin specks (golden)
       const tan: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
@@ -313,20 +318,20 @@ export const skins: ShotFactory = (dur) => {
       for (let i = 0; i < 90; i++) {
         tan.pos.push((r() - 0.5) * 4, (r() - 0.5) * 2.6, (r() - 0.5) * 2 + 0.2);
         tan.size.push(0.012 + r() * 0.02);
-        tan.col.push([1.0, 0.75, 0.3, 0.8 * tanA]);
+        tan.col.push([0.85, 0.7, 0.42, 0.5 * tanA]);
       }
       const bub: Particles = { pos: [], size: [], col: [], shape: 1, blend: "add" };
       for (let i = 0; i < 40; i++) {
         const lt = (t * 0.15 + r()) % 1;
         bub.pos.push((r() - 0.5) * 4, -1.5 + lt * 3.2, (r() - 0.5) * 2.5);
         bub.size.push(0.02 + r() * 0.04);
-        bub.col.push([1, 0.9, 0.95, 0.5]);
+        bub.col.push([0.9, 0.85, 0.82, 0.25]);
       }
       // the juice itself changes colour: pale blush -> deep ruby
-      const pale = { top: hex("#e8a2b8"), hor: hex("#d9849e"), bot: hex("#a84a6a") };
-      const ruby = { top: hex("#7a0326"), hor: hex("#b0103a"), bot: hex("#3a0012") };
+      const pale = { top: hex("#b89a96"), hor: hex("#9c7a78"), bot: hex("#5a3e3e") };
+      const ruby = { top: hex("#3a0a12"), hor: hex("#58101c"), bot: hex("#180408") };
       const k = extract;
-      const fogCol = lerp3(hex("#d98aa2"), hex("#8a0a2c"), k);
+      const fogCol = lerp3(hex("#8e706e"), hex("#3e0a14"), k);
       return {
         camera: cam(t),
         env: {
@@ -334,19 +339,19 @@ export const skins: ShotFactory = (dur) => {
           skyHor: scale(lerp3(pale.hor, ruby.hor, k), 0.85),
           skyBot: scale(lerp3(pale.bot, ruby.bot, k), 0.85),
           glowDir: [0.2, 1, 0.2],
-          glowCol: lerp3([0.8, 0.7, 0.6], [1.4, 0.25, 0.3], k),
+          glowCol: lerp3([0.35, 0.3, 0.26], [0.42, 0.12, 0.1], k),
           glowPow: 4,
           sunDir: [0.3, 0.9, 0.3],
           sunCol: [2.2, 2.0, 1.9],
-          ambSky: lerp3([0.6, 0.5, 0.55], [0.5, 0.1, 0.18], k),
-          ambGnd: lerp3([0.45, 0.35, 0.38], [0.25, 0.04, 0.08], k),
+          ambSky: lerp3([0.4, 0.34, 0.33], [0.3, 0.1, 0.12], k),
+          ambGnd: lerp3([0.3, 0.24, 0.24], [0.16, 0.04, 0.06], k),
           envAmt: 0.6,
           fog: [0.08, 0, 0, 0.6],
           fogCol: scale(fogCol, 0.9),
           lights: [{ pos: [1.5, 1.2, 2.0], col: [1, 0.9, 0.95], intensity: 8, radius: 6 }],
           skyNoise: 0.25,
         },
-        post: basePost({ exposure: 0.95, bloom: 0.75, bloomThreshold: 0.8, sat: 1.25, contrast: 1.1, dof: { focus: 2.6, aperture: 1.2, maxCoc: 14 } }),
+        post: basePost({ exposure: 1.0, bloom: 0.3, bloomThreshold: 1.1, sat: 0.95, contrast: 1.05, dof: { focus: 2.6, aperture: 1.2, maxCoc: 14 } }),
         draws,
         particles: [pig, tan, bub],
       };

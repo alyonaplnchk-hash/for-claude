@@ -11,7 +11,7 @@ import { hall, steel } from "./winery";
 export const oakMat = (o: Partial<Mat> = {}): Mat => ({ base: hex("#a87a4e"), rough: 0.7, pattern: 1, p1: [26, 0.0, 0.11, 0], p2: [1, 0, 0, 0], c1: hex("#6a0f22"), ...o });
 const hoopMat: Mat = { base: hex("#8d8a86"), rough: 0.45, metal: 0.8 };
 const headMat: Mat = { base: hex("#b48658"), rough: 0.75, pattern: 12, p1: [0.09, 0, 0, 0] };
-const wineMat: Mat = { base: hex("#4a0614"), rough: 0.12, spec: 1.3, emit: hex("#2a0410"), pattern: 9, p1: [0.5, 0, 0, 0], c1: hex("#c2183e"), noShadow: true };
+const wineMat: Mat = { base: hex("#2e050d"), rough: 0.1, spec: 1.3, emit: hex("#0e0205"), pattern: 9, p1: [0.25, 0, 0, 0], c1: hex("#7a1428"), noShadow: true };
 
 const warmEnv = (o: Partial<Env> = {}): Env => ({
   skyTop: hex("#4a3a2a"),
@@ -120,7 +120,7 @@ export const press: ShotFactory = (dur) => {
         const lt = (t * 0.8 + r()) % 1;
         drops.pos.push(Math.cos(a) * 0.64, 1.2 - lt * 0.72, Math.sin(a) * 0.64);
         drops.size.push(0.012);
-        drops.col.push([1, 0.15, 0.25, 0.8 * flow]);
+        drops.col.push([0.55, 0.08, 0.12, 0.6 * flow]);
       }
       return {
         camera: cam(t),
@@ -138,7 +138,7 @@ export const press: ShotFactory = (dur) => {
             { pos: [-2, 2.2, -1], col: [0.9, 0.6, 0.45], intensity: 6, radius: 8 },
           ],
         }),
-        post: basePost({ exposure: 1.05, bloom: 0.55, sat: 1.1, dof: { focus: 2.7, aperture: 0.5, maxCoc: 12 } }),
+        post: basePost({ exposure: 1.0, bloom: 0.25, sat: 0.92, dof: { focus: 2.7, aperture: 0.5, maxCoc: 12 } }),
         draws,
         particles: [drops],
       };
@@ -265,7 +265,7 @@ export const cellar: ShotFactory = () => {
         const y = (r() - 0.5) * 0.7;
         ox.pos.push(HERO_BARREL[0] + Math.cos(a) * rr, HERO_BARREL[1] + y, HERO_BARREL[2] + Math.sin(a) * rr);
         ox.size.push(0.008 + r() * 0.01);
-        ox.col.push([0.55, 0.85, 1.2, oxA * Math.sin(lt * Math.PI)]);
+        ox.col.push([0.7, 0.8, 0.9, 0.7 * oxA * Math.sin(lt * Math.PI)]);
       }
       // dust in the lamp light
       const dust: Particles = { pos: [], size: [], col: [], shape: 0, blend: "add" };
@@ -290,7 +290,7 @@ export const cellar: ShotFactory = () => {
       return {
         camera: c,
         env: warmEnv({ lights, shadow: { center: [0, 1, c.pos[2] - 4], radius: 7, bias: 0.02, soft: 2 } }),
-        post: basePost({ exposure: 1.15, bloom: 0.7, bloomThreshold: 0.9, sat: 1.08, contrast: 1.1, vignette: 0.6, dof: { focus: Math.min(focus, 6), aperture: 0.45, maxCoc: 12 } }),
+        post: basePost({ exposure: 1.1, bloom: 0.4, bloomThreshold: 1.0, sat: 0.95, contrast: 1.05, vignette: 0.6, dof: { focus: Math.min(focus, 6), aperture: 0.45, maxCoc: 12 } }),
         draws,
         glass: [],
         particles: [ox, dust, beams],
