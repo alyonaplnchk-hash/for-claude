@@ -139,7 +139,7 @@ export function backdrop(e: Engine, key: string, o: { rows: number; x0: number; 
   return (): Draw[] => {
     const d: Draw[] = [{ mesh: hedge, mat: { base: hex("#45602c"), rough: 0.8, sss: 0.3, pattern: 14, p1: [3, 0, 0, 0], c1: [0.7, 0.85, 0.6], c2: [1.1, 1.05, 0.8] }, inst: hI }];
     if (tI) {
-      d.push({ mesh: tree, mat: { base: [1, 1, 1], rough: 0.85, sss: 0.3 }, inst: tI });
+      d.push({ mesh: tree, mat: { base: [1.25, 1.0, 1.7], rough: 0.85, sss: 0.15 }, inst: tI });
       void tree2;
     }
     if (chateau && o.chateau) d.push({ mesh: chateau, mat: { base: [1, 1, 1], rough: 0.7 }, xf: m4.trs(o.chateau.pos, [0, o.chateau.rot, 0], 1) });

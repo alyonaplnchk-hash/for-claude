@@ -19,12 +19,12 @@ export const helix = (k: number, n: number, turns = 1.6, r0 = 0.5, r1 = 1.4, h =
 };
 
 export const wineRibbonMat = () => ({
-  base: hex("#3c0612"),
-  rough: 0.14,
-  spec: 1.0,
-  sss: 0.18,
+  base: hex("#6B1A2B"),
+  rough: 0.3,
+  spec: 0.7,
+  sss: 0.12,
   pattern: 9,
-  p1: [0.16, 0, 0, 0],
+  p1: [0.05, 0, 0, 0],
   c1: hex("#9a1a2e"),
 });
 
@@ -81,7 +81,7 @@ export const hook: ShotFactory = (dur) => {
       // grape: lying so that local Y (squash axis) is world X
       draws.push({
         mesh: grape,
-        mat: { base: [1, 1, 1], rough: 0.3, spec: 1.2, sss: 0.4, sheen: 0.45, pattern: 8, p1: [1, 0, 0, 0], c1: C.grapeGreen, c2: hex("#2c1042") },
+        mat: { base: [1, 1, 1], rough: 0.3, spec: 1.2, sss: 0.4, sheen: 0.45, pattern: 8, p1: [1, 0, 0, 0], c1: C.grapeGreen, c2: hex("#3a2347") },
         xf: m4.trs([0, 0, 0], [0, 0, Math.PI / 2], [0.5, 0.5, 0.5]),
         cols: [[1, 1, 1, 0.3]],
         deform: [squash, 1, 0.6, 0],
@@ -92,9 +92,9 @@ export const hook: ShotFactory = (dur) => {
       const glass: Draw[] = [];
       const plateMat = { glass: { tint: [0.93, 0.97, 1.0] as V3, refr: 0.035, absorb: 0.15, refl: 0.7 } };
       const plateIn = smooth(0.0, 0.6, t);
-      for (const s of [-1, 1]) {
-        glass.push({ mesh: plate, mat: plateMat, xf: m4.trs([s * (halfW + 0.03 + (1 - plateIn) * 0.6), 0.05, 0], [0, 0, 0], 1) });
-      }
+      void plate;
+      void plateMat;
+      void plateIn;
       // clear juice drops: born at the bottom, fall in slow motion
       const dm: M4[] = [];
       for (let i = 0; i < 22; i++) {

@@ -179,7 +179,7 @@ function barrelWine(arc: number, phi0: number, fill = 0.92) {
 export const HERO_BARREL: V3 = [0, 0.62, -9.5];
 
 export const cellar: ShotFactory = () => {
-  let body: Mesh, hoops: Mesh, heads: Mesh, bodyI: InstBuf, hoopI: InstBuf, headI: InstBuf, floor: Mesh, vault: Mesh, wallS: Mesh, rails: Mesh, lamp: Mesh;
+  let body: Mesh, hoops: Mesh, heads: Mesh, bodyI: InstBuf, hoopI: InstBuf, headI: InstBuf, vault: Mesh, wallS: Mesh, rails: Mesh, lamp: Mesh;
   let heroBody: Mesh, heroWine: Mesh, stand: Mesh, bung: Mesh;
   const CL = B.cellar;
   const ARC = Math.PI * 1.45;
@@ -215,7 +215,7 @@ export const cellar: ShotFactory = () => {
       bodyI = e.instances(mats, cols);
       hoopI = e.instances(mats);
       headI = e.instances(mats, cols);
-      floor = cached(e, "chai-floor", () => box(9, 0.1, 34));
+
       vault = cached(e, "chai-vault", () => lathe([[4.5, 0], [4.5, 34]], 32, [1, 1, 1], 0, Math.PI));
       wallS = cached(e, "chai-wall", () => box(0.3, 2.6, 34));
       rails = cached(e, "chai-rails", () => {
@@ -241,7 +241,7 @@ export const cellar: ShotFactory = () => {
     }),
     frame(t) {
       const draws: Draw[] = [
-        { mesh: floor, mat: { base: hex("#8a7c68"), rough: 0.9, pattern: 3, p1: [14, 100, 0, 0.6], c1: hex("#b3a68e"), c2: hex("#7a6c5a"), c3: hex("#555"), c4: hex("#6a5c4a") }, xf: m4.trs([0, -0.05, -14]) },
+        // (studio floor replaces the chai floor)
         { mesh: vault, mat: { base: hex("#c8b89a"), rough: 0.9, pattern: 2, p1: [0.32, 0.6, 0.02, 0], double: true }, xf: m4.trs([0, 2.4, 3], [-Math.PI / 2, 0, 0], 1) },
         { mesh: wallS, mat: { base: hex("#c8b89a"), rough: 0.9, pattern: 2, p1: [0.32, 0.6, 0.02, 0] }, xf: [m4.trs([-4.5, 1.3, -14]), m4.trs([4.5, 1.3, -14])] },
         { mesh: rails, mat: { base: hex("#6a4a30"), rough: 0.8 } },

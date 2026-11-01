@@ -86,6 +86,8 @@ export type Post = {
   grain?: number;
   ca?: number;
   dof?: { focus: number; aperture: number; maxCoc?: number };
+  ao?: { strength: number; radius?: number };
+  tonemap?: "aces" | "neutral";
   fade?: number;
   fadeCol?: V3;
 };
@@ -162,6 +164,7 @@ export class Engine {
     this.progs.up = this.prog(S.FS_VS, S.UP_FS);
     this.progs.dof = this.prog(S.FS_VS, S.DOF_FS);
     this.progs.comp = this.prog(S.FS_VS, S.COMP_FS);
+    this.progs.ao = this.prog(S.FS_VS, S.AO_FS);
     this.progs.trans = this.prog(S.FS_VS, S.TRANS_FS);
     this.emptyVAO = gl.createVertexArray()!;
     this.dyn = { buf: gl.createBuffer()!, count: 0 };
@@ -420,6 +423,8 @@ export class Engine {
     // DOF (half res)
     const hw = Math.ceil(rw / 2), hh = Math.ceil(rh / 2);
     this.tex.dof = this.mkTex(hw, hh, gl.RGBA16F, gl.RGBA, gl.HALF_FLOAT, gl.LINEAR);
+    this.tex.ao = this.mkTex(hw, hh, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, gl.LINEAR);
+    this.fb.ao = this.fbFor(this.tex.ao);
     this.fb.dof = this.fbFor(this.tex.dof);
     // bloom chain
     let w = rw, h = rh;
@@ -714,6 +719,22 @@ export class Engine {
       this.mark("dof");
     }
 
+    // --- ambient occlusion (half res)
+    const ao = post.ao;
+    if (ao) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.fb.ao);
+      gl.viewport(0, 0, Math.ceil(rw / 2), Math.ceil(rh / 2));
+      const pr = this.progs.ao;
+      gl.useProgram(pr.p);
+      this.texUnit = 0;
+      this.set(pr, "u_src", this.tex.scene);
+      this.set(pr, "u_texel", [1 / rw, 1 / rh]);
+      this.set(pr, "u_radius", (ao.radius ?? 26) * (rw / 1440));
+      this.set(pr, "u_strength", ao.strength);
+      this.fullscreen();
+      this.mark("ao");
+    }
+
     // --- bloom
     {
       const down = this.progs.down;
@@ -762,6 +783,10 @@ export class Engine {
     this.set(pr, "u_scene", this.tex.scene);
     this.set(pr, "u_bloom", this.bloomTex[0]);
     this.set(pr, "u_dof", this.tex.dof);
+    this.set(pr, "u_ao", this.tex.ao);
+    this.set(pr, "u_aoOn", ao ? 1 : 0);
+    this.set(pr, "u_aoTexel", [2 / rw, 2 / rh]);
+    this.set(pr, "u_tonemap", post.tonemap === "neutral" ? 1 : 0);
     this.set(pr, "u_dofOn", dof ? 1 : 0);
     this.set(pr, "u_focus", dof?.focus ?? 1);
     this.set(pr, "u_aperture", dof?.aperture ?? 0);

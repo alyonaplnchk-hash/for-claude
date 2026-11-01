@@ -2,9 +2,9 @@
 // heat radiates. Across the river, Right Bank: cool clay over limestone. The camera trucks between them.
 import { ShotFactory, cached, basePost, C } from "./common";
 import { B } from "../beats";
-import { Draw, Particles, Camera, Mesh } from "../engine/renderer";
-import { Geo, box, tube } from "../engine/geometry";
-import { V3, m4, hex, smooth, easeInOut, lerp, rng, spline } from "../engine/math";
+import { Draw, Particles, Camera, Mesh, InstBuf } from "../engine/renderer";
+import { Geo, box, tube, sphere } from "../engine/geometry";
+import { V3, M4, m4, hex, smooth, easeInOut, lerp, rng, spline } from "../engine/math";
 import { vineBlock, groundMat, VineBlock } from "./vineyard";
 
 const W = 4, D = 4.5, H = 2.4;
@@ -41,6 +41,7 @@ function rootsGeo(seed: number, deep: boolean, cx: number) {
 }
 
 export const soil: ShotFactory = (dur) => {
+  let pebble: Mesh, pebbleI: InstBuf;
   let block: Mesh, top: Mesh, roots: Mesh[] = [], vL: VineBlock, vR: VineBlock, water: Mesh;
   const S = B.soil;
   const cam = (t: number): Camera => {
@@ -55,6 +56,21 @@ export const soil: ShotFactory = (dur) => {
   return {
     init(e) {
       block = cached(e, "soil-block", () => box(W, H, D));
+      pebble = cached(e, "pebble", () => sphere(1, 14, 10));
+      {
+        const r = rng(91);
+        const mats: M4[] = [], cols: number[][] = [];
+        for (let i = 0; i < 260; i++) {
+          const s = 0.035 + r() * 0.06;
+          const x = LX + (r() - 0.5) * (W - 0.12);
+          const y = -0.22 - r() * 1.1;
+          if (r() < 0.5) mats.push(m4.trs([x, y, D / 2], [r() * 3, r() * 3, r() * 3], [s, s * 0.8, s * 0.5]));
+          else mats.push(m4.trs([LX - W / 2, y, (r() - 0.5) * (D - 0.12) + 0], [r() * 3, r() * 3, r() * 3], [s * 0.5, s * 0.8, s]));
+          const g = 0.75 + r() * 0.35;
+          cols.push([g * 1.02, g, g * 0.94, r()]);
+        }
+        pebbleI = e.instances(mats, cols);
+      }
       top = cached(e, "soil-top", () => box(W, 0.02, D));
       water = cached(e, "soil-water", () => box(2.2 * 1.0, 0.02, D * 1.4));
       roots = [cached(e, "rootsL", () => rootsGeo(3, true, LX)), cached(e, "rootsR", () => rootsGeo(5, false, RX))];
@@ -76,16 +92,17 @@ export const soil: ShotFactory = (dur) => {
     frame(t) {
       const draws: Draw[] = [];
       // left: gravel specimen
-      draws.push({ mesh: block, mat: { base: [1, 1, 1], pattern: 5, p1: [-0.18, -1.35, -1.95, 0], p2: [5.5, 0.95, 0.45, 0], c1: hex("#6e5c4a"), c2: hex("#a8977c"), c3: hex("#a8854f"), c4: hex("#6e6052") }, xf: m4.trs([LX, -H / 2, 0]) });
+      draws.push({ mesh: block, mat: { base: [1, 1, 1], pattern: 5, p1: [-0.18, -1.35, -1.95, 0], p2: [5.5, 0, 0, 0], c1: hex("#9C7A62"), c2: hex("#D6C6AF"), c3: hex("#E3CFA9"), c4: hex("#B39A86") }, xf: m4.trs([LX, -H / 2, 0]) });
       draws.push({ mesh: top, mat: groundMat({ p1: [11, 1.2, 0.35, 0.95], c1: hex("#b8ab95"), c2: hex("#857866") }), xf: m4.trs([LX, 0, 0]) });
       // right: clay over limestone
-      draws.push({ mesh: block, mat: { base: [1, 1, 1], pattern: 5, p1: [-0.15, -1.05, -1.9, 0], p2: [5.5, 0.04, 0.0, 0], c1: hex("#4a3a2c"), c2: hex("#6a5a50"), c3: hex("#bdb39c"), c4: hex("#a89e86") }, xf: m4.trs([RX, -H / 2, 0]) });
+      draws.push({ mesh: block, mat: { base: [1, 1, 1], pattern: 5, p1: [-0.15, -1.05, -1.9, 0], p2: [5.5, 0, 0, 0], c1: hex("#8E6F5A"), c2: hex("#A98C7A"), c3: hex("#EEE7DA"), c4: hex("#E2D8C6") }, xf: m4.trs([RX, -H / 2, 0]) });
       draws.push({ mesh: top, mat: groundMat({ p1: [7, 1.2, 0.35, 0.08], c4: hex("#5e4a3a") }), xf: m4.trs([RX, 0, 0]) });
       const rootGrow = [smooth(S.gravel - 0.5, S.heat + 1.5, t), smooth(S.right - 0.5, S.clay + 1.2, t)];
       roots.forEach((m, i) => {
-        if (rootGrow[i] > 0.01) draws.push({ mesh: m, mat: { base: [1, 1, 1], rough: 0.7, emit: [0.1, 0.08, 0.05], p3: [rootGrow[i], -1, 0, 1], noShadow: true } });
+        if (rootGrow[i] > 0.01) draws.push({ mesh: m, mat: { rough: 0.7, base: hex("#F4EEE4"), p3: [rootGrow[i], -1, 0, 1], noShadow: true } });
       });
       draws.push(...vL.draws(t), ...vR.draws(t));
+      draws.push({ mesh: pebble, mat: { base: hex("#B8AD9F"), rough: 0.55 }, inst: pebbleI });
       draws.push({ mesh: water, mat: { base: hex("#14405a"), rough: 0.08, spec: 1.3, noShadow: true, emit: [0.01, 0.03, 0.05] }, xf: m4.trs([0, -1.95, 0]) });
 
       const parts: Particles[] = [];
@@ -98,7 +115,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = (t * 0.55 + ph) % 1;
         rain.pos.push(LX + x, -0.05 - lt * (H - 0.2), D / 2 + 0.03);
         rain.size.push(0.022);
-        rain.col.push([0.62, 0.72, 0.82, 0.75 * smooth(S.gravel, S.gravel + 0.6, t) * smooth(1, 0.85, lt)]);
+        rain.col.push([0.5, 0.72, 0.95, 0.9 * smooth(S.gravel, S.gravel + 0.6, t) * smooth(1, 0.85, lt)]);
       }
       for (let i = 0; i < 70; i++) {
         const x = (r() - 0.5) * (W - 0.4);
@@ -106,7 +123,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = Math.min(((t - S.clay) * 0.12 + ph * 0.6) % 0.7, 0.55);
         rain.pos.push(RX + x, -0.05 - lt * 1.4, D / 2 + 0.03);
         rain.size.push(0.022);
-        rain.col.push([0.62, 0.72, 0.82, 0.75 * smooth(S.clay - 0.3, S.clay + 0.4, t)]);
+        rain.col.push([0.5, 0.72, 0.95, 0.9 * smooth(S.clay - 0.3, S.clay + 0.4, t)]);
       }
       parts.push(rain);
       // heat shimmer rising off the stones
@@ -116,7 +133,7 @@ export const soil: ShotFactory = (dur) => {
         const lt = (t * 0.35 + ph) % 1;
         heat.pos.push(LX + (r() - 0.5) * W, 0.05 + lt * 1.6, (r() - 0.5) * D);
         heat.size.push(0.05 + r() * 0.06);
-        heat.col.push([0.95, 0.7, 0.42, 0.3 * smooth(S.heat - 0.4, S.heat + 0.5, t) * Math.sin(lt * Math.PI)]);
+        heat.col.push([1.5, 0.75, 0.35, 0.45 * smooth(S.heat - 0.4, S.heat + 0.5, t) * Math.sin(lt * Math.PI)]);
       }
       parts.push(heat);
       // drifting dust
@@ -145,7 +162,7 @@ export const soil: ShotFactory = (dur) => {
           ambGnd: [0.22, 0.17, 0.12],
           envAmt: 0.6,
           fog: [0.006, 0.0, 0, 0.5],
-          fogCol: hex("#7a6c5c"),
+          fogCol: hex("#ECE6DF"),
           shadow: { center: [0, -0.5, 0], radius: 7.5, bias: 0.015, soft: 2 },
         },
         post: basePost({ exposure: 1.05, bloom: 0.25, sat: 0.92, dof: { focus: Math.max(focus, 2), aperture: 0.25, maxCoc: 10 } }),

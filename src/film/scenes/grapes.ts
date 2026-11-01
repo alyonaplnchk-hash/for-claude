@@ -80,6 +80,7 @@ export const grapes: ShotFactory = (dur) => {
       hedge = cached(e, "hedge-20", () => hedgeGeo(20, 3));
       hedgeI = e.instances([-4.8, -3.2, -1.6, 1.6, 3.2, 4.8, 6.4].map((x) => m4.trs([x, 0, -18], [0, 0, 0], 1)));
       ground = cached(e, "ground-80", () => groundPlane(80));
+      void [hedge, hedgeI, ground]; // studio cut: kept for the landscape variant
     },
     camera: cam,
     // 9:16: a slow dolly from Merlot to Cabernet Franc, in step with the narration
@@ -98,8 +99,8 @@ export const grapes: ShotFactory = (dur) => {
       });
       draws.push({ mesh: leaf, mat: leafMat(0.008), inst: leaves });
       draws.push({ mesh: cane, mat: { base: [1, 1, 1], rough: 0.8 } });
-      draws.push({ mesh: hedge, mat: { base: hex("#42602a"), rough: 0.8, sss: 0.2 }, inst: hedgeI });
-      draws.push({ mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.3] }) });
+
+
       const c = cam(t);
       const focus = Math.hypot(c.pos[0] - c.target[0], c.pos[2] - c.target[2]);
       void G;
@@ -131,6 +132,7 @@ export const veraison: ShotFactory = (dur) => {
       hedge = cached(e, "hedge-20", () => hedgeGeo(20, 3));
       hedgeI = e.instances([-3.2, -1.6, 1.6, 3.2, 4.8].map((x) => m4.trs([x, 0, -14], [0, 0, 0], 1)));
       ground = cached(e, "ground-80", () => groundPlane(80));
+      void [hedge, hedgeI, ground]; // studio cut: kept for the landscape variant
     },
     camera: cam,
     cameraPortrait: (t: number): Camera => {
@@ -145,8 +147,8 @@ export const veraison: ShotFactory = (dur) => {
         { mesh: berry, mat: grapeMat(prog), inst: h.inst },
         { mesh: h.stem, mat: stemMat, xf: h.xf },
         { mesh: leaf, mat: leafMat(0.008), inst: leaves },
-        { mesh: hedge, mat: { base: hex("#42602a"), rough: 0.8, sss: 0.2 }, inst: hedgeI },
-        { mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.3] }) },
+        
+
       ];
       const c = cam(t);
       return {

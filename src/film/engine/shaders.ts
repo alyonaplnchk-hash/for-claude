@@ -198,6 +198,19 @@ void pattern(inout vec3 base, inout vec3 N, inout float rough, inout vec3 emit, 
     float contour = smoothstep(0.05, 0.0, cl) * smoothstep(0.02, 0.15, v_wpos.y);
     base = mix(base, base * 1.5 + 0.02, contour * 0.5);
     float lw = max(v_aux, 0.0), rw = max(-v_aux, 0.0);
+    if (u_p2.z > 0.5) {
+      // modern light map: flat land, colour-filled regions with a crisp darker edge
+      float hl = smoothstep(0.02, 0.6, v_wpos.y);
+      base = u_c3 * (0.94 + 0.06 * hl);
+      float lf = smoothstep(0.35, 0.65, lw) * u_p2.x, rf = smoothstep(0.35, 0.65, rw) * u_p2.y;
+      base = mix(base, u_c1, lf * 0.85);
+      base = mix(base, u_c2, rf * 0.85);
+      float le2 = smoothstep(0.25, 0.45, lw) * smoothstep(0.65, 0.45, lw) * u_p2.x;
+      float re2 = smoothstep(0.25, 0.45, rw) * smoothstep(0.65, 0.45, rw) * u_p2.y;
+      base *= 1.0 - 0.35 * max(le2, re2);
+      emit = vec3(0.0);
+      return;
+    }
     float hatch = smoothstep(0.35, 0.5, abs(fract((v_wpos.x - v_wpos.z) * 2.2 - u_time * 0.3) - 0.5));
     float le = smoothstep(0.05, 0.4, lw) * smoothstep(0.95, 0.5, lw);
     float re = smoothstep(0.05, 0.4, rw) * smoothstep(0.95, 0.5, rw);
@@ -272,6 +285,10 @@ void pattern(inout vec3 base, inout vec3 N, inout float rough, inout vec3 emit, 
     rough = mix(rough, 1.0, hole);
     metal = mix(metal, 0.0, hole);
   }
+#elif PATTERN == 15
+  {
+    // seamless studio floor: handled after lighting
+  }
 #elif PATTERN == 14
   {
     // generic organic noise between c1 and c2 (fields, forests, foliage hedges)
@@ -335,6 +352,10 @@ void main() {
   col += u_sheen * pow(1.0 - NdV, 2.5) * (amb + u_sunCol * 0.15) * vec3(0.75, 0.82, 1.0);
 #endif
   col += emit;
+#if PATTERN == 15
+  // melt the floor into the backdrop with distance from the subject (p1.x..p1.y, local units)
+  col = mix(col, skyColor(normalize(v_wpos - u_camPos)), smoothstep(u_p1.x, u_p1.y, length(v_opos.xz)));
+#endif
   float fogAmt = (1.0 - exp(-u_fog.x * dist)) * exp(-max(v_wpos.y - u_fog.z, 0.0) * u_fog.y);
   fogAmt = min(fogAmt, u_fog.w);
   vec3 fc = u_fogCol + u_sunCol * 0.3 * pow(max(dot(-V, u_sunDir), 0.0), 8.0);
@@ -497,8 +518,9 @@ void main() {
 export const COMP_FS = /* glsl */ `#version 300 es
 precision highp float;
 in vec2 v_uv;
-uniform sampler2D u_scene, u_bloom, u_dof;
-uniform int u_dofOn; uniform float u_focus, u_aperture, u_maxCoc;
+uniform sampler2D u_scene, u_bloom, u_dof, u_ao;
+uniform int u_dofOn, u_tonemap; uniform float u_focus, u_aperture, u_maxCoc, u_aoOn;
+uniform vec2 u_aoTexel;
 uniform float u_exposure, u_bloomAmt, u_contrast, u_sat, u_vignette, u_grain, u_ca, u_time, u_fade;
 uniform vec3 u_lift, u_gain, u_tintShadow, u_tintHigh, u_fadeCol;
 uniform vec2 u_res;
@@ -514,6 +536,25 @@ vec3 scene(vec2 uv) {
   return s.rgb;
 }
 vec3 aces(vec3 x) { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0); }
+// Khronos PBR Neutral: keeps base colours true, rolls off highlights (product-render look)
+vec3 neutral(vec3 c) {
+  const float sc = 0.76, desat = 0.15;
+  float x = min(c.r, min(c.g, c.b));
+  float off = x < 0.08 ? x - 6.25 * x * x : 0.04;
+  c -= off;
+  float peak = max(c.r, max(c.g, c.b));
+  if (peak < sc) return c;
+  float d = 1.0 - sc;
+  float np = 1.0 - d * d / (peak + d - sc);
+  c *= np / peak;
+  float g = 1.0 - 1.0 / (desat * (peak - np) + 1.0);
+  return mix(c, np * vec3(1.0), g);
+}
+float aoAt(vec2 uv) {
+  if (u_aoOn < 0.5) return 1.0;
+  vec2 t = u_aoTexel;
+  return 0.25 * (texture(u_ao, uv + vec2(-t.x, -t.y)).r + texture(u_ao, uv + vec2(t.x, -t.y)).r + texture(u_ao, uv + vec2(-t.x, t.y)).r + texture(u_ao, uv + vec2(t.x, t.y)).r);
+}
 float h(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 void main() {
   vec2 uv = v_uv;
@@ -522,9 +563,10 @@ void main() {
   vec3 col = scene(uv);
   col.r = mix(col.r, texture(u_scene, uv - dc * ca).r, 0.6);
   col.b = mix(col.b, texture(u_scene, uv + dc * ca).b, 0.6);
+  col *= aoAt(uv);
   col += texture(u_bloom, uv).rgb * u_bloomAmt;
   col *= u_exposure;
-  col = aces(col);
+  col = u_tonemap == 1 ? clamp(neutral(col), 0.0, 1.0) : aces(col);
   col = pow(col, vec3(1.0 / 2.2));
   float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
   col = mix(vec3(l), col, u_sat);
@@ -596,4 +638,27 @@ void main() {
     c = mix(texture(u_a, uv).rgb, texture(u_b, uv).rgb, smoothstep(0.0, 1.0, p));
   }
   o = vec4(c, 1.0);
+}`;
+
+
+// Screen-space ambient occlusion from the distance stored in the scene alpha (scale invariant).
+export const AO_FS = /* glsl */ `#version 300 es
+precision highp float;
+in vec2 v_uv; uniform sampler2D u_src; uniform vec2 u_texel; uniform float u_radius, u_strength;
+out vec4 o;
+float hh(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+void main() {
+  float d = texture(u_src, v_uv).a;
+  if (d > 30000.0) { o = vec4(1.0); return; }
+  float occ = 0.0;
+  float rot = hh(gl_FragCoord.xy) * 6.2831;
+  for (int i = 0; i < 16; i++) {
+    float fi = float(i) + 0.5;
+    float r = sqrt(fi / 16.0) * u_radius;
+    float th = fi * 2.39996 + rot;
+    float ds = texture(u_src, v_uv + vec2(cos(th), sin(th)) * r * u_texel).a;
+    float diff = (d - ds) / d;
+    occ += smoothstep(0.002, 0.02, diff) * (1.0 - smoothstep(0.06, 0.16, diff));
+  }
+  o = vec4(1.0 - u_strength * occ / 16.0);
 }`;

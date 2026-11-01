@@ -6,7 +6,7 @@ import { Engine, Draw, Particles, Camera, Mat, Mesh } from "../engine/renderer";
 import { Geo, box, cylinder, lathe, disk, tube } from "../engine/geometry";
 import { V3, m4, hex, smooth, easeInOut, easeOut, lerp, rng, noise1 } from "../engine/math";
 import { wineGlass, glassWine, bottleGeo, capsuleGeo } from "./assets";
-import { backdrop, groundPlane, groundMat, hedgeGeo } from "./vineyard";
+import { backdrop, groundPlane, hedgeGeo } from "./vineyard";
 
 const glassMat: Mat = { glass: { tint: [0.97, 0.98, 1.0], refr: 0.045, absorb: 0.35, refl: 1.0 } };
 export const wine = (col: string, glow = "#8a1a30"): Mat => ({ base: hex(col), rough: 0.08, spec: 1.4, sss: 0.6, pattern: 9, p1: [0.7, 0, 0, 0], c1: hex(glow), noShadow: true });
@@ -42,6 +42,7 @@ export const blend: ShotFactory = (dur) => {
       glass = cached(e, "wineglass", () => wineGlass(48));
       wall = cached(e, "lab-wall", () => box(8, 4, 0.2));
       for (let i = 0; i < 2; i++) glassWines.push(e.mesh(glassWine(0.05)));
+      void wall;
     },
     camera: cam,
     cameraPortrait: (t: number): Camera => {
@@ -53,8 +54,8 @@ export const blend: ShotFactory = (dur) => {
       const fl = smooth(BL.left - 0.6, BL.left + 1.6, t);
       const fr = smooth(BL.right - 0.6, BL.right + 1.4, t);
       const draws: Draw[] = [
-        { mesh: table, mat: { base: hex("#6a4630"), rough: 0.45, spec: 1, pattern: 12, p1: [0.18, 0, 0, 0] }, xf: m4.trs([0, 0.87, 0], [0, Math.PI / 2, 0], 1) },
-        { mesh: wall, mat: { base: hex("#3a2418"), rough: 0.7, pattern: 12, p1: [0.3, 0, 0, 0] }, xf: m4.trs([0, 2, -1.6]) },
+        { mesh: table, mat: { base: hex("#F3F0EC"), rough: 0.5, spec: 0.6 }, xf: m4.trs([0, 0.87, 0], [0, Math.PI / 2, 0], [1, 1, 1]) },
+
       ];
       const glassD: Draw[] = [];
       VARS.forEach((v, i) => {
@@ -210,6 +211,7 @@ export const finale: ShotFactory = (dur) => {
       ground = cached(e, "ground-200", () => groundPlane(200));
       back = backdrop(e, "fin-back", { rows: 40, x0: -32, rowGap: 1.6, z0: -60, length: 52, trees: [[-18, 0, -64], [-12, 0, -70], [10, 0, -66], [16, 0, -72], [24, 0, -62], [-26, 0, -60]], chateau: { pos: [-6, 0, -86], rot: 0.25 } });
       labelTex = e.texture(labelCanvas());
+      void [ground, back];
       void hedgeGeo;
       void disk;
       void Geo;
@@ -221,10 +223,9 @@ export const finale: ShotFactory = (dur) => {
       const level = 0.02 + 0.43 * smooth(pourStart + 0.5, pourEnd + 0.3, t);
       eng.updateMesh(glassW, glassWine(level));
       const draws: Draw[] = [
-        { mesh: table, mat: { base: hex("#7a6c5a"), rough: 0.55, pattern: 2, p1: [0.6, 0.6, 0.006, 0] }, xf: m4.trs([0, 0.86, 0]) },
-        { mesh: ground, mat: groundMat({ p1: [6, 1.6, 0.6, 0.5] }), xf: m4.trs([0, 0, 0]) },
-        ...back(),
-        { mesh: bottle, mat: { base: hex("#0d1a10"), rough: 0.06, spec: 1.6, pattern: 10, p1: [0.07, 0.11, 0.0, 2.6], tex: labelTex }, xf: bx },
+        { mesh: table, mat: { base: hex("#F3F0EC"), rough: 0.5, spec: 0.6 }, xf: m4.trs([0, 0.86, 0]) },
+
+        { mesh: bottle, mat: { base: hex("#14211a"), rough: 0.12, spec: 1.2, pattern: 10, p1: [0.07, 0.11, 0.0, 2.6], tex: labelTex }, xf: bx },
         { mesh: capsule, mat: { base: hex("#5a0a1c"), rough: 0.3, metal: 0.6 }, xf: bx },
         { mesh: glassW, mat: wine("#3e0712", "#9a1a30"), xf: m4.trs(GL) },
       ];
