@@ -82,6 +82,15 @@ export const EPISODES: Episode[] = [
         lines: ["What’s your favorite", "wine memory?"],
         highlight: ["memory"],
       },
+      {
+        lines: [
+          "Beyond Les Carmes,",
+          "where would you",
+          "plant your next",
+          "vineyard?",
+        ],
+        highlight: ["Les", "Carmes"],
+      },
     ],
   },
   {
