@@ -46,7 +46,7 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
 
 **Producer Spotlight** (`series: "producer-spotlight"`)
 - Intro (7 s): PRODUCER → *Spotlight* written by hand in gold → flourish →
-  "in conversation with" → guest logo, AVU logo on top.
+  "in conversation with" → GUEST NAME (if given) → guest logo, AVU logo on top.
 - Cards (6 s each): label PRODUCER SPOTLIGHT, the question rises word by word,
   the estate name in gold. Everything is on screen by ~3 s — the user asked
   for "smooth but fast, fully written within 3 seconds".
@@ -66,7 +66,8 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
 
 Ask only for what's missing; the user often sends things one message at a time.
 
-- Producer Spotlight: estate name, its logo file, the questions.
+- Producer Spotlight: estate name, its logo file, the guest's name (shown
+  in the intro), the questions.
 - Wine Tips: the tips and who presents each one (Laura, Ivano, or both).
 - Optional: a different background photo; a card label other than the default.
 
@@ -91,7 +92,12 @@ re-colour the guest logo; the user explicitly wants original colours.
   id: "PS-ChateauMargaux",          // PS- or WT- prefix, letters/digits/hyphens
   series: "producer-spotlight",
   photo: "store.jpg",
-  guest: { logo: "guests/chateau-margaux.png", aspect: 1200 / 410 },
+  guest: {
+    logo: "guests/chateau-margaux.png",
+    aspect: 1200 / 410,
+    name: "Philippe Bascaules",   // shown in caps under "in conversation with"
+    logoWidth: 440,               // optional; default 408 suits wide logos
+  },
   cards: [
     {
       lines: ["What makes", "Château Margaux", "different?"],
@@ -100,6 +106,11 @@ re-colour the guest logo; the user explicitly wants original colours.
   ],
 },
 ```
+
+Check the intro still for the logo size: a tall, compact logo (stacked
+crest + name, like Les Carmes Haut-Brion) needs a larger `logoWidth`
+(~440) to keep its lettering readable; a wide one-line logo is fine at the
+default.
 
 Wine Tips cards add `byline: "Laura"`. If only one host presents the
 episode, set `introSubtitle: "with Laura"`.
@@ -111,7 +122,10 @@ and give a long estate name its own line rather than letting it wrap
 (e.g. "Apart from / Lynch-Bages, / what's your / favourite bottle?").
 Use sentence case and curly apostrophes (’) even when the user types the
 question in capitals — the series uses sentence case throughout. Keep their
-spelling (e.g. British "favourite").
+spelling as typed ("favourite" in one episode, "favorite" in another).
+
+Gold word: the estate name when the question contains it; otherwise the
+one word that carries the question ("surprises", "memory").
 
 `highlight` lists single words; punctuation is ignored when matching, so
 list "Lynch-Bages" for "Lynch-Bages?".

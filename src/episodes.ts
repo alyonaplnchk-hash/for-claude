@@ -20,7 +20,9 @@ export type Episode = {
   photo: string;
   // Producer Spotlight only: the guest estate's logo, prepared with
   // scripts/prepare-logo.py (which prints the aspect)
-  guest?: { logo: string; aspect: number };
+  // name: the person interviewed, shown in the intro above the logo.
+  // logoWidth: intro logo width in px (default 408); smaller for tall logos.
+  guest?: { logo: string; aspect: number; name?: string; logoWidth?: number };
   // Questions (Producer Spotlight) or tips (Wine Tips), in order
   cards: Card[];
   // Small caps line above every card; defaults per series
@@ -58,6 +60,27 @@ export const EPISODES: Episode[] = [
           "favourite bottle?",
         ],
         highlight: ["Lynch-Bages"],
+      },
+    ],
+  },
+  {
+    id: "PS-CarmesHautBrion",
+    series: "producer-spotlight",
+    photo: "store.jpg",
+    guest: {
+      logo: "guests/les-carmes-haut-brion.png",
+      aspect: 1249 / 759,
+      name: "Guillaume Pouthier",
+      logoWidth: 440,
+    },
+    cards: [
+      {
+        lines: ["What surprises", "people when they", "visit the estate?"],
+        highlight: ["surprises"],
+      },
+      {
+        lines: ["What’s your favorite", "wine memory?"],
+        highlight: ["memory"],
       },
     ],
   },

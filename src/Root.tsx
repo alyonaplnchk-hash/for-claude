@@ -50,7 +50,9 @@ export const RemotionRoot: React.FC = () => {
                 subtitle: ep.introSubtitle ?? series.subtitle,
                 guestLogo: ep.guest?.logo,
                 guestLogoAspect: ep.guest?.aspect ?? 1,
-                guestLogoWidth: GUEST_LOGO_WIDTH,
+                // The template draws the logo at 85% of this width
+                guestLogoWidth: (ep.guest?.logoWidth ?? 408) / 0.85,
+                guestName: ep.guest?.name,
               }}
             />
             {ep.cards.map((card, i) => (

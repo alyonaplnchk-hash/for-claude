@@ -43,6 +43,8 @@ export const Ecriture: React.FC<
     scriptWord?: ScriptWord;
     // Line under the script word
     subtitle?: string;
+    // The guest's name, between the subtitle and the guest logo
+    guestName?: string;
     // Letter size of the script word relative to Spotlight
     scriptScale?: number;
     ink?: string;
@@ -72,6 +74,7 @@ export const Ecriture: React.FC<
   scriptWord = "Spotlight",
   subtitle = "in conversation with",
   scriptScale = 1,
+  guestName,
 }) => {
   const frame = useCurrentFrame();
   // Spotlight: 62 frames for 9 letters; other words keep the same pen speed.
@@ -185,6 +188,21 @@ export const Ecriture: React.FC<
         >
           {subtitle}
         </div>
+        {guestName ? (
+          <div
+            style={{
+              fontFamily: SORA,
+              fontSize: 32,
+              letterSpacing: "0.32em",
+              paddingLeft: "0.32em",
+              color: text,
+              marginTop: 26,
+              ...fadeIn(frame, 134, 36, { rise: 8 }),
+            }}
+          >
+            {guestName.toUpperCase()}
+          </div>
+        ) : null}
         {!guestLogo ? null : originalLogos ? (
           <Img
             src={staticFile(guestLogo)}
