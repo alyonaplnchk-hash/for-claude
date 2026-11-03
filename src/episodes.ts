@@ -108,6 +108,10 @@ export const EPISODES: Episode[] = [
         lines: ["What’s the next", "big thing in wine?"],
         highlight: ["next"],
       },
+      {
+        lines: ["Magnum or", "Marie-Jeanne?"],
+        highlight: ["Magnum", "Marie-Jeanne"],
+      },
     ],
   },
   {
