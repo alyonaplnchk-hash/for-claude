@@ -49,7 +49,8 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   "in conversation with" → GUEST NAME (if given) → guest logo, AVU logo on top.
 - Cards (6 s each): label PRODUCER SPOTLIGHT, the question rises word by word,
   the estate name in gold. Everything is on screen by ~3 s — the user asked
-  for "smooth but fast, fully written within 3 seconds".
+  for "smooth but fast, fully written within 3 seconds". Cards over 10 words
+  speed up their word reveal automatically to keep that limit.
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
 
 **Wine Tips** (`series: "wine-tips"`)
@@ -120,7 +121,9 @@ designed. At the card's 82 px size about 20 characters fit on a line.
 Aim for 2–4 lines of similar length, break at natural phrase boundaries,
 and give a long estate name its own line rather than letting it wrap
 (e.g. "Apart from / Lynch-Bages, / what's your / favourite bottle?").
-Use sentence case and curly apostrophes (’) even when the user types the
+When the user says "keep it tight", rewrite the question shorter
+(aim for ≤ 13 words) keeping its idea and the estate name, and tell them
+what you cut. Use sentence case and curly apostrophes (’) even when the user types the
 question in capitals — the series uses sentence case throughout. Keep their
 spelling as typed ("favourite" in one episode, "favorite" in another).
 

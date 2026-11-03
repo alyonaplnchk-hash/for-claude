@@ -95,6 +95,15 @@ export const EPISODES: Episode[] = [
         lines: ["Who is your", "wine hero?"],
         highlight: ["hero"],
       },
+      {
+        lines: [
+          "If someone opens",
+          "Les Carmes in 2076,",
+          "what note would",
+          "you leave them?",
+        ],
+        highlight: ["Les", "Carmes"],
+      },
     ],
   },
   {

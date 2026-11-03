@@ -31,6 +31,9 @@ export type QuestionCardProps = {
 const WORD_START = 10;
 const WORD_STAGGER = 6;
 const WORD_LENGTH = 20;
+// Every card is fully written by this frame (2.8 s): long questions
+// reveal their words a little faster instead of running past 3 s.
+const ALL_WORDS_DONE = 84;
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   lines,
@@ -42,8 +45,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const frame = useCurrentFrame();
   let index = 0;
   const wordCount = lines.join(" ").split(" ").length;
-  const lastWordDone =
-    WORD_START + (wordCount - 1) * WORD_STAGGER + WORD_LENGTH;
+  const stagger = Math.min(
+    WORD_STAGGER,
+    (ALL_WORDS_DONE - WORD_START - WORD_LENGTH) / Math.max(1, wordCount - 1),
+  );
+  const lastWordDone = WORD_START + (wordCount - 1) * stagger + WORD_LENGTH;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#EEE8DD" }}>
@@ -102,7 +108,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           {lines.map((line, l) => (
             <div key={l}>
               {line.split(" ").map((word, w) => {
-                const start = WORD_START + index * WORD_STAGGER;
+                const start = WORD_START + index * stagger;
                 index++;
                 const t = [start, start + WORD_LENGTH];
                 const ease = { ...clamp, easing: soft };
