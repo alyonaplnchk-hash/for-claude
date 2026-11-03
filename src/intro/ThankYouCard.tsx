@@ -25,6 +25,8 @@ export type ThankYouProps = {
   // Omit both for a series without a guest (Wine Tips)
   guestLogo?: string;
   guestLogoAspect?: number;
+  // Guest logo height; compact (stacked) logos need more than wide ones
+  guestLogoHeight?: number;
   photo: string;
 };
 
@@ -35,6 +37,7 @@ const GUEST_HEIGHT = 118;
 export const ThankYouCard: React.FC<ThankYouProps> = ({
   guestLogo,
   guestLogoAspect,
+  guestLogoHeight = GUEST_HEIGHT,
   photo,
 }) => {
   const frame = useCurrentFrame();
@@ -93,16 +96,21 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
                   width: 1.5,
                   backgroundColor: AVU_GOLD,
                   opacity: 0.55,
-                  height: interpolate(frame, [80, 104], [0, GUEST_HEIGHT], {
-                    ...clamp,
-                  }),
+                  height: interpolate(
+                    frame,
+                    [80, 104],
+                    [0, Math.min(guestLogoHeight, AVU_HEIGHT)],
+                    {
+                      ...clamp,
+                    },
+                  ),
                 }}
               />
               <Img
                 src={staticFile(guestLogo)}
                 style={{
-                  height: GUEST_HEIGHT,
-                  width: GUEST_HEIGHT * guestLogoAspect,
+                  height: guestLogoHeight,
+                  width: guestLogoHeight * guestLogoAspect,
                   ...fadeIn(frame, 86, 30),
                 }}
               />

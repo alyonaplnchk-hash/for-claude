@@ -79,6 +79,7 @@ export const RemotionRoot: React.FC = () => {
               defaultProps={{
                 guestLogo: ep.guest?.logo,
                 guestLogoAspect: ep.guest?.aspect,
+                guestLogoHeight: ep.guest?.outroHeight,
                 photo: ep.photo,
               }}
             />

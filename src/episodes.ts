@@ -21,8 +21,15 @@ export type Episode = {
   // Producer Spotlight only: the guest estate's logo, prepared with
   // scripts/prepare-logo.py (which prints the aspect)
   // name: the person interviewed, shown in the intro above the logo.
-  // logoWidth: intro logo width in px (default 408); smaller for tall logos.
-  guest?: { logo: string; aspect: number; name?: string; logoWidth?: number };
+  // logoWidth: intro logo width in px (default 408); larger for compact logos.
+  // outroHeight: logo height on the Thank you card (default 118).
+  guest?: {
+    logo: string;
+    aspect: number;
+    name?: string;
+    logoWidth?: number;
+    outroHeight?: number;
+  };
   // Questions (Producer Spotlight) or tips (Wine Tips), in order
   cards: Card[];
   // Small caps line above every card; defaults per series
@@ -72,6 +79,7 @@ export const EPISODES: Episode[] = [
       aspect: 1249 / 759,
       name: "Guillaume Pouthier",
       logoWidth: 440,
+      outroHeight: 175,
     },
     cards: [
       {
