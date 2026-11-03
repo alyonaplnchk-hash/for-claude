@@ -91,6 +91,10 @@ export const EPISODES: Episode[] = [
         ],
         highlight: ["Les", "Carmes"],
       },
+      {
+        lines: ["Who is your", "wine hero?"],
+        highlight: ["hero"],
+      },
     ],
   },
   {
