@@ -99,7 +99,7 @@ export const EPISODES: Episode[] = [
       name: "FlashQuestions",
       scriptWord: "Flash",
       subtitle: "questions",
-      scriptScale: 1.6,
+      scriptScale: 1.36, // 1.6 reduced by 15% at the user’s request
     },
     cards: [
       {

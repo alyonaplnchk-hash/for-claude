@@ -53,9 +53,10 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   speed up their word reveal automatically to keep that limit.
 - Divider (4 s, optional): a section break before the flash questions
   Laura asks on camera — label PRODUCER SPOTLIGHT, *Flash* written by hand
-  (large, fast) → flourish → "questions". Fully on screen by ~1 s; the
+  (fast) → flourish → "questions". Fully on screen by ~1 s; the
   editor shows it for 1.5–2 s. Set `divider` on the episode:
-  `{ name: "FlashQuestions", scriptWord: "Flash", subtitle: "questions", scriptScale: 1.6 }`
+  `{ name: "FlashQuestions", scriptWord: "Flash", subtitle: "questions", scriptScale: 1.36 }`
+  (the user asked for Flash 15% smaller than the first try at 1.6)
   → composition `<id>-8-FlashQuestions` (template `src/intro/DividerCard.tsx`).
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
 
