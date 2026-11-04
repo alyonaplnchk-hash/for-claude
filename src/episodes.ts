@@ -1,3 +1,5 @@
+import type { ScriptWord } from "./intro/shared";
+
 // One entry per video. Each episode becomes a folder of compositions in
 // Remotion Studio: <id>-0-Intro, <id>-1-Card … <id>-9-Outro.
 // The avu-video-intros skill (.claude/skills/avu-video-intros) explains
@@ -37,6 +39,14 @@ export type Episode = {
   cards: Card[];
   // Small caps line above every card; defaults per series
   cardLabel?: string;
+  // Section divider after the last card, e.g. before the flash questions.
+  // Becomes <id>-8-<name>; scriptWord must be in scripts/script-words.txt.
+  divider?: {
+    name: string;
+    scriptWord: ScriptWord;
+    subtitle: string;
+    scriptScale?: number;
+  };
   // Line under the script word in the intro; defaults per series
   // (e.g. "with Laura" when only Laura presents)
   introSubtitle?: string;
@@ -84,6 +94,12 @@ export const EPISODES: Episode[] = [
       logoWidth: 440,
       outroHeight: 180,
       outroAvuHeight: 144,
+    },
+    divider: {
+      name: "FlashQuestions",
+      scriptWord: "Flash",
+      subtitle: "questions",
+      scriptScale: 1.6,
     },
     cards: [
       {

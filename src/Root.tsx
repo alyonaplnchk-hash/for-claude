@@ -8,6 +8,7 @@ import { Nocturne, NOCTURNE_DURATION } from "./intro/Nocturne";
 import { QuestionCard, QUESTION_DURATION } from "./intro/QuestionCard";
 import { FPS, IntroProps } from "./intro/shared";
 import { ThankYouCard, THANK_YOU_DURATION } from "./intro/ThankYouCard";
+import { DividerCard, DIVIDER_DURATION } from "./intro/DividerCard";
 
 const video = { fps: FPS, width: 1080, height: 1920 };
 
@@ -71,6 +72,21 @@ export const RemotionRoot: React.FC = () => {
                 }}
               />
             ))}
+            {ep.divider ? (
+              <Composition
+                id={`${ep.id}-8-${ep.divider.name}`}
+                component={DividerCard}
+                durationInFrames={DIVIDER_DURATION}
+                {...video}
+                defaultProps={{
+                  label: ep.cardLabel ?? series.cardLabel,
+                  scriptWord: ep.divider.scriptWord,
+                  scriptScale: ep.divider.scriptScale ?? 1.6,
+                  subtitle: ep.divider.subtitle,
+                  photo: ep.photo,
+                }}
+              />
+            ) : null}
             <Composition
               id={`${ep.id}-9-Outro`}
               component={ThankYouCard}
