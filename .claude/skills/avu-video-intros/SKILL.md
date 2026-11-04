@@ -51,6 +51,12 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   the estate name in gold. Everything is on screen by ~3 s — the user asked
   for "smooth but fast, fully written within 3 seconds". Cards over 10 words
   speed up their word reveal automatically to keep that limit.
+- Divider (4 s, optional): a section break before the flash questions
+  Laura asks on camera — label PRODUCER SPOTLIGHT, *Flash* written by hand
+  (large, fast) → flourish → "questions". Fully on screen by ~1 s; the
+  editor shows it for 1.5–2 s. Set `divider` on the episode:
+  `{ name: "FlashQuestions", scriptWord: "Flash", subtitle: "questions", scriptScale: 1.6 }`
+  → composition `<id>-8-FlashQuestions` (template `src/intro/DividerCard.tsx`).
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
 
 **Wine Tips** (`series: "wine-tips"`)
@@ -180,7 +186,7 @@ breaks, which words are gold), and any concern (e.g. low-res logo).
 ## Adding a new hand-written word
 
 Only the words in `scripts/script-words.txt` can be animated by hand
-(currently Spotlight, Thank you, Tips). To add one (e.g. for a new series):
+(currently Spotlight, Thank you, Tips, Flash). To add one (e.g. for a new series):
 
 ```bash
 echo "Cheers" >> scripts/script-words.txt
