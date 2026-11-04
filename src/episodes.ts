@@ -23,12 +23,15 @@ export type Episode = {
   // name: the person interviewed, shown in the intro above the logo.
   // logoWidth: intro logo width in px (default 408); larger for compact logos.
   // outroHeight: logo height on the Thank you card (default 118).
+  // outroAvuHeight: AVU logo height on that card (default 156); lower it
+  // when the guest logo is light and thin-lined so the two look equal.
   guest?: {
     logo: string;
     aspect: number;
     name?: string;
     logoWidth?: number;
     outroHeight?: number;
+    outroAvuHeight?: number;
   };
   // Questions (Producer Spotlight) or tips (Wine Tips), in order
   cards: Card[];
@@ -79,7 +82,8 @@ export const EPISODES: Episode[] = [
       aspect: 1249 / 759,
       name: "Guillaume Pouthier",
       logoWidth: 440,
-      outroHeight: 175,
+      outroHeight: 200,
+      outroAvuHeight: 132,
     },
     cards: [
       {

@@ -80,6 +80,7 @@ export const RemotionRoot: React.FC = () => {
                 guestLogo: ep.guest?.logo,
                 guestLogoAspect: ep.guest?.aspect,
                 guestLogoHeight: ep.guest?.outroHeight,
+                avuLogoHeight: ep.guest?.outroAvuHeight,
                 photo: ep.photo,
               }}
             />

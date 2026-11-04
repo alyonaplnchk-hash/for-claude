@@ -98,7 +98,8 @@ re-colour the guest logo; the user explicitly wants original colours.
     aspect: 1200 / 410,
     name: "Philippe Bascaules",   // shown in caps under "in conversation with"
     logoWidth: 440,               // optional; default 408 suits wide logos
-    outroHeight: 175,             // optional; Thank you card, default 118
+    outroHeight: 200,             // optional; Thank you card, default 118
+    outroAvuHeight: 132,          // optional; AVU on that card, default 156
   },
   cards: [
     {
@@ -111,9 +112,12 @@ re-colour the guest logo; the user explicitly wants original colours.
 
 Check the intro still for the logo size: a tall, compact logo (stacked
 crest + name, like Les Carmes Haut-Brion) needs a larger `logoWidth`
-(~440) to keep its lettering readable, and a larger `outroHeight` (~175)
-on the Thank you card next to the AVU logo; a wide one-line logo is fine
-at the defaults.
+(~440) to keep its lettering readable. On the Thank you card the AVU mark
+is dense and bold, so next to a light, thin-lined logo it reads larger
+than its size: raise `outroHeight` (~200) and lower `outroAvuHeight`
+(~132) until both look equal — the user flagged this on Les Carmes. A
+wide one-line logo (Lynch-Bages) is fine at the defaults. When unsure,
+render 3–4 size pairs side by side as stills and pick by eye.
 
 Wine Tips cards add `byline: "Laura"`. If only one host presents the
 episode, set `introSubtitle: "with Laura"`.

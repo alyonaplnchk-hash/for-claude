@@ -27,6 +27,8 @@ export type ThankYouProps = {
   guestLogoAspect?: number;
   // Guest logo height; compact (stacked) logos need more than wide ones
   guestLogoHeight?: number;
+  // AVU logo height; lower it next to a light, thin-lined guest logo
+  avuLogoHeight?: number;
   photo: string;
 };
 
@@ -38,6 +40,7 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
   guestLogo,
   guestLogoAspect,
   guestLogoHeight = GUEST_HEIGHT,
+  avuLogoHeight = AVU_HEIGHT,
   photo,
 }) => {
   const frame = useCurrentFrame();
@@ -84,8 +87,8 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
           <Img
             src={staticFile(AVU_LOGO)}
             style={{
-              height: AVU_HEIGHT,
-              width: AVU_HEIGHT * AVU_ASPECT,
+              height: avuLogoHeight,
+              width: avuLogoHeight * AVU_ASPECT,
               ...fadeIn(frame, 76, 30),
             }}
           />
@@ -99,7 +102,7 @@ export const ThankYouCard: React.FC<ThankYouProps> = ({
                   height: interpolate(
                     frame,
                     [80, 104],
-                    [0, Math.min(guestLogoHeight, AVU_HEIGHT)],
+                    [0, Math.min(guestLogoHeight, avuLogoHeight)],
                     {
                       ...clamp,
                     },
