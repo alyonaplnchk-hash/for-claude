@@ -82,8 +82,8 @@ export const EPISODES: Episode[] = [
       aspect: 1249 / 759,
       name: "Guillaume Pouthier",
       logoWidth: 440,
-      outroHeight: 200,
-      outroAvuHeight: 132,
+      outroHeight: 180,
+      outroAvuHeight: 144,
     },
     cards: [
       {

@@ -98,8 +98,8 @@ re-colour the guest logo; the user explicitly wants original colours.
     aspect: 1200 / 410,
     name: "Philippe Bascaules",   // shown in caps under "in conversation with"
     logoWidth: 440,               // optional; default 408 suits wide logos
-    outroHeight: 200,             // optional; Thank you card, default 118
-    outroAvuHeight: 132,          // optional; AVU on that card, default 156
+    outroHeight: 180,             // optional; Thank you card, default 118
+    outroAvuHeight: 144,          // optional; AVU on that card, default 156
   },
   cards: [
     {
@@ -114,8 +114,8 @@ Check the intro still for the logo size: a tall, compact logo (stacked
 crest + name, like Les Carmes Haut-Brion) needs a larger `logoWidth`
 (~440) to keep its lettering readable. On the Thank you card the AVU mark
 is dense and bold, so next to a light, thin-lined logo it reads larger
-than its size: raise `outroHeight` (~200) and lower `outroAvuHeight`
-(~132) until both look equal — the user flagged this on Les Carmes. A
+than its size: raise `outroHeight` (~180) and lower `outroAvuHeight`
+(~144) until both look equal. On Les Carmes the user found 156/175 AVU-heavy and 132/200 Carmes-heavy; small steps matter. A
 wide one-line logo (Lynch-Bages) is fine at the defaults. When unsure,
 render 3–4 size pairs side by side as stills and pick by eye.
 
