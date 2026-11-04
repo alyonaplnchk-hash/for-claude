@@ -74,7 +74,7 @@ export const RemotionRoot: React.FC = () => {
             ))}
             {ep.divider ? (
               <Composition
-                id={`${ep.id}-8-${ep.divider.name}`}
+                id={`${ep.id}-${ep.cards.length + 1}-${ep.divider.name}`}
                 component={DividerCard}
                 durationInFrames={DIVIDER_DURATION}
                 {...video}

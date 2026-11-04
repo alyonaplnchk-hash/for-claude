@@ -118,7 +118,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                     style={{
                       display: "inline-block",
                       marginRight: "0.24em",
-                      color: highlight.includes(word.replace(/[?.,!]/g, ""))
+                      color: highlight.includes(
+                        word.replace(/[?.,!:;…"“”]/g, ""),
+                      )
                         ? AVU_GOLD
                         : undefined,
                       opacity: interpolate(frame, t, [0, 1], ease),

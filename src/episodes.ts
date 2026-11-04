@@ -40,7 +40,8 @@ export type Episode = {
   // Small caps line above every card; defaults per series
   cardLabel?: string;
   // Section divider after the last card, e.g. before the flash questions.
-  // Becomes <id>-8-<name>; scriptWord must be in scripts/script-words.txt.
+  // Becomes <id>-<last card + 1>-<name>; scriptWord must be in
+  // scripts/script-words.txt.
   divider?: {
     name: string;
     scriptWord: ScriptWord;
@@ -139,6 +140,15 @@ export const EPISODES: Episode[] = [
       {
         lines: ["Magnum or", "Marie-Jeanne?"],
         highlight: ["Magnum", "Marie-Jeanne"],
+      },
+      {
+        lines: [
+          "A vineyard in the",
+          "heart of Bordeaux:",
+          "challenge or",
+          "advantage?",
+        ],
+        highlight: ["Bordeaux"],
       },
     ],
   },

@@ -57,7 +57,7 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   editor shows it for 1.5–2 s. Set `divider` on the episode:
   `{ name: "FlashQuestions", scriptWord: "Flash", subtitle: "questions", scriptScale: 1.36 }`
   (the user asked for Flash 15% smaller than the first try at 1.6)
-  → composition `<id>-8-FlashQuestions` (template `src/intro/DividerCard.tsx`).
+  → composition `<id>-<last card + 1>-FlashQuestions`, so it always follows the last question (template `src/intro/DividerCard.tsx`).
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
 
 **Wine Tips** (`series: "wine-tips"`)
@@ -143,7 +143,7 @@ spelling as typed ("favourite" in one episode, "favorite" in another).
 Gold word: the estate name when the question contains it; otherwise the
 one word that carries the question ("surprises", "memory").
 
-`highlight` lists single words; punctuation is ignored when matching, so
+`highlight` lists single words; punctuation (?.,!:;… and quotes) is ignored when matching, so
 list "Lynch-Bages" for "Lynch-Bages?".
 
 ### 4. Preview before rendering
