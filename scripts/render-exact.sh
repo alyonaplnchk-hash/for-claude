@@ -21,7 +21,8 @@ esac
 
 npx remotion render "$comp" "$seq" --sequence --image-format=png "$@"
 
-in=(-framerate 30 -i "$seq/element-%03d.png")
+# Frame numbers are zero-padded to the clip length (2 digits for < 100 frames)
+in=(-framerate 30 -pattern_type glob -i "$seq/element-*.png")
 scale="scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int"
 tags=(-colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv)
 
