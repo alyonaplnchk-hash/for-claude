@@ -44,7 +44,13 @@ export type MapCardProps = {
   // Camera: where the move starts and ends ([lon, lat] and Mercator scale)
   from: { center: [number, number]; scale: number };
   to: { center: [number, number]; scale: number };
+  // For phones without alpha support: a flat chroma-key green background,
+  // and nothing semi-transparent over it (no neighbours, shadow, fades or
+  // pulse) so CapCut's chroma key cuts it cleanly.
+  greenScreen?: boolean;
 };
+
+export const CHROMA_GREEN = "#00B140";
 
 const topo = countries50m as unknown as Topology<{
   countries: GeometryCollection<{ name: string }>;
@@ -71,6 +77,7 @@ export const MapCard: React.FC<MapCardProps> = ({
   places,
   from,
   to,
+  greenScreen = false,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -99,12 +106,14 @@ export const MapCard: React.FC<MapCardProps> = ({
   const [kx, ky] = projection(countryLabelAt) ?? [0, 0];
 
   const ease = { ...clamp, easing: soft };
-  const mapIn = interpolate(frame, [0, 14], [0, 1], ease);
+  const mapIn = greenScreen ? 1 : interpolate(frame, [0, 14], [0, 1], ease);
   const countryIn = interpolate(frame, [20, 44], [0, 1], ease);
   const labelsIn = interpolate(frame, [48, 64], [0, 1], ease);
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={greenScreen ? { backgroundColor: CHROMA_GREEN } : undefined}
+    >
       <svg
         width={width}
         height={height}
@@ -112,7 +121,9 @@ export const MapCard: React.FC<MapCardProps> = ({
           position: "absolute",
           opacity: mapIn,
           // A soft shadow lifts the map off whatever footage is underneath
-          filter: "drop-shadow(0px 8px 22px rgba(43, 38, 30, 0.28))",
+          filter: greenScreen
+            ? undefined
+            : "drop-shadow(0px 8px 22px rgba(43, 38, 30, 0.28))",
         }}
       >
         <defs>
@@ -131,7 +142,10 @@ export const MapCard: React.FC<MapCardProps> = ({
             <rect width={width} height={height} fill="url(#map-fade)" />
           </mask>
         </defs>
-        <g mask="url(#map-fade-mask)">
+        <g
+          mask="url(#map-fade-mask)"
+          style={{ display: greenScreen ? "none" : undefined }}
+        >
           {COUNTRIES.map((c) =>
             c.id === countryId ? null : (
               <path
@@ -209,7 +223,9 @@ export const MapCard: React.FC<MapCardProps> = ({
                 fill="none"
                 stroke={CREAM}
                 strokeWidth={2}
-                opacity={(1 - pulse) * 0.9 * (pulse > 0 ? 1 : 0)}
+                opacity={
+                  greenScreen ? 0 : (1 - pulse) * 0.9 * (pulse > 0 ? 1 : 0)
+                }
               />
               {place.kind === "city" ? (
                 <>

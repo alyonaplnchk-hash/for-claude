@@ -88,23 +88,26 @@ export const RemotionRoot: React.FC = () => {
                 }}
               />
             ) : null}
-            {(ep.maps ?? []).map((m) => (
-              <Composition
-                key={m.name}
-                id={`${ep.id}-Map-${m.name}`}
-                component={MapCard}
-                durationInFrames={MAP_DURATION}
-                {...video}
-                defaultProps={{
-                  countryId: m.countryId,
-                  countryName: m.countryName,
-                  countryLabelAt: m.countryLabelAt,
-                  places: m.places,
-                  from: m.from,
-                  to: m.to,
-                }}
-              />
-            ))}
+            {(ep.maps ?? []).flatMap((m) =>
+              [false, true].map((green) => (
+                <Composition
+                  key={m.name + String(green)}
+                  id={`${ep.id}-Map-${m.name}${green ? "-Green" : ""}`}
+                  component={MapCard}
+                  durationInFrames={MAP_DURATION}
+                  {...video}
+                  defaultProps={{
+                    countryId: m.countryId,
+                    countryName: m.countryName,
+                    countryLabelAt: m.countryLabelAt,
+                    places: m.places,
+                    from: m.from,
+                    to: m.to,
+                    greenScreen: green,
+                  }}
+                />
+              )),
+            )}
             <Composition
               id={`${ep.id}-9-Outro`}
               component={ThankYouCard}

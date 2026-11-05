@@ -75,7 +75,14 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   the whole country in the final frame so its shape is recognisable — a
   closer zoom turned it into a shapeless gold blob; when two places are
   close (Cape Town and Swartland, ~60 km), move one label off with
-  `labelOffset: [dx, dy]`, which draws a thin leader line. Preview by compositing
+  `labelOffset: [dx, dy]`, which draws a thin leader line.
+  For the phone: ProRes .mov and .webm don't download or play well on a
+  phone, and this ffmpeg can't encode HEVC with alpha. So every map also
+  has `<id>-Map-<name>-Green` — the country, marks and labels on flat
+  chroma green (#00B140), with nothing semi-transparent over the green (no
+  neighbours, shadow, fade-in or pulse). Render it with render-exact.sh and
+  send the H.264 `.mp4`; in CapCut: Overlay → the clip → Chroma key → pick
+  the green. Preview by compositing
   stills over a light and a dark background, since the footage under it
   varies.
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
