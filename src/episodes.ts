@@ -57,7 +57,16 @@ export type Episode = {
     countryName: string;
     // [lon, lat] for the country name on the map
     countryLabelAt: [number, number];
-    city: { name: string; lon: number; lat: number };
+    // A city gets a dot, a wine region a ring; labels right unless "left"
+    places: {
+      name: string;
+      lon: number;
+      lat: number;
+      kind: "city" | "region";
+      labelSide?: "right" | "left";
+      // [dx, dy] px: label moved off the mark with a leader line
+      labelOffset?: [number, number];
+    }[];
     from: { center: [number, number]; scale: number };
     to: { center: [number, number]; scale: number };
   }[];
@@ -111,11 +120,28 @@ export const EPISODES: Episode[] = [
     },
     maps: [
       {
-        name: "CapeTown",
+        name: "CapeTown-Swartland",
         countryId: "710",
         countryName: "South Africa",
-        countryLabelAt: [22.6, -30.6],
-        city: { name: "Cape Town", lon: 18.4241, lat: -33.9249 },
+        countryLabelAt: [22.9, -29.5],
+        places: [
+          {
+            name: "Cape Town",
+            lon: 18.4241,
+            lat: -33.9249,
+            kind: "city",
+            labelOffset: [22, -10],
+          },
+          // Wine region around Malmesbury and Riebeek, ~60 km north; its
+          // label sits up and right with a leader line, clear of Cape Town
+          {
+            name: "Swartland",
+            lon: 18.75,
+            lat: -33.25,
+            kind: "region",
+            labelOffset: [70, -70],
+          },
+        ],
         from: { center: [22, -18], scale: 1000 },
         to: { center: [24.5, -30], scale: 2300 },
       },

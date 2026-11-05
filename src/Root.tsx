@@ -99,7 +99,7 @@ export const RemotionRoot: React.FC = () => {
                   countryId: m.countryId,
                   countryName: m.countryName,
                   countryLabelAt: m.countryLabelAt,
-                  city: m.city,
+                  places: m.places,
                   from: m.from,
                   to: m.to,
                 }}

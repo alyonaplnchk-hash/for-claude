@@ -70,7 +70,12 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   → composition `<id>-Map-<name>` (template `src/intro/MapCard.tsx`).
   Render with `scripts/render-alpha.sh` (not render-exact): it outputs
   `<name>.mov` (ProRes 4444 with alpha, exact gold — the main file for the
-  editor) and `<name>.webm` (VP9 with alpha, small). Preview by compositing
+  editor) and `<name>.webm` (VP9 with alpha, small). Several places can be
+  marked (`places`: a city gets a dot, a wine region a dashed ring). Keep
+  the whole country in the final frame so its shape is recognisable — a
+  closer zoom turned it into a shapeless gold blob; when two places are
+  close (Cape Town and Swartland, ~60 km), move one label off with
+  `labelOffset: [dx, dy]`, which draws a thin leader line. Preview by compositing
   stills over a light and a dark background, since the footage under it
   varies.
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.

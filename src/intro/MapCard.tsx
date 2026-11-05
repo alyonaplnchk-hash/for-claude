@@ -15,7 +15,8 @@ import { clamp, PLAYFAIR, SORA, soft } from "./shared";
 
 // A map overlay on a transparent background, placed in the lower part of the
 // frame under the speakers. Cards' palette: cream land, the country in AVU
-// gold, the city marked with a dot; labels sit on the map itself. The camera
+// gold, each place marked (a dot for a city, a ring for a wine region);
+// labels sit on the map itself. The camera
 // eases in from the wider region to the country, then holds.
 const TEXT = "#4A443B";
 const LAND = "#F4EFE6";
@@ -28,7 +29,18 @@ export type MapCardProps = {
   countryName: string;
   // Where the country name sits ([lon, lat]); clear of enclaves and the city
   countryLabelAt: [number, number];
-  city: { name: string; lon: number; lat: number };
+  // Places appear one after another. A city gets a dot, a wine region a
+  // ring. The label goes to the right of the mark unless labelSide is "left".
+  places: {
+    name: string;
+    lon: number;
+    lat: number;
+    kind: "city" | "region";
+    labelSide?: "right" | "left";
+    // Move the label away from the mark ([dx, dy] px); a thin leader line
+    // joins them. For places too close together to label side by side.
+    labelOffset?: [number, number];
+  }[];
   // Camera: where the move starts and ends ([lon, lat] and Mercator scale)
   from: { center: [number, number]; scale: number };
   to: { center: [number, number]; scale: number };
@@ -56,7 +68,7 @@ export const MapCard: React.FC<MapCardProps> = ({
   countryId,
   countryName,
   countryLabelAt,
-  city,
+  places,
   from,
   to,
 }) => {
@@ -84,17 +96,11 @@ export const MapCard: React.FC<MapCardProps> = ({
   const country = COUNTRIES.find((c) => c.id === countryId) as
     | Feature<Geometry, { name: string }>
     | undefined;
-  const [cx, cy] = projection([city.lon, city.lat]) ?? [0, 0];
   const [kx, ky] = projection(countryLabelAt) ?? [0, 0];
 
   const ease = { ...clamp, easing: soft };
   const mapIn = interpolate(frame, [0, 14], [0, 1], ease);
   const countryIn = interpolate(frame, [20, 44], [0, 1], ease);
-  const dotIn = interpolate(frame, [42, 52], [0, 1], {
-    ...clamp,
-    easing: Easing.out(Easing.back(2)),
-  });
-  const ring = interpolate(frame, [48, 84], [0, 1], clamp);
   const labelsIn = interpolate(frame, [48, 64], [0, 1], ease);
 
   return (
@@ -140,6 +146,8 @@ export const MapCard: React.FC<MapCardProps> = ({
             ),
           )}
         </g>
+
+        {/* The country itself stays solid: only its neighbours fade out */}
         {country ? (
           <>
             <path
@@ -174,37 +182,89 @@ export const MapCard: React.FC<MapCardProps> = ({
           {countryName.toUpperCase()}
         </text>
 
-        {/* City: a pulse ring, then the dot */}
-        <circle
-          cx={cx}
-          cy={cy}
-          r={13 + ring * 40}
-          fill="none"
-          stroke={CREAM}
-          strokeWidth={2}
-          opacity={(1 - ring) * 0.9 * (ring > 0 ? 1 : 0)}
-        />
-        <circle
-          cx={cx}
-          cy={cy}
-          r={12 * dotIn}
-          fill={CREAM}
-          stroke={TEXT}
-          strokeWidth={3}
-        />
-        <circle cx={cx} cy={cy} r={5 * dotIn} fill={TEXT} />
-        <text
-          x={cx + 26}
-          y={cy - 22}
-          textAnchor="start"
-          fontFamily={PLAYFAIR}
-          fontStyle="italic"
-          fontSize={48}
-          fill={CREAM}
-          opacity={labelsIn}
-        >
-          {city.name}
-        </text>
+        {places.map((place, i) => {
+          // Each place lands 8 frames after the previous one
+          const at = 42 + i * 8;
+          const [px, py] = projection([place.lon, place.lat]) ?? [0, 0];
+          const markIn = interpolate(frame, [at, at + 10], [0, 1], {
+            ...clamp,
+            easing: Easing.out(Easing.back(2)),
+          });
+          const pulse = interpolate(frame, [at + 6, at + 40], [0, 1], clamp);
+          const textIn = interpolate(frame, [at + 6, at + 20], [0, 1], ease);
+          const left = place.labelSide === "left";
+          const markR = place.kind === "city" ? 10 : 15;
+          const [ox, oy] = place.labelOffset ?? [
+            (left ? -1 : 1) * (markR + 12),
+            0,
+          ];
+          const dist = Math.hypot(ox, oy);
+          const leader = dist > markR + 30;
+          return (
+            <g key={place.name}>
+              <circle
+                cx={px}
+                cy={py}
+                r={markR + pulse * 34}
+                fill="none"
+                stroke={CREAM}
+                strokeWidth={2}
+                opacity={(1 - pulse) * 0.9 * (pulse > 0 ? 1 : 0)}
+              />
+              {place.kind === "city" ? (
+                <>
+                  <circle
+                    cx={px}
+                    cy={py}
+                    r={markR * markIn}
+                    fill={CREAM}
+                    stroke={TEXT}
+                    strokeWidth={2.5}
+                  />
+                  <circle cx={px} cy={py} r={4 * markIn} fill={TEXT} />
+                </>
+              ) : (
+                <>
+                  <circle
+                    cx={px}
+                    cy={py}
+                    r={markR * markIn}
+                    fill={CREAM}
+                    fillOpacity={0.22}
+                    stroke={CREAM}
+                    strokeWidth={2.5}
+                    strokeDasharray="4 4"
+                  />
+                  <circle cx={px} cy={py} r={3.5 * markIn} fill={CREAM} />
+                </>
+              )}
+              {leader ? (
+                <line
+                  x1={px + (ox / dist) * (markR + 4)}
+                  y1={py + (oy / dist) * (markR + 4)}
+                  x2={px + ox - (left ? -8 : 8)}
+                  y2={py + oy}
+                  stroke={CREAM}
+                  strokeWidth={1.5}
+                  opacity={textIn}
+                />
+              ) : null}
+              <text
+                x={px + ox}
+                y={py + oy}
+                textAnchor={left ? "end" : "start"}
+                dominantBaseline="middle"
+                fontFamily={PLAYFAIR}
+                fontStyle="italic"
+                fontSize={44}
+                fill={CREAM}
+                opacity={textIn}
+              >
+                {place.name}
+              </text>
+            </g>
+          );
+        })}
       </svg>
     </AbsoluteFill>
   );
