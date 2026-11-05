@@ -58,15 +58,21 @@ Gold `#89764B` for the script word, flourishes and highlighted words; text
   `{ name: "FlashQuestions", scriptWord: "Flash", subtitle: "questions", scriptScale: 1.36 }`
   (the user asked for Flash 15% smaller than the first try at 1.6)
   → composition `<id>-<last card + 1>-FlashQuestions`, so it always follows the last question (template `src/intro/DividerCard.tsx`).
-- Map insert (3 s, optional): a place mentioned in the interview. Same
-  backdrop, label PRODUCER SPOTLIGHT, a cream map that eases in from the
-  region to the country; the country fills AVU gold, the city gets a dot,
-  and a caption appears below (*City* in Playfair Italic, COUNTRY in gold
-  Sora caps). Set `maps` on the episode (country by ISO numeric code from
-  Natural Earth / world-atlas, city lon/lat, camera `from`/`to` centre and
-  Mercator scale) → composition `<id>-Map-<name>` (template
-  `src/intro/MapCard.tsx`). Check the last frame: the country should sit
-  clear of the label and the frame edges.
+- Map overlay (3 s, optional): a place mentioned in the interview, laid
+  over the interview footage in the lower part of the frame, under the
+  speakers — so it has a **transparent background**: no photo, veil, grain
+  or label. Cream neighbouring countries fade out softly, the country fills
+  solid AVU gold, the city gets a dot; labels sit on the map (COUNTRY in
+  cream Sora caps, *City* in cream Playfair Italic). The camera eases from
+  the region to the country. Set `maps` on the episode (country ISO numeric
+  code from Natural Earth / world-atlas, `countryLabelAt` [lon, lat] clear
+  of enclaves, city lon/lat, camera `from`/`to` centre + Mercator scale)
+  → composition `<id>-Map-<name>` (template `src/intro/MapCard.tsx`).
+  Render with `scripts/render-alpha.sh` (not render-exact): it outputs
+  `<name>.mov` (ProRes 4444 with alpha, exact gold — the main file for the
+  editor) and `<name>.webm` (VP9 with alpha, small). Preview by compositing
+  stills over a light and a dark background, since the footage under it
+  varies.
 - Outro (6 s): *Thank you* written by hand, then AVU logo | guest logo.
 
 **Wine Tips** (`series: "wine-tips"`)

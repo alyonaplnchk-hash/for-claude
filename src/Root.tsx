@@ -96,13 +96,12 @@ export const RemotionRoot: React.FC = () => {
                 durationInFrames={MAP_DURATION}
                 {...video}
                 defaultProps={{
-                  label: ep.cardLabel ?? series.cardLabel,
                   countryId: m.countryId,
                   countryName: m.countryName,
+                  countryLabelAt: m.countryLabelAt,
                   city: m.city,
                   from: m.from,
                   to: m.to,
-                  photo: ep.photo,
                 }}
               />
             ))}

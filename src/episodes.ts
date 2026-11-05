@@ -48,12 +48,15 @@ export type Episode = {
     subtitle: string;
     scriptScale?: number;
   };
-  // Short map inserts, e.g. where a guest has another estate.
-  // Each becomes <id>-Map-<name> (3 s).
+  // Short map overlays (transparent, lower part of the frame), e.g. where
+  // a guest has another estate. Each becomes <id>-Map-<name> (3 s), rendered
+  // with scripts/render-alpha.sh.
   maps?: {
     name: string;
     countryId: string; // ISO 3166-1 numeric, e.g. "710" for South Africa
     countryName: string;
+    // [lon, lat] for the country name on the map
+    countryLabelAt: [number, number];
     city: { name: string; lon: number; lat: number };
     from: { center: [number, number]; scale: number };
     to: { center: [number, number]; scale: number };
@@ -111,6 +114,7 @@ export const EPISODES: Episode[] = [
         name: "CapeTown",
         countryId: "710",
         countryName: "South Africa",
+        countryLabelAt: [22.6, -30.6],
         city: { name: "Cape Town", lon: 18.4241, lat: -33.9249 },
         from: { center: [22, -18], scale: 1000 },
         to: { center: [24.5, -30], scale: 2300 },
