@@ -48,6 +48,16 @@ export type Episode = {
     subtitle: string;
     scriptScale?: number;
   };
+  // Short map inserts, e.g. where a guest has another estate.
+  // Each becomes <id>-Map-<name> (3 s).
+  maps?: {
+    name: string;
+    countryId: string; // ISO 3166-1 numeric, e.g. "710" for South Africa
+    countryName: string;
+    city: { name: string; lon: number; lat: number };
+    from: { center: [number, number]; scale: number };
+    to: { center: [number, number]; scale: number };
+  }[];
   // Line under the script word in the intro; defaults per series
   // (e.g. "with Laura" when only Laura presents)
   introSubtitle?: string;
@@ -96,6 +106,16 @@ export const EPISODES: Episode[] = [
       outroHeight: 180,
       outroAvuHeight: 144,
     },
+    maps: [
+      {
+        name: "CapeTown",
+        countryId: "710",
+        countryName: "South Africa",
+        city: { name: "Cape Town", lon: 18.4241, lat: -33.9249 },
+        from: { center: [22, -18], scale: 1000 },
+        to: { center: [24.5, -30], scale: 2300 },
+      },
+    ],
     divider: {
       name: "FlashQuestions",
       scriptWord: "Flash",

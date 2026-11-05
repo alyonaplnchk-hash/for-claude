@@ -9,6 +9,7 @@ import { QuestionCard, QUESTION_DURATION } from "./intro/QuestionCard";
 import { FPS, IntroProps } from "./intro/shared";
 import { ThankYouCard, THANK_YOU_DURATION } from "./intro/ThankYouCard";
 import { DividerCard, DIVIDER_DURATION } from "./intro/DividerCard";
+import { MapCard, MAP_DURATION } from "./intro/MapCard";
 
 const video = { fps: FPS, width: 1080, height: 1920 };
 
@@ -87,6 +88,24 @@ export const RemotionRoot: React.FC = () => {
                 }}
               />
             ) : null}
+            {(ep.maps ?? []).map((m) => (
+              <Composition
+                key={m.name}
+                id={`${ep.id}-Map-${m.name}`}
+                component={MapCard}
+                durationInFrames={MAP_DURATION}
+                {...video}
+                defaultProps={{
+                  label: ep.cardLabel ?? series.cardLabel,
+                  countryId: m.countryId,
+                  countryName: m.countryName,
+                  city: m.city,
+                  from: m.from,
+                  to: m.to,
+                  photo: ep.photo,
+                }}
+              />
+            ))}
             <Composition
               id={`${ep.id}-9-Outro`}
               component={ThankYouCard}
