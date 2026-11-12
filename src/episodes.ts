@@ -87,6 +87,15 @@ export const EPISODES: Episode[] = [
     cards: [],
   },
   {
+    id: "WT-ChampagneStyles",
+    series: "wine-tips",
+    photo: "store.jpg",
+    introTitle: ["Blanc de Blancs,", "Blanc de Noirs", "or Rosé?"],
+    introSeconds: 3,
+    outroSeconds: 3,
+    cards: [],
+  },
+  {
     // Sample episode to preview the Wine Tips templates
     id: "WT-Sample",
     series: "wine-tips",
